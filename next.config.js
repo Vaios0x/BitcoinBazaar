@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['ipfs.io', 'gateway.pinata.cloud', 'arweave.net', 'via.placeholder.com'],
+    domains: ['ipfs.io', 'gateway.pinata.cloud', 'arweave.net', 'via.placeholder.com', 'images.unsplash.com'],
   },
   webpack: (config) => {
     config.resolve.fallback = {
