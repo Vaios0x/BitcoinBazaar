@@ -11,7 +11,7 @@ const gamingNFTs = [
   {
     id: '1',
     name: 'CryptoPunk Warrior #1234',
-    imageUri: 'https://via.placeholder.com/400x400/FF6B6B/FFFFFF?text=Warrior',
+    imageUri: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center',
     price: '2.5',
     paymentToken: 'sBTC',
     stats: {
@@ -29,7 +29,7 @@ const gamingNFTs = [
   {
     id: '2',
     name: 'Bored Ape Mage #5678',
-    imageUri: 'https://via.placeholder.com/400x400/4ECDC4/FFFFFF?text=Mage',
+    imageUri: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=400&fit=crop&crop=center',
     price: '1.8',
     paymentToken: 'sBTC',
     stats: {
@@ -47,7 +47,7 @@ const gamingNFTs = [
   {
     id: '3',
     name: 'Stacks Guardian #9999',
-    imageUri: 'https://via.placeholder.com/400x400/45B7D1/FFFFFF?text=Guardian',
+    imageUri: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center',
     price: '3.2',
     paymentToken: 'sBTC',
     stats: {
@@ -65,7 +65,7 @@ const gamingNFTs = [
   {
     id: '4',
     name: 'Bitcoin Berserker #7777',
-    imageUri: 'https://via.placeholder.com/400x400/F97316/FFFFFF?text=Berserker',
+    imageUri: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=400&fit=crop&crop=center',
     price: '4.1',
     paymentToken: 'sBTC',
     stats: {
@@ -83,7 +83,7 @@ const gamingNFTs = [
   {
     id: '5',
     name: 'Ethereum Assassin #3333',
-    imageUri: 'https://via.placeholder.com/400x400/8B5CF6/FFFFFF?text=Assassin',
+    imageUri: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center',
     price: '2.8',
     paymentToken: 'sBTC',
     stats: {
@@ -101,7 +101,7 @@ const gamingNFTs = [
   {
     id: '6',
     name: 'Solana Paladin #5555',
-    imageUri: 'https://via.placeholder.com/400x400/10B981/FFFFFF?text=Paladin',
+    imageUri: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=400&fit=crop&crop=center',
     price: '3.5',
     paymentToken: 'sBTC',
     stats: {

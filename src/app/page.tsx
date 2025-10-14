@@ -18,7 +18,7 @@ const trendingNFTs: NFT[] = [
     id: 1,
     name: 'Bitcoin Genesis #1',
     description: 'The first NFT minted on Bitcoin block 840,000',
-    imageUri: 'https://via.placeholder.com/400x400/5546FF/FFFFFF?text=Bitcoin+Genesis',
+    imageUri: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=400&h=400&fit=crop&crop=center',
     price: 0.1,
     paymentToken: 'sBTC',
     creator: 'SP1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
@@ -34,7 +34,7 @@ const trendingNFTs: NFT[] = [
     id: 2,
     name: 'Stacks Pioneer #42',
     description: 'A rare NFT from the early days of Stacks',
-    imageUri: 'https://via.placeholder.com/400x400/F97316/FFFFFF?text=Stacks+Pioneer',
+    imageUri: 'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=400&h=400&fit=crop&crop=center',
     price: 150,
     paymentToken: 'STX',
     creator: 'SP1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
@@ -49,7 +49,7 @@ const trendingNFTs: NFT[] = [
     id: 3,
     name: 'Lucky Block #1000',
     description: 'Minted during Bitcoin block 840,100 - a lucky block!',
-    imageUri: 'https://via.placeholder.com/400x400/10B981/FFFFFF?text=Lucky+Block',
+    imageUri: 'https://images.unsplash.com/photo-1621761191319-c6fb62004040?w=400&h=400&fit=crop&crop=center',
     price: 0.05,
     paymentToken: 'sBTC',
     creator: 'SP1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
@@ -68,7 +68,7 @@ const gamingNFTs = [
   {
     id: '1',
     name: 'CryptoPunk Warrior #1234',
-    imageUri: 'https://via.placeholder.com/400x400/FF6B6B/FFFFFF?text=Warrior',
+    imageUri: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center',
     price: '2.5',
     paymentToken: 'sBTC',
     stats: {
@@ -86,7 +86,7 @@ const gamingNFTs = [
   {
     id: '2',
     name: 'Bored Ape Mage #5678',
-    imageUri: 'https://via.placeholder.com/400x400/4ECDC4/FFFFFF?text=Mage',
+    imageUri: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=400&fit=crop&crop=center',
     price: '1.8',
     paymentToken: 'sBTC',
     stats: {
@@ -104,7 +104,7 @@ const gamingNFTs = [
   {
     id: '3',
     name: 'Stacks Guardian #9999',
-    imageUri: 'https://via.placeholder.com/400x400/45B7D1/FFFFFF?text=Guardian',
+    imageUri: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center',
     price: '3.2',
     paymentToken: 'sBTC',
     stats: {
