@@ -11,7 +11,7 @@ const gamingNFTs = [
   {
     id: '1',
     name: 'CryptoPunk Warrior #1234',
-    imageUri: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center',
+    imageUri: 'https://images.unsplash.com/photo-1551103782-8ab07afd45c1?w=400&h=400&fit=crop&crop=center',
     price: '2.5',
     paymentToken: 'sBTC',
     stats: {
@@ -29,7 +29,7 @@ const gamingNFTs = [
   {
     id: '2',
     name: 'Bored Ape Mage #5678',
-    imageUri: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=400&fit=crop&crop=center',
+    imageUri: 'https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=400&h=400&fit=crop&crop=center',
     price: '1.8',
     paymentToken: 'sBTC',
     stats: {
@@ -47,7 +47,7 @@ const gamingNFTs = [
   {
     id: '3',
     name: 'Stacks Guardian #9999',
-    imageUri: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center',
+    imageUri: 'https://images.unsplash.com/photo-1614732484003-ef9881555dc3?w=400&h=400&fit=crop&crop=center',
     price: '3.2',
     paymentToken: 'sBTC',
     stats: {
@@ -65,7 +65,7 @@ const gamingNFTs = [
   {
     id: '4',
     name: 'Bitcoin Berserker #7777',
-    imageUri: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=400&fit=crop&crop=center',
+    imageUri: 'https://images.unsplash.com/photo-1614732489823-cf610c62399c?w=400&h=400&fit=crop&crop=center',
     price: '4.1',
     paymentToken: 'sBTC',
     stats: {
@@ -83,7 +83,7 @@ const gamingNFTs = [
   {
     id: '5',
     name: 'Ethereum Assassin #3333',
-    imageUri: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center',
+    imageUri: 'https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=400&h=400&fit=crop&crop=center',
     price: '2.8',
     paymentToken: 'sBTC',
     stats: {
@@ -101,7 +101,7 @@ const gamingNFTs = [
   {
     id: '6',
     name: 'Solana Paladin #5555',
-    imageUri: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=400&fit=crop&crop=center',
+    imageUri: 'https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=400&h=400&fit=crop&crop=center',
     price: '3.5',
     paymentToken: 'sBTC',
     stats: {

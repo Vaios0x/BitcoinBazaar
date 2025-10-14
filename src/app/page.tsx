@@ -68,7 +68,7 @@ const gamingNFTs = [
   {
     id: '1',
     name: 'CryptoPunk Warrior #1234',
-    imageUri: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center',
+    imageUri: 'https://images.unsplash.com/photo-1551103782-8ab07afd45c1?w=400&h=400&fit=crop&crop=center',
     price: '2.5',
     paymentToken: 'sBTC',
     stats: {
@@ -86,7 +86,7 @@ const gamingNFTs = [
   {
     id: '2',
     name: 'Bored Ape Mage #5678',
-    imageUri: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=400&fit=crop&crop=center',
+    imageUri: 'https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=400&h=400&fit=crop&crop=center',
     price: '1.8',
     paymentToken: 'sBTC',
     stats: {
@@ -104,7 +104,7 @@ const gamingNFTs = [
   {
     id: '3',
     name: 'Stacks Guardian #9999',
-    imageUri: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center',
+    imageUri: 'https://images.unsplash.com/photo-1614732484003-ef9881555dc3?w=400&h=400&fit=crop&crop=center',
     price: '3.2',
     paymentToken: 'sBTC',
     stats: {
