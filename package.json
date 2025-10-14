@@ -1,0 +1,50 @@
+{
+  "name": "bitcoin-bazaar",
+  "version": "1.0.0",
+  "description": "The first Bitcoin-native NFT marketplace",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "clarinet test",
+    "deploy": "clarinet deploy --testnet"
+  },
+  "dependencies": {
+    "@stacks/auth": "^7.2.0",
+    "@stacks/common": "^7.0.2",
+    "@stacks/connect": "^7.10.2",
+    "@stacks/network": "^7.2.0",
+    "@stacks/stacking": "^7.2.0",
+    "@stacks/transactions": "^7.2.0",
+    "autoprefixer": "^10.4.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "framer-motion": "^11.0.0",
+    "lucide-react": "^0.300.0",
+    "next": "15.0.2",
+    "postcss": "^8.4.0",
+    "react": "^18.2.0",
+    "react-confetti": "^6.4.0",
+    "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.6.0",
+    "sonner": "^1.0.0",
+    "tailwind-merge": "^2.0.0",
+    "tailwindcss": "^3.4.0",
+    "three": "^0.160.0",
+    "zustand": "^5.0.8"
+  },
+  "devDependencies": {
+    "@types/bn.js": "^5.2.0",
+    "@types/json5": "^0.0.30",
+    "@types/node": "^20.19.21",
+    "@types/prop-types": "^15.7.15",
+    "@types/react": "^18.3.26",
+    "@types/react-dom": "^18.3.7",
+    "@types/three": "^0.180.0",
+    "eslint": "^8.0.0",
+    "eslint-config-next": "15.0.2",
+    "typescript": "^5.0.0"
+  }
+}

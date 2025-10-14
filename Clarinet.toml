@@ -1,0 +1,46 @@
+[project]
+name = "bitcoin-bazaar"
+authors = ["Vaios0x"]
+description = "The first Bitcoin-native NFT marketplace"
+telemetry = false
+cache_dir = ".cache"
+
+[contracts.nft-core]
+path = "contracts/nft-core.clar"
+clarity_version = 2
+
+[contracts.marketplace-core]
+path = "contracts/marketplace-core.clar"
+clarity_version = 2
+
+[contracts.bitcoin-oracle]
+path = "contracts/bitcoin-oracle.clar"
+clarity_version = 2
+
+[contracts.auction]
+path = "contracts/auction.clar"
+clarity_version = 2
+
+[contracts.lazy-mint]
+path = "contracts/lazy-mint.clar"
+clarity_version = 2
+
+[contracts.analytics]
+path = "contracts/analytics.clar"
+clarity_version = 2
+
+[contracts.governance]
+path = "contracts/governance.clar"
+clarity_version = 2
+
+[contracts.escrow]
+path = "contracts/escrow.clar"
+clarity_version = 2
+
+[contracts.rewards]
+path = "contracts/rewards.clar"
+clarity_version = 2
+
+[repl]
+costs_version = 2
+parser_version = 2

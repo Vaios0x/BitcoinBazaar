@@ -1,0 +1,211 @@
+;; BitcoinBazaar Rewards Contract
+;; Loyalty program and gamification
+
+;; Error codes
+(define-constant err-insufficient-points (err u700))
+(define-constant err-reward-not-found (err u701))
+(define-constant err-already-claimed (err u702))
+
+;; Reward points token
+(define-fungible-token reward-points)
+
+;; User rewards
+(define-map user-rewards
+  { user: principal }
+  {
+    total-points: uint,
+    level: uint,
+    streak-days: uint,
+    last-activity-block: uint,
+    referral-count: uint,
+    total-earned: uint
+  }
+)
+
+;; Reward tiers
+(define-map reward-tiers
+  { level: uint }
+  {
+    name: (string-ascii 50),
+    min-points: uint,
+    multiplier: uint,
+    benefits: (list 10 (string-ascii 100))
+  }
+)
+
+;; Activity rewards
+(define-map activity-rewards
+  { activity-type: (string-ascii 20) }
+  { points: uint, cooldown-blocks: uint }
+)
+
+;; Data variables
+(define-data-var total-points-minted uint u0)
+(define-data-var daily-streak-bonus uint u10) ;; 10% bonus for daily activity
+
+;; Claim activity reward
+(define-public (claim-activity-reward (activity-type (string-ascii 20)))
+  (begin
+    (let ((points (get-activity-points activity-type)))
+      (try! (ft-mint? reward-points points tx-sender))
+      
+      ;; Update user stats
+      (update-user-rewards activity-type)
+      
+      ;; Update total points
+      (var-set total-points-minted (+ (var-get total-points-minted) points))
+      
+      (ok points)
+    )
+  )
+)
+
+;; Get activity points
+(define-read-only (get-activity-points (activity-type (string-ascii 20)))
+  (if (is-eq activity-type "mint")
+    u100
+    (if (is-eq activity-type "buy")
+      u50
+      (if (is-eq activity-type "sell")
+        u75
+        (if (is-eq activity-type "auction")
+          u25
+          (if (is-eq activity-type "referral")
+            u200
+            u0
+          )
+        )
+      )
+    )
+  )
+)
+
+;; Update user rewards
+(define-private (update-user-rewards (activity-type (string-ascii 20)))
+  (let ((current-rewards (default-to 
+    {
+      total-points: u0,
+      level: u1,
+      streak-days: u0,
+      last-activity-block: u0,
+      referral-count: u0,
+      total-earned: u0
+    }
+    (map-get? user-rewards {user: tx-sender})
+  )))
+    (let ((points-earned (get-activity-points activity-type))
+          (streak-bonus (if (is-daily-activity) (var-get daily-streak-bonus) u0))
+          (total-points-earned (+ points-earned (/ (* points-earned streak-bonus) u100))))
+      
+      (map-set user-rewards {user: tx-sender}
+        (merge current-rewards {
+          total-points: (+ (get total-points current-rewards) total-points-earned),
+          level: (calculate-level (+ (get total-points current-rewards) total-points-earned)),
+          streak-days: (if (is-daily-activity) (+ (get streak-days current-rewards) u1) u1),
+          last-activity-block: burn-block-height,
+          total-earned: (+ (get total-earned current-rewards) total-points-earned)
+        })
+      )
+    )
+  )
+)
+
+;; Check if daily activity
+(define-private (is-daily-activity)
+  (let ((current-rewards (map-get? user-rewards {user: tx-sender})))
+    (if (is-some current-rewards)
+      (let ((last-activity (get last-activity-block (unwrap-panic current-rewards))))
+        (<= (- burn-block-height last-activity) u144) ;; 144 blocks = ~24 hours
+      )
+      true
+    )
+  )
+)
+
+;; Calculate user level
+(define-private (calculate-level (total-points uint))
+  (if (>= total-points u10000)
+    u5 ;; Diamond
+    (if (>= total-points u5000)
+      u4 ;; Platinum
+      (if (>= total-points u2000)
+        u3 ;; Gold
+        (if (>= total-points u1000)
+          u2 ;; Silver
+          u1 ;; Bronze
+        )
+      )
+    )
+  )
+)
+
+;; Get user rewards
+(define-read-only (get-user-rewards (user principal))
+  (ok (map-get? user-rewards {user: user}))
+)
+
+;; Get user level
+(define-read-only (get-user-level (user principal))
+  (let ((rewards (map-get? user-rewards {user: user})))
+    (if (is-some rewards)
+      (ok (get level (unwrap-panic rewards)))
+      (ok u1)
+    )
+  )
+)
+
+;; Get total points
+(define-read-only (get-total-points (user principal))
+  (let ((rewards (map-get? user-rewards {user: user})))
+    (if (is-some rewards)
+      (ok (get total-points (unwrap-panic rewards)))
+      (ok u0)
+    )
+  )
+)
+
+;; Get streak days
+(define-read-only (get-streak-days (user principal))
+  (let ((rewards (map-get? user-rewards {user: user})))
+    (if (is-some rewards)
+      (ok (get streak-days (unwrap-panic rewards)))
+      (ok u0)
+    )
+  )
+)
+
+;; Set reward tier
+(define-public (set-reward-tier (level uint) (name (string-ascii 50)) (min-points uint) (multiplier uint) (benefits (list 10 (string-ascii 100))))
+  (begin
+    (map-set reward-tiers {level: level}
+      {
+        name: name,
+        min-points: min-points,
+        multiplier: multiplier,
+        benefits: benefits
+      }
+    )
+    (ok true)
+  )
+)
+
+;; Get reward tier
+(define-read-only (get-reward-tier (level uint))
+  (ok (map-get? reward-tiers {level: level}))
+)
+
+;; Get global stats
+(define-read-only (get-global-stats)
+  (ok {
+    total-points-minted: (var-get total-points-minted),
+    daily-streak-bonus: (var-get daily-streak-bonus)
+  })
+)
+
+;; Set daily streak bonus
+(define-public (set-daily-streak-bonus (bonus-percent uint))
+  (begin
+    (var-set daily-streak-bonus bonus-percent)
+    (ok true)
+  )
+)
