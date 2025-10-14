@@ -6,6 +6,7 @@ import { Footer } from '@/components/layout/Footer'
 import { NeuralBackground } from '@/components/effects/NeuralBackground'
 import { WalletProvider } from '@/components/providers/WalletProvider'
 import { Toaster } from 'react-hot-toast'
+import { ChatbotProvider } from '@/components/providers/ChatbotProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -36,14 +37,16 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={`${inter.className} bg-neural-background text-white antialiased`}>
         <WalletProvider>
-          <div className="min-h-screen flex flex-col">
-            <NeuralBackground />
-            <Navbar />
-            <main className="flex-1 relative z-10">
-              {children}
-            </main>
-            <Footer />
-          </div>
+          <ChatbotProvider>
+            <div className="min-h-screen flex flex-col">
+              <NeuralBackground />
+              <Navbar />
+              <main className="flex-1 relative z-10">
+                {children}
+              </main>
+              <Footer />
+            </div>
+          </ChatbotProvider>
           <Toaster
             position="bottom-right"
             toastOptions={{
