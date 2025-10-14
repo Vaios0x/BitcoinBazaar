@@ -8,7 +8,7 @@ import { NFTGrid } from '@/components/nft/NFTGrid'
 import { BitcoinOrb } from '@/components/effects/BitcoinOrb'
 import { GamingNFTCard } from '@/components/gaming/GamingNFTCard'
 import { DeFiDashboard } from '@/components/defi/DeFiDashboard'
-import { useWallet } from '@/lib/hooks/useWallet'
+import { useWalletStore } from '@/lib/stores/walletStore'
 import { useBitcoinPrice } from '@/lib/hooks/useBitcoinPrice'
 import type { NFT } from '@/types/nft'
 
@@ -130,7 +130,7 @@ const stats = [
 
 export default function HomePage() {
   const [isLoading, setIsLoading] = React.useState(true)
-  const { isConnected } = useWallet()
+  const { isConnected } = useWalletStore()
   const { currentBlock, isDynamicPricing } = useBitcoinPrice(1)
 
   React.useEffect(() => {

@@ -3,7 +3,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Upload, Image, DollarSign, Percent, Hash, Zap, Info } from 'lucide-react'
-import { useWallet } from '@/lib/hooks/useWallet'
+import { useWalletStore } from '@/lib/stores/walletStore'
 
 export default function CreatePage() {
   const [formData, setFormData] = React.useState({
@@ -18,7 +18,7 @@ export default function CreatePage() {
   })
   const [isUploading, setIsUploading] = React.useState(false)
   const [isCreating, setIsCreating] = React.useState(false)
-  const { isConnected } = useWallet()
+  const { isConnected } = useWalletStore()
 
   const handleInputChange = (e: any) => {
     const { name, value, type } = e.target

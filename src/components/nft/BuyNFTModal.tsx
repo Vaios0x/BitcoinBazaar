@@ -3,7 +3,7 @@
 import React from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Zap, TrendingDown, Info, Loader2 } from 'lucide-react'
-import { useWallet } from '@/lib/hooks/useWallet'
+import { useWalletStore } from '@/lib/stores/walletStore'
 import { useBitcoinPrice } from '@/lib/hooks/useBitcoinPrice'
 import type { NFT } from '@/types/nft'
 
@@ -18,7 +18,7 @@ export function BuyNFTModal({ nft, isOpen, onClose }: BuyNFTModalProps) {
   const [isProcessing, setIsProcessing] = React.useState(false)
   const [agreedToTerms, setAgreedToTerms] = React.useState(false)
   
-  const { address, balance, isConnected } = useWallet()
+  const { address, balance, isConnected } = useWalletStore()
   const { currentBlock, isDynamicPricing, discount } = useBitcoinPrice(nft.id)
 
   const finalPrice = isDynamicPricing ? nft.price * (1 - discount / 100) : nft.price
