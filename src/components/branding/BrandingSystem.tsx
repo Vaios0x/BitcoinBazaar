@@ -1,6 +1,6 @@
 'use client'
 
-import React, { ReactNode } from 'react'
+import React from 'react'
 import { motion } from 'framer-motion'
 
 // Premium Branding System Component
@@ -29,7 +29,7 @@ export const BrandingSystem = () => {
 interface PremiumButtonProps {
   variant: 'bitcoin' | 'stacks' | 'holographic' | 'cyber' | 'neural'
   size: 'sm' | 'md' | 'lg' | 'xl'
-  children: ReactNode
+  children: React.ReactNode
   onClick?: () => void
   disabled?: boolean
   loading?: boolean
@@ -104,7 +104,7 @@ export const PremiumButton: React.FC<PremiumButtonProps> = ({
 // Premium Card Component
 interface PremiumCardProps {
   variant: 'default' | 'premium' | 'bitcoin' | 'stacks' | 'holographic' | 'cyber' | 'neural'
-  children: ReactNode
+  children: React.ReactNode
   hover?: boolean
   glow?: boolean
   className?: string
@@ -165,7 +165,7 @@ export const PremiumCard: React.FC<PremiumCardProps> = ({
 interface PremiumTextProps {
   variant: 'gradient' | 'bitcoin' | 'stacks' | 'holographic' | 'cyber' | 'neural'
   size: 'xs' | 'sm' | 'base' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl' | '7xl' | '8xl'
-  children: ReactNode
+  children: React.ReactNode
   className?: string
 }
 
@@ -335,7 +335,7 @@ export const PremiumLoading: React.FC<PremiumLoadingProps> = ({
 // Premium Badge Component
 interface PremiumBadgeProps {
   variant: 'success' | 'warning' | 'error' | 'info' | 'bitcoin' | 'stacks' | 'holographic'
-  children: ReactNode
+  children: React.ReactNode
   className?: string
 }
 
@@ -425,7 +425,7 @@ export const PremiumProgress: React.FC<PremiumProgressProps> = ({
 interface PremiumModalProps {
   isOpen: boolean
   onClose: () => void
-  children: ReactNode
+  children: React.ReactNode
   variant?: 'default' | 'premium' | 'bitcoin' | 'stacks' | 'holographic'
   size?: 'sm' | 'md' | 'lg' | 'xl' | 'full'
   className?: string
