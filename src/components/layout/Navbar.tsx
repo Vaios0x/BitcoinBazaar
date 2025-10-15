@@ -132,7 +132,7 @@ export function Navbar() {
           </div>
           
           {/* Create Button - Desktop */}
-          <div className="hidden lg:block">
+          <div className="hidden lg:block ml-6 xl:ml-8">
             <Link 
               href="/create" 
               className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white font-semibold rounded-full hover:from-bitcoin-600 hover:to-stacks-600 transition-all duration-300 transform hover:scale-105 bitcoin-glow group"
