@@ -2,344 +2,295 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
-import { TrendingUp, TrendingDown, Users, Coins, Star, Zap, Activity } from 'lucide-react'
+import { TrendingUp, TrendingDown, Users, Activity, DollarSign, BarChart3, PieChart, LineChart } from 'lucide-react'
 import { BitcoinSymbols } from '@/components/effects/BitcoinSymbols'
 
-// Mock analytics data
-const stats = {
-  totalVolume: { stx: 125000, sbtc: 2.4, usd: 60000 },
-  totalSales: 1234,
-  activeUsers: 567,
-  totalCollections: 89,
-  floorPrice: { stx: 45, sbtc: 0.08 },
-  averagePrice: { stx: 78, sbtc: 0.12 }
+// Mock stats data
+const marketStats = {
+  totalVolume: 45.2,
+  volumeChange: 12.5,
+  totalSales: 1247,
+  salesChange: 8.3,
+  averagePrice: 0.036,
+  priceChange: -2.1,
+  activeUsers: 3421,
+  usersChange: 15.7
 }
 
-const trendingCollections = [
-  { id: 1, name: 'Bitcoin Genesis', volume: 2.1, change: 15.2, isPositive: true },
-  { id: 2, name: 'Stacks Pioneers', volume: 1.8, change: -5.3, isPositive: false },
-  { id: 3, name: 'Lucky Blocks', volume: 1.5, change: 22.1, isPositive: true },
-  { id: 4, name: 'Diamond Hands', volume: 1.2, change: 8.7, isPositive: true },
-  { id: 5, name: 'Halving Heroes', volume: 0.9, change: -2.1, isPositive: false }
+const topCollections = [
+  { name: 'Bitcoin Genesis Collection', volume: 12.4, change: 8.2, floorPrice: 0.15 },
+  { name: 'Stacks Pioneers', volume: 8.7, change: -3.1, floorPrice: 0.08 },
+  { name: 'Halving Heroes', volume: 6.2, change: 15.3, floorPrice: 0.12 },
+  { name: 'Diamond Hands', volume: 4.8, change: 22.1, floorPrice: 0.09 },
+  { name: 'Lucky Blocks', volume: 3.9, change: -5.7, floorPrice: 0.06 }
 ]
 
 const recentActivity = [
-  { type: 'sale', nft: 'Bitcoin Genesis #1', price: 0.15, token: 'sBTC', time: '2m ago' },
-  { type: 'bid', nft: 'Stacks Pioneer #42', price: 120, token: 'STX', time: '5m ago' },
-  { type: 'sale', nft: 'Lucky Block #1000', price: 0.08, token: 'sBTC', time: '8m ago' },
-  { type: 'mint', nft: 'Diamond Hands #69', price: 0.2, token: 'sBTC', time: '12m ago' },
-  { type: 'sale', nft: 'Halving Hero #2024', price: 0.3, token: 'sBTC', time: '15m ago' }
+  { type: 'sale', nft: 'Genesis Block #1', price: 2.5, time: '2m ago', user: '0x1234...5678' },
+  { type: 'bid', nft: 'Satoshi Transaction', price: 1.8, time: '5m ago', user: '0x9876...5432' },
+  { type: 'sale', nft: 'Bitcoin Pizza Day', price: 0.8, time: '12m ago', user: '0x4567...8901' },
+  { type: 'bid', nft: 'Halving Event #1', price: 3.2, time: '18m ago', user: '0x2345...6789' },
+  { type: 'sale', nft: 'Mt. Gox Era', price: 1.2, time: '25m ago', user: '0x7890...1234' }
+]
+
+const priceHistory = [
+  { date: '2024-01-01', price: 0.025 },
+  { date: '2024-01-02', price: 0.028 },
+  { date: '2024-01-03', price: 0.031 },
+  { date: '2024-01-04', price: 0.029 },
+  { date: '2024-01-05', price: 0.033 },
+  { date: '2024-01-06', price: 0.036 },
+  { date: '2024-01-07', price: 0.034 }
 ]
 
 export default function StatsPage() {
-  const [timeRange, setTimeRange] = React.useState('24h')
-  const [bitcoinBlock, setBitcoinBlock] = React.useState(840000)
-
-  React.useEffect(() => {
-    // Simulate Bitcoin block updates
-    const interval = setInterval(() => {
-      setBitcoinBlock((prev: number) => prev + 1)
-    }, 60000) // Update every minute
-
-    return () => clearInterval(interval)
-  }, [])
+  const [timeRange, setTimeRange] = React.useState('7d')
+  const [selectedMetric, setSelectedMetric] = React.useState('volume')
 
   return (
     <div className="min-h-screen relative">
       {/* Bitcoin Symbols Animation Background */}
       <BitcoinSymbols />
       
-      {/* Hero Section */}
-      <section className="relative -mt-[28rem] pt-0 pb-20 px-4 sm:px-6 lg:px-8">
+      {/* Hero Section - Enhanced Responsive */}
+      <section className="relative -mt-[20rem] sm:-mt-[24rem] lg:-mt-[28rem] pt-0 pb-12 sm:pb-16 lg:pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto relative z-10">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
-        >
-          <h1 className="text-4xl lg:text-6xl font-bold mb-4">
-            Marketplace <span className="gradient-text">Analytics</span>
-          </h1>
-          <p className="text-xl text-gray-300 max-w-3xl">
-            Real-time insights into BitcoinBazaar's activity. Track volume, trends, and Bitcoin-native metrics.
-          </p>
-        </motion.div>
-
-        {/* Bitcoin Block Info */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="mb-8"
-        >
-          <div className="glass-card rounded-2xl p-6">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-bitcoin-500 to-orange-600 rounded-full flex items-center justify-center">
-                  <span className="text-white text-xl font-bold">₿</span>
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-white">Current Bitcoin Block</h3>
-                  <p className="text-2xl font-bold text-bitcoin-500">#{bitcoinBlock.toLocaleString()}</p>
-                </div>
-              </div>
-              <div className="text-right">
-                <p className="text-sm text-gray-400">Lucky Block Status</p>
-                <div className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                  bitcoinBlock % 100 === 0 
-                    ? 'bg-green-500/20 text-green-400' 
-                    : 'bg-gray-500/20 text-gray-400'
-                }`}>
-                  {bitcoinBlock % 100 === 0 ? 'Lucky Block Active!' : 'Normal Block'}
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Time Range Selector */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="mb-8"
-        >
-          <div className="flex space-x-2">
-            {['24h', '7d', '30d', 'All'].map((range) => (
-              <button
-                key={range}
-                onClick={() => setTimeRange(range)}
-                className={`px-4 py-2 rounded-xl font-semibold transition-all ${
-                  timeRange === range
-                    ? 'bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white'
-                    : 'glass-card text-gray-400 hover:text-white'
-                }`}
-              >
-                {range}
-              </button>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Key Metrics */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
-        >
-          {[
-            { 
-              label: 'Total Volume', 
-              value: `$${stats.totalVolume.usd.toLocaleString()}`, 
-              change: '+12.5%',
-              isPositive: true,
-              icon: TrendingUp,
-              color: 'text-green-400'
-            },
-            { 
-              label: 'Total Sales', 
-              value: stats.totalSales.toLocaleString(), 
-              change: '+8.2%',
-              isPositive: true,
-              icon: Coins,
-              color: 'text-stacks-500'
-            },
-            { 
-              label: 'Active Users', 
-              value: stats.activeUsers.toLocaleString(), 
-              change: '+15.3%',
-              isPositive: true,
-              icon: Users,
-              color: 'text-purple-400'
-            },
-            { 
-              label: 'Collections', 
-              value: stats.totalCollections.toString(), 
-              change: '+3.1%',
-              isPositive: true,
-              icon: Star,
-              color: 'text-yellow-400'
-            }
-          ].map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 + index * 0.1 }}
-              className="glass-card p-6 rounded-2xl"
-            >
-              <div className="flex items-center justify-between mb-4">
-                <stat.icon className={`w-8 h-8 ${stat.color}`} />
-                <div className={`flex items-center space-x-1 text-sm font-semibold ${
-                  stat.isPositive ? 'text-green-400' : 'text-red-400'
-                }`}>
-                  {stat.isPositive ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
-                  <span>{stat.change}</span>
-                </div>
-              </div>
-              <div>
-                <p className="text-3xl font-bold text-white mb-1">{stat.value}</p>
-                <p className="text-sm text-gray-400">{stat.label}</p>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Volume Breakdown */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8"
-        >
-          {/* Volume by Token */}
-          <div className="glass-card p-6 rounded-2xl">
-            <h3 className="text-xl font-bold text-white mb-6">Volume by Token</h3>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-gradient-to-br from-bitcoin-500 to-orange-600 rounded-full flex items-center justify-center">
-                    <span className="text-white text-sm font-bold">₿</span>
-                  </div>
-                  <span className="text-white font-semibold">sBTC</span>
-                </div>
-                <div className="text-right">
-                  <p className="text-lg font-bold text-white">{stats.totalVolume.sbtc} sBTC</p>
-                  <p className="text-sm text-gray-400">${(stats.totalVolume.sbtc * 25000).toLocaleString()}</p>
-                </div>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-gradient-to-br from-stacks-500 to-purple-600 rounded-full flex items-center justify-center">
-                    <span className="text-white text-sm font-bold">S</span>
-                  </div>
-                  <span className="text-white font-semibold">STX</span>
-                </div>
-                <div className="text-right">
-                  <p className="text-lg font-bold text-white">{stats.totalVolume.stx.toLocaleString()} STX</p>
-                  <p className="text-sm text-gray-400">${(stats.totalVolume.stx * 0.48).toLocaleString()}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Floor Prices */}
-          <div className="glass-card p-6 rounded-2xl">
-            <h3 className="text-xl font-bold text-white mb-6">Floor Prices</h3>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-gradient-to-br from-bitcoin-500 to-orange-600 rounded-full flex items-center justify-center">
-                    <span className="text-white text-sm font-bold">₿</span>
-                  </div>
-                  <span className="text-white font-semibold">sBTC Floor</span>
-                </div>
-                <p className="text-lg font-bold text-white">{stats.floorPrice.sbtc} sBTC</p>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-gradient-to-br from-stacks-500 to-purple-600 rounded-full flex items-center justify-center">
-                    <span className="text-white text-sm font-bold">S</span>
-                  </div>
-                  <span className="text-white font-semibold">STX Floor</span>
-                </div>
-                <p className="text-lg font-bold text-white">{stats.floorPrice.stx} STX</p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Trending Collections */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8"
-        >
-          <div className="glass-card p-6 rounded-2xl">
-            <h3 className="text-xl font-bold text-white mb-6">Trending Collections</h3>
-            <div className="space-y-4">
-              {trendingCollections.map((collection, index) => (
-                <div key={collection.id} className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <span className="text-lg font-bold text-gray-400">#{index + 1}</span>
-                    <div>
-                      <p className="text-white font-semibold">{collection.name}</p>
-                      <p className="text-sm text-gray-400">{collection.volume} sBTC volume</p>
-                    </div>
-                  </div>
-                  <div className={`flex items-center space-x-1 text-sm font-semibold ${
-                    collection.isPositive ? 'text-green-400' : 'text-red-400'
-                  }`}>
-                    {collection.isPositive ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
-                    <span>{collection.change}%</span>
-                  </div>
-                </div>
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12 sm:mb-16"
+          >
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6">
+              Market <span className="gradient-text">Analytics</span>
+            </h1>
+            <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto mb-6 sm:mb-8">
+              Real-time insights into BitcoinBazaar's activity. Track volume, trends, 
+              and Bitcoin-native metrics.
+            </p>
+            
+            {/* Time Range Selector */}
+            <div className="flex justify-center gap-2 sm:gap-3">
+              {['24h', '7d', '30d', '90d'].map((range) => (
+                <button
+                  key={range}
+                  onClick={() => setTimeRange(range)}
+                  className={`px-3 sm:px-4 py-2 rounded-lg text-sm sm:text-base font-medium transition-all ${
+                    timeRange === range
+                      ? 'bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white'
+                      : 'glass-card text-gray-300 hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  {range}
+                </button>
               ))}
             </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Main Stats Grid - Enhanced Responsive */}
+      <section className="pt-6 sm:pt-8 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-12"
+          >
+            {/* Total Volume */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="glass-card p-4 sm:p-6 rounded-2xl"
+            >
+              <div className="flex items-center justify-between mb-3">
+                <DollarSign className="w-6 h-6 sm:w-8 sm:h-8 text-bitcoin-500" />
+                {marketStats.volumeChange > 0 ? (
+                  <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
+                ) : (
+                  <TrendingDown className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
+                )}
+              </div>
+              <div className="text-2xl sm:text-3xl font-bold text-white mb-1">
+                {marketStats.totalVolume} sBTC
+              </div>
+              <div className="text-sm text-gray-400 mb-1">Total Volume</div>
+              <div className={`text-xs font-semibold ${
+                marketStats.volumeChange > 0 ? 'text-green-400' : 'text-red-400'
+              }`}>
+                {marketStats.volumeChange > 0 ? '+' : ''}{marketStats.volumeChange}%
+              </div>
+            </motion.div>
+
+            {/* Total Sales */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="glass-card p-4 sm:p-6 rounded-2xl"
+            >
+              <div className="flex items-center justify-between mb-3">
+                <Activity className="w-6 h-6 sm:w-8 sm:h-8 text-stacks-500" />
+                {marketStats.salesChange > 0 ? (
+                  <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
+                ) : (
+                  <TrendingDown className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
+                )}
+              </div>
+              <div className="text-2xl sm:text-3xl font-bold text-white mb-1">
+                {marketStats.totalSales.toLocaleString()}
+              </div>
+              <div className="text-sm text-gray-400 mb-1">Total Sales</div>
+              <div className={`text-xs font-semibold ${
+                marketStats.salesChange > 0 ? 'text-green-400' : 'text-red-400'
+              }`}>
+                {marketStats.salesChange > 0 ? '+' : ''}{marketStats.salesChange}%
+              </div>
+            </motion.div>
+
+            {/* Average Price */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="glass-card p-4 sm:p-6 rounded-2xl"
+            >
+              <div className="flex items-center justify-between mb-3">
+                <BarChart3 className="w-6 h-6 sm:w-8 sm:h-8 text-purple-500" />
+                {marketStats.priceChange > 0 ? (
+                  <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
+                ) : (
+                  <TrendingDown className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
+                )}
+              </div>
+              <div className="text-2xl sm:text-3xl font-bold text-white mb-1">
+                {marketStats.averagePrice} sBTC
+              </div>
+              <div className="text-sm text-gray-400 mb-1">Average Price</div>
+              <div className={`text-xs font-semibold ${
+                marketStats.priceChange > 0 ? 'text-green-400' : 'text-red-400'
+              }`}>
+                {marketStats.priceChange > 0 ? '+' : ''}{marketStats.priceChange}%
+              </div>
+            </motion.div>
+
+            {/* Active Users */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="glass-card p-4 sm:p-6 rounded-2xl"
+            >
+              <div className="flex items-center justify-between mb-3">
+                <Users className="w-6 h-6 sm:w-8 sm:h-8 text-blue-500" />
+                {marketStats.usersChange > 0 ? (
+                  <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
+                ) : (
+                  <TrendingDown className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
+                )}
+              </div>
+              <div className="text-2xl sm:text-3xl font-bold text-white mb-1">
+                {marketStats.activeUsers.toLocaleString()}
+              </div>
+              <div className="text-sm text-gray-400 mb-1">Active Users</div>
+              <div className={`text-xs font-semibold ${
+                marketStats.usersChange > 0 ? 'text-green-400' : 'text-red-400'
+              }`}>
+                {marketStats.usersChange > 0 ? '+' : ''}{marketStats.usersChange}%
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* Charts and Data Sections */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-12">
+            {/* Price Chart */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="glass-card p-4 sm:p-6 rounded-2xl"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg sm:text-xl font-bold text-white">Price History</h3>
+                <LineChart className="w-5 h-5 sm:w-6 sm:h-6 text-stacks-500" />
+              </div>
+              <div className="h-48 bg-gradient-to-r from-bitcoin-500/20 to-stacks-500/20 rounded-lg flex items-center justify-center">
+                <div className="text-center">
+                  <div className="text-2xl sm:text-3xl font-bold text-white mb-2">
+                    {marketStats.averagePrice} sBTC
+                  </div>
+                  <div className="text-sm text-gray-400">Average Price (7d)</div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Top Collections */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 }}
+              className="glass-card p-4 sm:p-6 rounded-2xl"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg sm:text-xl font-bold text-white">Top Collections</h3>
+                <PieChart className="w-5 h-5 sm:w-6 sm:h-6 text-stacks-500" />
+              </div>
+              <div className="space-y-3">
+                {topCollections.map((collection, index) => (
+                  <div key={index} className="flex items-center justify-between p-3 glass-card rounded-lg">
+                    <div>
+                      <div className="text-sm sm:text-base font-semibold text-white">{collection.name}</div>
+                      <div className="text-xs text-gray-400">Floor: {collection.floorPrice} sBTC</div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-sm sm:text-base font-bold text-bitcoin-500">{collection.volume} sBTC</div>
+                      <div className={`text-xs font-semibold ${
+                        collection.change > 0 ? 'text-green-400' : 'text-red-400'
+                      }`}>
+                        {collection.change > 0 ? '+' : ''}{collection.change}%
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
           </div>
 
           {/* Recent Activity */}
-          <div className="glass-card p-6 rounded-2xl">
-            <h3 className="text-xl font-bold text-white mb-6">Recent Activity</h3>
-            <div className="space-y-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8 }}
+            className="glass-card p-4 sm:p-6 rounded-2xl"
+          >
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg sm:text-xl font-bold text-white">Recent Activity</h3>
+              <Activity className="w-5 h-5 sm:w-6 sm:h-6 text-stacks-500" />
+            </div>
+            <div className="space-y-3">
               {recentActivity.map((activity, index) => (
-                <div key={index} className="flex items-center justify-between">
+                <div key={index} className="flex items-center justify-between p-3 glass-card rounded-lg">
                   <div className="flex items-center space-x-3">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                      activity.type === 'sale' ? 'bg-green-500/20' :
-                      activity.type === 'bid' ? 'bg-blue-500/20' :
-                      'bg-purple-500/20'
-                    }`}>
-                      {activity.type === 'sale' ? <Coins className="w-4 h-4 text-green-400" /> :
-                       activity.type === 'bid' ? <TrendingUp className="w-4 h-4 text-blue-400" /> :
-                       <Zap className="w-4 h-4 text-purple-400" />}
-                    </div>
+                    <div className={`w-2 h-2 rounded-full ${
+                      activity.type === 'sale' ? 'bg-green-400' : 'bg-blue-400'
+                    }`} />
                     <div>
-                      <p className="text-white font-semibold">{activity.nft}</p>
-                      <p className="text-sm text-gray-400">{activity.time}</p>
+                      <div className="text-sm sm:text-base font-semibold text-white">{activity.nft}</div>
+                      <div className="text-xs text-gray-400">{activity.user} • {activity.time}</div>
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-white font-semibold">
-                      {activity.price} {activity.token}
-                    </p>
-                    <p className="text-sm text-gray-400 capitalize">{activity.type}</p>
+                    <div className="text-sm sm:text-base font-bold text-bitcoin-500">
+                      {activity.price} sBTC
+                    </div>
+                    <div className="text-xs text-gray-400 capitalize">{activity.type}</div>
                   </div>
                 </div>
               ))}
             </div>
-          </div>
-        </motion.div>
-
-        {/* Bitcoin Integration Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7 }}
-          className="glass-card p-6 rounded-2xl"
-        >
-          <h3 className="text-xl font-bold text-white mb-6 flex items-center space-x-2">
-            <Zap className="w-6 h-6 text-bitcoin-500" />
-            <span>Bitcoin Integration Stats</span>
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="text-center">
-              <p className="text-3xl font-bold text-bitcoin-500 mb-2">47</p>
-              <p className="text-sm text-gray-400">NFTs minted during lucky blocks</p>
-            </div>
-            <div className="text-center">
-              <p className="text-3xl font-bold text-bitcoin-500 mb-2">12.3%</p>
-              <p className="text-sm text-gray-400">Average discount from dynamic pricing</p>
-            </div>
-            <div className="text-center">
-              <p className="text-3xl font-bold text-bitcoin-500 mb-2">156</p>
-              <p className="text-sm text-gray-400">Bitcoin blocks with special events</p>
-            </div>
-          </div>
-        </motion.div>
+          </motion.div>
         </div>
       </section>
     </div>

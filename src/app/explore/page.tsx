@@ -160,23 +160,23 @@ export default function ExplorePage() {
   })
 
   return (
-    <div className="min-h-screen -mt-[28rem] pt-0 pb-8 px-4 sm:px-6 lg:px-8 relative">
+    <div className="min-h-screen -mt-[20rem] sm:-mt-[24rem] lg:-mt-[28rem] pt-0 pb-8 px-4 sm:px-6 lg:px-8 relative">
       {/* Bitcoin Symbols Animation Background */}
       <BitcoinSymbols />
       
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Header */}
+        {/* Header - Enhanced Responsive */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
+          className="mb-6 sm:mb-8"
         >
-          <h1 className="text-4xl lg:text-6xl font-bold mb-4 relative">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-4 relative">
             Explore <span className="gradient-text relative">
               NFTs
               {/* Floating Bitcoin symbol near the text */}
               <motion.span
-                className="absolute -top-4 -right-4 text-bitcoin-500 text-2xl"
+                className="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 text-bitcoin-500 text-xl sm:text-2xl"
                 animate={{
                   y: [0, -10, 0],
                   rotate: [0, 10, -10, 0],
@@ -192,61 +192,63 @@ export default function ExplorePage() {
               </motion.span>
             </span>
           </h1>
-          <p className="text-xl text-gray-300 max-w-3xl">
+          <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl">
             Discover unique NFTs powered by Bitcoin. From Bitcoin-native collections to Stacks pioneers.
           </p>
         </motion.div>
 
-        {/* Search and Filters */}
+        {/* Search and Filters - Enhanced Responsive */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="mb-8"
+          className="mb-6 sm:mb-8"
         >
           <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
-            {/* Search Bar */}
-            <div className="flex-1 max-w-md">
+            {/* Search Bar - Enhanced Responsive */}
+            <div className="flex-1 max-w-md w-full">
               <div className="relative">
                 <input
                   type="text"
                   placeholder="Search NFTs, collections, creators..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full px-4 py-3 pl-12 pr-4 glass-card text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-stacks-500 rounded-xl"
+                  className="w-full px-4 py-2 sm:py-3 pl-10 sm:pl-12 pr-4 glass-card text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-stacks-500 rounded-xl text-sm sm:text-base"
                 />
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Search className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
               </div>
             </div>
 
-            {/* Filter and View Controls */}
-            <div className="flex items-center space-x-4">
+            {/* Filter and View Controls - Enhanced Responsive */}
+            <div className="flex items-center space-x-2 sm:space-x-4 w-full lg:w-auto">
               {/* Filter Button */}
               <button
                 onClick={() => setShowFilters(!showFilters)}
-                className="flex items-center space-x-2 px-4 py-3 glass-card rounded-xl hover:bg-white/10 transition-all"
+                className="flex items-center space-x-1 sm:space-x-2 px-3 sm:px-4 py-2 sm:py-3 glass-card rounded-xl hover:bg-white/10 transition-all text-sm sm:text-base"
               >
-                <Filter className="w-5 h-5" />
-                <span>Filters</span>
+                <Filter className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span className="hidden sm:inline">Filters</span>
               </button>
 
               {/* View Mode Toggle */}
               <div className="flex glass-card rounded-xl p-1">
                 <button
                   onClick={() => setViewMode('grid')}
-                  className={`p-2 rounded-lg transition-all ${
+                  className={`p-1.5 sm:p-2 rounded-lg transition-all ${
                     viewMode === 'grid' ? 'bg-stacks-500 text-white' : 'text-gray-400 hover:text-white'
                   }`}
+                  aria-label="Grid view"
                 >
-                  <Grid className="w-5 h-5" />
+                  <Grid className="w-4 h-4 sm:w-5 sm:h-5" />
                 </button>
                 <button
                   onClick={() => setViewMode('list')}
-                  className={`p-2 rounded-lg transition-all ${
+                  className={`p-1.5 sm:p-2 rounded-lg transition-all ${
                     viewMode === 'list' ? 'bg-stacks-500 text-white' : 'text-gray-400 hover:text-white'
                   }`}
+                  aria-label="List view"
                 >
-                  <List className="w-5 h-5" />
+                  <List className="w-4 h-4 sm:w-5 sm:h-5" />
                 </button>
               </div>
 
@@ -258,22 +260,22 @@ export default function ExplorePage() {
             </div>
           </div>
 
-          {/* Filter Panel */}
+          {/* Filter Panel - Enhanced Responsive */}
           {showFilters && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="mt-4 glass-card rounded-2xl p-6"
+              className="mt-4 glass-card rounded-2xl p-4 sm:p-6"
             >
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                 {/* Payment Token Filter */}
                 <div>
                   <label className="block text-sm font-semibold text-white mb-2">Payment Token</label>
                   <select
                     value={selectedFilters.paymentToken}
                     onChange={(e) => setSelectedFilters((prev: any) => ({ ...prev, paymentToken: e.target.value }))}
-                    className="w-full px-3 py-2 glass-card rounded-lg text-white bg-transparent border border-white/10 focus:border-stacks-500 focus:outline-none"
+                    className="w-full px-3 py-2 glass-card rounded-lg text-white bg-transparent border border-white/10 focus:border-stacks-500 focus:outline-none text-sm"
                   >
                     {filterOptions.paymentToken.map(option => (
                       <option key={option} value={option} className="bg-gray-800">{option}</option>
@@ -287,7 +289,7 @@ export default function ExplorePage() {
                   <select
                     value={selectedFilters.priceRange}
                     onChange={(e) => setSelectedFilters((prev: any) => ({ ...prev, priceRange: e.target.value }))}
-                    className="w-full px-3 py-2 glass-card rounded-lg text-white bg-transparent border border-white/10 focus:border-stacks-500 focus:outline-none"
+                    className="w-full px-3 py-2 glass-card rounded-lg text-white bg-transparent border border-white/10 focus:border-stacks-500 focus:outline-none text-sm"
                   >
                     {filterOptions.priceRange.map(option => (
                       <option key={option} value={option} className="bg-gray-800">{option}</option>
@@ -301,7 +303,7 @@ export default function ExplorePage() {
                   <select
                     value={selectedFilters.collection}
                     onChange={(e) => setSelectedFilters((prev: any) => ({ ...prev, collection: e.target.value }))}
-                    className="w-full px-3 py-2 glass-card rounded-lg text-white bg-transparent border border-white/10 focus:border-stacks-500 focus:outline-none"
+                    className="w-full px-3 py-2 glass-card rounded-lg text-white bg-transparent border border-white/10 focus:border-stacks-500 focus:outline-none text-sm"
                   >
                     {filterOptions.collections.map(option => (
                       <option key={option} value={option} className="bg-gray-800">{option}</option>
@@ -315,7 +317,7 @@ export default function ExplorePage() {
                   <select
                     value={selectedFilters.sortBy}
                     onChange={(e) => setSelectedFilters((prev: any) => ({ ...prev, sortBy: e.target.value }))}
-                    className="w-full px-3 py-2 glass-card rounded-lg text-white bg-transparent border border-white/10 focus:border-stacks-500 focus:outline-none"
+                    className="w-full px-3 py-2 glass-card rounded-lg text-white bg-transparent border border-white/10 focus:border-stacks-500 focus:outline-none text-sm"
                   >
                     {filterOptions.sortBy.map(option => (
                       <option key={option} value={option} className="bg-gray-800">{option}</option>
@@ -327,17 +329,17 @@ export default function ExplorePage() {
           )}
         </motion.div>
 
-        {/* Results */}
+        {/* Results - Enhanced Responsive */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <div className="flex items-center justify-between mb-6">
-            <p className="text-gray-400">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 gap-2 sm:gap-0">
+            <p className="text-gray-400 text-sm sm:text-base">
               Showing {filteredNFTs.length} of {allNFTs.length} NFTs
             </p>
-            <div className="text-sm text-gray-400">
+            <div className="text-xs sm:text-sm text-gray-400">
               {selectedFilters.paymentToken !== 'All' && `Filtered by ${selectedFilters.paymentToken} • `}
               {selectedFilters.collection !== 'All' && `${selectedFilters.collection} • `}
               Sorted by {selectedFilters.sortBy}
@@ -352,10 +354,10 @@ export default function ExplorePage() {
               onAddToCart={addToCart}
             />
           ) : (
-            <div className="text-center py-12">
-              <div className="text-6xl mb-4">🔍</div>
-              <h3 className="text-2xl font-bold text-white mb-2">No NFTs found</h3>
-              <p className="text-gray-400 mb-6">Try adjusting your search or filters</p>
+            <div className="text-center py-8 sm:py-12">
+              <div className="text-4xl sm:text-6xl mb-4">🔍</div>
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">No NFTs found</h3>
+              <p className="text-gray-400 mb-4 sm:mb-6 text-sm sm:text-base px-4">Try adjusting your search or filters</p>
               <motion.button
                 onClick={() => {
                   setSearchQuery('')
@@ -366,7 +368,7 @@ export default function ExplorePage() {
                     sortBy: 'Recently Listed'
                   })
                 }}
-                className="px-6 py-3 bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-stacks-500/50 transition-all relative overflow-hidden"
+                className="px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-stacks-500/50 transition-all relative overflow-hidden text-sm sm:text-base"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -384,7 +386,7 @@ export default function ExplorePage() {
                     ease: "easeInOut"
                   }}
                 >
-                  <span className="text-white text-xl">₿</span>
+                  <span className="text-white text-lg sm:text-xl">₿</span>
                 </motion.div>
               </motion.button>
             </div>

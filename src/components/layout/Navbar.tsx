@@ -95,33 +95,33 @@ export function Navbar() {
         backgroundColor: backgroundColor
       }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3 group">
-            <div className="relative w-12 h-12">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
+        <div className="flex items-center justify-between h-16 sm:h-20">
+          {/* Logo - Responsive */}
+          <Link href="/" className="flex items-center space-x-2 sm:space-x-3 group">
+            <div className="relative w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12">
               {/* Enhanced 3D Bitcoin Orb Logo */}
               <div className="absolute inset-0 bg-gradient-to-br from-bitcoin-500 to-stacks-500 rounded-full blur-lg opacity-60 animate-bitcoin-pulse" />
               <div className="relative flex items-center justify-center w-full h-full bg-gradient-to-br from-bitcoin-500 to-stacks-500 rounded-full bitcoin-glow group-hover:scale-110 transition-transform duration-300">
                 <Logo 
                   variant="main" 
-                  size="md" 
+                  size="sm" 
                   animate={true} 
                   glow={true}
-                  className="w-8 h-8"
+                  className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8"
                 />
               </div>
             </div>
-            <div>
-              <h1 className="text-2xl font-bold gradient-text animate-gradient-shift group-hover:scale-105 transition-transform duration-300">
+            <div className="hidden xs:block">
+              <h1 className="text-lg sm:text-xl lg:text-2xl font-bold gradient-text animate-gradient-shift group-hover:scale-105 transition-transform duration-300">
                 BitcoinBazaar
               </h1>
-              <p className="text-xs text-gray-400 group-hover:text-stacks-400 transition-colors duration-300">Powered by Bitcoin</p>
+              <p className="text-xs text-gray-400 group-hover:text-stacks-400 transition-colors duration-300 hidden sm:block">Powered by Bitcoin</p>
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          {/* Desktop Navigation - Hidden on mobile */}
+          <div className="hidden lg:flex items-center space-x-6 xl:space-x-8">
             <NavLink href="/">Home</NavLink>
             <NavLink href="/explore">Explore</NavLink>
             <NavLink href="/gaming">Gaming</NavLink>
@@ -131,43 +131,43 @@ export function Navbar() {
             <NavLink href="/stats">Stats</NavLink>
           </div>
           
-          {/* Search Bar */}
-          <div className="hidden lg:block flex-1 max-w-md mx-8">
+          {/* Search Bar - Hidden on mobile and tablet */}
+          <div className="hidden xl:block flex-1 max-w-md mx-4 lg:mx-8">
             <div className="relative">
               <input
                 type="text"
                 placeholder="Search NFTs, collections, users..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-2 pl-10 pr-4 glass-card text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-stacks-500 rounded-full"
+                className="w-full px-4 py-2 pl-10 pr-4 glass-card text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-stacks-500 rounded-full text-sm"
               />
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
             </div>
           </div>
           
           {/* Right Side Actions */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 sm:space-x-4">
             
-            {/* Notifications */}
-            <div className="relative" data-notifications>
+            {/* Notifications - Hidden on very small screens */}
+            <div className="relative hidden sm:block" data-notifications>
               <button 
                 onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
                 className="relative p-2 glass-card-premium rounded-full hover:bg-white/10 transition-colors stacks-glow group"
               >
-                <Bell className="w-5 h-5 text-gray-300 group-hover:text-stacks-400 transition-colors duration-300" />
+                <Bell className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300 group-hover:text-stacks-400 transition-colors duration-300" />
                 <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full animate-pulse" />
               </button>
               
-              {/* Notifications Dropdown */}
+              {/* Notifications Dropdown - Responsive */}
               {isNotificationsOpen && (
                 <motion.div
                   initial={{ opacity: 0, y: -10, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                  className="absolute right-0 top-12 w-80 glass-card-premium rounded-2xl p-4 shadow-2xl border border-white/10"
+                  className="absolute right-0 top-12 w-72 sm:w-80 glass-card-premium rounded-2xl p-4 shadow-2xl border border-white/10"
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-semibold text-white">Notifications</h3>
+                    <h3 className="text-base sm:text-lg font-semibold text-white">Notifications</h3>
                     <button 
                       onClick={() => setIsNotificationsOpen(false)}
                       className="text-gray-400 hover:text-white transition-colors"
@@ -176,7 +176,7 @@ export function Navbar() {
                     </button>
                   </div>
                   
-                  <div className="space-y-3 max-h-80 overflow-y-auto">
+                  <div className="space-y-3 max-h-64 sm:max-h-80 overflow-y-auto">
                     {notifications.map((notification) => (
                       <div
                         key={notification.id}
@@ -213,33 +213,51 @@ export function Navbar() {
               )}
             </div>
             
-            {/* Wallet Connection */}
-            <ConnectWallet />
+            {/* Wallet Connection - Responsive */}
+            <div className="hidden sm:block">
+              <ConnectWallet />
+            </div>
             
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 glass-card-premium rounded-full hover:scale-110 transition-transform duration-300"
+              className="lg:hidden p-2 glass-card-premium rounded-full hover:scale-110 transition-transform duration-300"
+              aria-label="Toggle mobile menu"
             >
               {isMobileMenuOpen ? (
-                <X className="w-6 h-6 text-white" />
+                <X className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               ) : (
-                <Menu className="w-6 h-6 text-white" />
+                <Menu className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               )}
             </button>
           </div>
         </div>
       </div>
       
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Enhanced Responsive with Solid Neural Background */}
       {isMobileMenuOpen && (
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          className="md:hidden glass-card-premium m-4 rounded-2xl p-6 floating-particles"
+          className="lg:hidden bg-gradient-to-br from-gray-900/95 to-gray-800/95 backdrop-blur-xl border border-white/10 m-2 sm:m-4 rounded-2xl p-4 sm:p-6 neural-grid-pattern"
         >
-          <div className="flex flex-col space-y-4">
+          {/* Mobile Search */}
+          <div className="mb-4 sm:hidden">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search NFTs, collections..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full px-4 py-2 pl-10 pr-4 glass-card text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-stacks-500 rounded-full text-sm"
+              />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+            </div>
+          </div>
+
+          {/* Mobile Navigation Links */}
+          <div className="flex flex-col space-y-3 sm:space-y-4">
             <MobileNavLink href="/">Home</MobileNavLink>
             <MobileNavLink href="/explore">Explore</MobileNavLink>
             <MobileNavLink href="/gaming">Gaming</MobileNavLink>
@@ -247,6 +265,11 @@ export function Navbar() {
             <MobileNavLink href="/collections">Collections</MobileNavLink>
             <MobileNavLink href="/auctions">Auctions</MobileNavLink>
             <MobileNavLink href="/stats">Stats</MobileNavLink>
+          </div>
+
+          {/* Mobile Wallet Connection */}
+          <div className="mt-4 pt-4 border-t border-white/10 sm:hidden">
+            <ConnectWallet />
           </div>
         </motion.div>
       )}

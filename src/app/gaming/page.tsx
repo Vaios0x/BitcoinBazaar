@@ -177,69 +177,69 @@ export default function GamingPage() {
       {/* Bitcoin Symbols Animation Background */}
       <BitcoinSymbols />
       
-      {/* Hero Section */}
-      <section className="relative -mt-[28rem] pt-0 pb-20 px-4 sm:px-6 lg:px-8">
+      {/* Hero Section - Enhanced Responsive */}
+      <section className="relative -mt-[20rem] sm:-mt-[24rem] lg:-mt-[28rem] pt-0 pb-12 sm:pb-16 lg:pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-16"
+            className="text-center mb-12 sm:mb-16"
           >
-            <h1 className="text-5xl lg:text-7xl font-bold mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6">
               Gaming <span className="gradient-text">NFTs</span>
             </h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+            <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto mb-6 sm:mb-8">
               Battle, level up, and earn Bitcoin with playable NFTs. 
               Each NFT has unique stats and can battle for sBTC prizes.
             </p>
             
-            {/* Gaming Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-              <div className="glass-card p-6 rounded-2xl text-center">
-                <Swords className="w-8 h-8 text-red-500 mx-auto mb-2" />
-                <div className="text-2xl font-bold text-white">1,247</div>
-                <div className="text-sm text-gray-400">Battles Today</div>
+            {/* Gaming Stats - Enhanced Responsive */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 max-w-4xl mx-auto">
+              <div className="glass-card p-4 sm:p-6 rounded-2xl text-center">
+                <Swords className="w-6 h-6 sm:w-8 sm:h-8 text-red-500 mx-auto mb-2" />
+                <div className="text-lg sm:text-2xl font-bold text-white">1,247</div>
+                <div className="text-xs sm:text-sm text-gray-400">Battles Today</div>
               </div>
-              <div className="glass-card p-6 rounded-2xl text-center">
-                <Trophy className="w-8 h-8 text-yellow-500 mx-auto mb-2" />
-                <div className="text-2xl font-bold text-white">42.3</div>
-                <div className="text-sm text-gray-400">sBTC Won</div>
+              <div className="glass-card p-4 sm:p-6 rounded-2xl text-center">
+                <Trophy className="w-6 h-6 sm:w-8 sm:h-8 text-yellow-500 mx-auto mb-2" />
+                <div className="text-lg sm:text-2xl font-bold text-white">42.3</div>
+                <div className="text-xs sm:text-sm text-gray-400">sBTC Won</div>
               </div>
-              <div className="glass-card p-6 rounded-2xl text-center">
-                <Zap className="w-8 h-8 text-blue-500 mx-auto mb-2" />
-                <div className="text-2xl font-bold text-white">89</div>
-                <div className="text-sm text-gray-400">Active Players</div>
+              <div className="glass-card p-4 sm:p-6 rounded-2xl text-center">
+                <Zap className="w-6 h-6 sm:w-8 sm:h-8 text-blue-500 mx-auto mb-2" />
+                <div className="text-lg sm:text-2xl font-bold text-white">89</div>
+                <div className="text-xs sm:text-sm text-gray-400">Active Players</div>
               </div>
-              <div className="glass-card p-6 rounded-2xl text-center">
-                <Flame className="w-8 h-8 text-orange-500 mx-auto mb-2" />
-                <div className="text-2xl font-bold text-white">156</div>
-                <div className="text-sm text-gray-400">Level Ups</div>
+              <div className="glass-card p-4 sm:p-6 rounded-2xl text-center">
+                <Flame className="w-6 h-6 sm:w-8 sm:h-8 text-orange-500 mx-auto mb-2" />
+                <div className="text-lg sm:text-2xl font-bold text-white">156</div>
+                <div className="text-xs sm:text-sm text-gray-400">Level Ups</div>
               </div>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Gaming NFTs Grid */}
-      <section className="pt-8 pb-20 px-4 sm:px-6 lg:px-8">
+      {/* Gaming NFTs Grid - Enhanced Responsive */}
+      <section className="pt-6 sm:pt-8 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-16"
+            className="text-center mb-12 sm:mb-16"
           >
-            <h2 className="text-4xl lg:text-6xl font-bold mb-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6">
               Battle-Ready <span className="gradient-text">NFTs</span>
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto">
               Choose your champion and enter the arena. Each NFT has unique stats 
               that determine battle outcomes.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {gamingNFTs.map((nft) => (
               <GamingNFTCard
                 key={nft.id}
@@ -259,36 +259,36 @@ export default function GamingPage() {
         </div>
       </section>
 
-      {/* Leaderboard */}
-      <section className="pt-8 pb-20 px-4 sm:px-6 lg:px-8">
+      {/* Leaderboard - Enhanced Responsive */}
+      <section className="pt-6 sm:pt-8 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-16"
+            className="text-center mb-12 sm:mb-16"
           >
-            <h2 className="text-4xl lg:text-6xl font-bold mb-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6">
               Battle <span className="gradient-text">Leaderboard</span>
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto">
               The strongest warriors in the BitcoinBazaar arena. 
               Climb the ranks and earn your place among legends.
             </p>
           </motion.div>
 
-          <div className="glass-card rounded-3xl p-8">
-            <div className="space-y-4">
+          <div className="glass-card rounded-3xl p-4 sm:p-6 lg:p-8">
+            <div className="space-y-3 sm:space-y-4">
               {leaderboard.map((entry, index) => (
                 <motion.div
                   key={entry.rank}
                   initial={{ opacity: 0, x: -50 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="flex items-center justify-between p-6 glass-card rounded-2xl hover:bg-white/5 transition-all"
+                  className="flex items-center justify-between p-4 sm:p-6 glass-card rounded-2xl hover:bg-white/5 transition-all"
                 >
-                  <div className="flex items-center space-x-4">
-                    <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg ${
+                  <div className="flex items-center space-x-3 sm:space-x-4">
+                    <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-base sm:text-lg ${
                       entry.rank === 1 ? 'bg-gradient-to-r from-yellow-500 to-orange-500' :
                       entry.rank === 2 ? 'bg-gradient-to-r from-gray-400 to-gray-500' :
                       entry.rank === 3 ? 'bg-gradient-to-r from-amber-600 to-amber-700' :
@@ -297,16 +297,16 @@ export default function GamingPage() {
                       {entry.rank}
                     </div>
                     <div>
-                      <div className="text-xl font-bold text-white">{entry.name}</div>
-                      <div className="text-sm text-gray-400">
+                      <div className="text-lg sm:text-xl font-bold text-white">{entry.name}</div>
+                      <div className="text-xs sm:text-sm text-gray-400">
                         {entry.wins}W - {entry.losses}L
                       </div>
                     </div>
                   </div>
                   
                   <div className="text-right">
-                    <div className="text-2xl font-bold text-bitcoin-500">{entry.earnings} sBTC</div>
-                    <div className="text-sm text-gray-400">Total Earnings</div>
+                    <div className="text-lg sm:text-2xl font-bold text-bitcoin-500">{entry.earnings} sBTC</div>
+                    <div className="text-xs sm:text-sm text-gray-400">Total Earnings</div>
                   </div>
                 </motion.div>
               ))}
@@ -315,37 +315,37 @@ export default function GamingPage() {
         </div>
       </section>
 
-      {/* Battle Tips Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
+      {/* Battle Tips Section - Enhanced Responsive */}
+      <section className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-12"
+            className="text-center mb-8 sm:mb-12"
           >
-            <h2 className="text-4xl lg:text-6xl font-bold mb-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6">
               Battle <span className="gradient-text">Tips</span>
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto">
               Master the art of NFT combat with these strategic insights
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="glass-card rounded-2xl p-6 hover:bg-white/5 transition-all"
+              className="glass-card rounded-2xl p-4 sm:p-6 hover:bg-white/5 transition-all"
             >
-              <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-white mb-3">Power Matching</h3>
-              <p className="text-gray-300 text-sm">
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3">Power Matching</h3>
+              <p className="text-gray-300 text-xs sm:text-sm">
                 Choose opponents based on your NFT's power level for optimal success rates
               </p>
             </motion.div>
@@ -354,15 +354,15 @@ export default function GamingPage() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="glass-card rounded-2xl p-6 hover:bg-white/5 transition-all"
+              className="glass-card rounded-2xl p-4 sm:p-6 hover:bg-white/5 transition-all"
             >
-              <div className="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-white mb-3">Higher Rewards</h3>
-              <p className="text-gray-300 text-sm">
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3">Higher Rewards</h3>
+              <p className="text-gray-300 text-xs sm:text-sm">
                 Higher difficulty battles offer better rewards but require more strategy
               </p>
             </motion.div>
@@ -371,15 +371,15 @@ export default function GamingPage() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="glass-card rounded-2xl p-6 hover:bg-white/5 transition-all"
+              className="glass-card rounded-2xl p-4 sm:p-6 hover:bg-white/5 transition-all"
             >
-              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-white mb-3">Special Abilities</h3>
-              <p className="text-gray-300 text-sm">
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3">Special Abilities</h3>
+              <p className="text-gray-300 text-xs sm:text-sm">
                 Use special abilities strategically to gain advantages in battle
               </p>
             </motion.div>
@@ -388,16 +388,16 @@ export default function GamingPage() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="glass-card rounded-2xl p-6 hover:bg-white/5 transition-all"
+              className="glass-card rounded-2xl p-4 sm:p-6 hover:bg-white/5 transition-all"
             >
-              <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-500 rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-green-500 to-blue-500 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-white mb-3">Critical Hits</h3>
-              <p className="text-gray-300 text-sm">
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3">Critical Hits</h3>
+              <p className="text-gray-300 text-xs sm:text-sm">
                 Watch for critical hit opportunities to maximize damage output
               </p>
             </motion.div>
