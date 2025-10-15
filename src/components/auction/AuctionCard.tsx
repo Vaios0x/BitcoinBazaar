@@ -7,7 +7,7 @@ import type { Auction } from '@/types/nft'
 
 interface AuctionCardProps {
   auction: Auction
-  onBid?: (auctionId: number, amount: number) => void
+  onBid?: (auction: Auction) => void
 }
 
 export function AuctionCard({ auction, onBid }: AuctionCardProps) {
@@ -45,8 +45,8 @@ export function AuctionCard({ auction, onBid }: AuctionCardProps) {
   }, [auction.endTime])
 
   const handleBid = () => {
-    if (onBid && bidAmount > auction.currentPrice) {
-      onBid(auction.id, bidAmount)
+    if (onBid) {
+      onBid(auction)
     }
   }
 
@@ -122,8 +122,7 @@ export function AuctionCard({ auction, onBid }: AuctionCardProps) {
                 />
                 <button
                   onClick={handleBid}
-                  disabled={bidAmount <= auction.currentPrice}
-                  className="px-4 py-2 bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-stacks-500/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2 bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-stacks-500/50 transition-all"
                 >
                   Bid
                 </button>

@@ -28,9 +28,11 @@ interface GamingNFTCardProps {
   nft: GamingNFT
   onBattle?: () => void
   onStake?: () => void
+  onStats?: () => void
+  onBattleModal?: () => void
 }
 
-export function GamingNFTCard({ nft, onBattle, onStake }: GamingNFTCardProps) {
+export function GamingNFTCard({ nft, onBattle, onStake, onStats, onBattleModal }: GamingNFTCardProps) {
   const [showStats, setShowStats] = React.useState(false)
 
   const winRate = nft.stats.wins + nft.stats.losses > 0
@@ -220,15 +222,14 @@ export function GamingNFTCard({ nft, onBattle, onStake }: GamingNFTCardProps) {
           {/* Action Buttons */}
           <div className="mt-4 grid grid-cols-2 gap-2">
             <button
-              onMouseEnter={() => setShowStats(true)}
-              onMouseLeave={() => setShowStats(false)}
+              onClick={onStats}
               className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm font-semibold text-white transition-colors"
             >
               Stats
             </button>
             
             <button
-              onClick={onBattle}
+              onClick={onBattleModal}
               className="px-4 py-2 bg-gradient-to-r from-red-500 to-orange-500 hover:shadow-lg hover:shadow-red-500/50 rounded-lg text-sm font-semibold text-white transition-all flex items-center justify-center space-x-1"
             >
               <Swords className="w-4 h-4" />

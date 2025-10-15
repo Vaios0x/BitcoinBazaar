@@ -4,6 +4,8 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { TrendingUp, Users, Star, Filter, Grid, List } from 'lucide-react'
 import type { Collection } from '@/types/nft'
+import { CollectionModal } from '@/components/collections/CollectionModal'
+import { BitcoinSymbols } from '@/components/effects/BitcoinSymbols'
 
 // Mock collection data
 const collections: Collection[] = [
@@ -89,6 +91,8 @@ export default function CollectionsPage() {
   })
   const [viewMode, setViewMode] = React.useState<'grid' | 'list'>('grid')
   const [showFilters, setShowFilters] = React.useState(false)
+  const [selectedCollection, setSelectedCollection] = React.useState<Collection | null>(null)
+  const [isModalOpen, setIsModalOpen] = React.useState(false)
 
   // Filter collections
   const filteredCollections = collections.filter(collection => {
@@ -97,9 +101,22 @@ export default function CollectionsPage() {
     return true
   })
 
+  const handleViewCollection = (collection: Collection) => {
+    setSelectedCollection(collection)
+    setIsModalOpen(true)
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+    setSelectedCollection(null)
+  }
+
   return (
-    <div className="min-h-screen pt-20 pb-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen -mt-[28rem] pt-0 pb-8 px-4 sm:px-6 lg:px-8 relative">
+      {/* Bitcoin Symbols Animation Background */}
+      <BitcoinSymbols />
+      
+      <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -324,7 +341,10 @@ export default function CollectionsPage() {
                           </p>
                         </div>
                       </div>
-                      <button className="px-4 py-2 bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-stacks-500/50 transition-all">
+                      <button 
+                        onClick={() => handleViewCollection(collection)}
+                        className="px-4 py-2 bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-stacks-500/50 transition-all"
+                      >
                         View Collection
                       </button>
                     </div>
@@ -351,6 +371,13 @@ export default function CollectionsPage() {
           )}
         </motion.div>
       </div>
+
+      {/* Collection Modal */}
+      <CollectionModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        collection={selectedCollection}
+      />
     </div>
   )
 }

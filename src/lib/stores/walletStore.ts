@@ -200,8 +200,13 @@ export const useWalletStore = create<WalletState>()(
           const stxResponse = await fetch(
             `${apiUrl}/extended/v1/address/${address}/balances`
           )
+          
+          if (!stxResponse.ok) {
+            throw new Error(`HTTP error! status: ${stxResponse.status}`)
+          }
+          
           const stxData = await stxResponse.json()
-          const stxBalance = parseInt(stxData.stx.balance) / 1_000_000
+          const stxBalance = parseInt(stxData.stx?.balance || '0') / 1_000_000
 
           // Get sBTC balance
           let sbtcBalance = 0
@@ -219,23 +224,21 @@ export const useWalletStore = create<WalletState>()(
                 const sbtcToken = stxData.fungible_tokens[contract]
                 if (sbtcToken && sbtcToken.balance) {
                   sbtcBalance = parseInt(sbtcToken.balance) / 100_000_000 // sBTC has 8 decimals
-                  console.log('sBTC balance found:', sbtcBalance, 'from contract:', contract)
                   break
                 }
               }
               
-              // If no sBTC found in fungible tokens, try to get it from a different endpoint
-              if (sbtcBalance === 0) {
-                console.log('No sBTC found in fungible tokens, trying alternative method...')
-                // For now, let's simulate the balance (you can replace this with actual API call)
-                sbtcBalance = 6.0 // This should be replaced with actual API call
-                console.log('Using simulated sBTC balance:', sbtcBalance)
+              // If no sBTC found in fungible tokens, use simulated balance for testnet
+              if (sbtcBalance === 0 && network === 'testnet') {
+                sbtcBalance = 6.0 // Simulated balance for testnet
               }
             }
-          } catch (error) {
-            console.warn('sBTC balance fetch failed:', error)
-            // Fallback: set to 6 if we know the user has 6 sBTC
-            sbtcBalance = 6.0
+          } catch (sbtcError) {
+            console.warn('sBTC balance fetch failed:', sbtcError)
+            // Fallback: set to 6 for testnet
+            if (network === 'testnet') {
+              sbtcBalance = 6.0
+            }
           }
 
           // Get BTC balance (for display only)
@@ -243,8 +246,8 @@ export const useWalletStore = create<WalletState>()(
           try {
             // BTC balance placeholder
             btcBalance = 0
-          } catch (error) {
-            console.warn('BTC balance fetch failed:', error)
+          } catch (btcError) {
+            console.warn('BTC balance fetch failed:', btcError)
           }
 
           set({

@@ -2,130 +2,89 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
-import { TrendingUp, Zap, Shield, Coins, Users, Star } from 'lucide-react'
-import { NFTCard } from '@/components/nft/NFTCard'
-import { NFTGrid } from '@/components/nft/NFTGrid'
-import { BitcoinOrb } from '@/components/effects/BitcoinOrb'
-import { GamingNFTCard } from '@/components/gaming/GamingNFTCard'
-import { DeFiDashboard } from '@/components/defi/DeFiDashboard'
+import { TrendingUp, Zap, Shield, Coins, Users, Star, CheckCircle, ArrowRight, Globe, Lock, Sparkles } from 'lucide-react'
+import { BitcoinSymbolsIntense } from '@/components/effects/BitcoinSymbolsIntense'
 import { useWalletStore } from '@/lib/stores/walletStore'
 import { useBitcoinPrice } from '@/lib/hooks/useBitcoinPrice'
-import type { NFT } from '@/types/nft'
 
-// Mock data for demo
-const trendingNFTs: NFT[] = [
-  {
-    id: 1,
-    name: 'Bitcoin Genesis #1',
-    description: 'The first NFT minted on Bitcoin block 840,000',
-    imageUri: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=400&h=400&fit=crop&crop=center',
-    price: 0.1,
-    paymentToken: 'sBTC',
-    creator: 'SP1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
-    royaltyPercent: 10,
-    collectionName: 'Bitcoin Genesis Collection',
-    collectionId: 1,
-    isDynamicPricing: true,
-    mintedAtBitcoinBlock: 840000,
-    lastSalePrice: 0.08,
-    usdPrice: 3200,
-  },
-  {
-    id: 2,
-    name: 'Stacks Pioneer #42',
-    description: 'A rare NFT from the early days of Stacks',
-    imageUri: 'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=400&h=400&fit=crop&crop=center',
-    price: 150,
-    paymentToken: 'STX',
-    creator: 'SP1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
-    royaltyPercent: 5,
-    collectionName: 'Stacks Pioneers',
-    collectionId: 2,
-    isDynamicPricing: false,
-    lastSalePrice: 120,
-    usdPrice: 72,
-  },
-  {
-    id: 3,
-    name: 'Lucky Block #1000',
-    description: 'Minted during Bitcoin block 840,100 - a lucky block!',
-    imageUri: 'https://images.unsplash.com/photo-1621761191319-c6fb62004040?w=400&h=400&fit=crop&crop=center',
-    price: 0.05,
-    paymentToken: 'sBTC',
-    creator: 'SP1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
-    royaltyPercent: 15,
-    collectionName: 'Lucky Blocks',
-    collectionId: 3,
-    isDynamicPricing: true,
-    mintedAtBitcoinBlock: 840100,
-    lastSalePrice: 0.045,
-    usdPrice: 1800,
-  },
-]
-
-// Gaming NFTs with stats
-const gamingNFTs = [
-  {
-    id: '1',
-    name: 'CryptoPunk Warrior #1234',
-    imageUri: 'https://images.unsplash.com/photo-1551103782-8ab07afd45c1?w=400&h=400&fit=crop&crop=center',
-    price: '2.5',
-    paymentToken: 'sBTC',
-    stats: {
-      hp: 150,
-      attack: 85,
-      defense: 70,
-      speed: 60,
-      level: 15,
-      xp: 750,
-      wins: 12,
-      losses: 3,
-      totalEarnings: 2.4
-    }
-  },
-  {
-    id: '2',
-    name: 'Bored Ape Mage #5678',
-    imageUri: 'https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=400&h=400&fit=crop&crop=center',
-    price: '1.8',
-    paymentToken: 'sBTC',
-    stats: {
-      hp: 120,
-      attack: 95,
-      defense: 45,
-      speed: 80,
-      level: 12,
-      xp: 600,
-      wins: 8,
-      losses: 5,
-      totalEarnings: 1.6
-    }
-  },
-  {
-    id: '3',
-    name: 'Stacks Guardian #9999',
-    imageUri: 'https://images.unsplash.com/photo-1614732484003-ef9881555dc3?w=400&h=400&fit=crop&crop=center',
-    price: '3.2',
-    paymentToken: 'sBTC',
-    stats: {
-      hp: 200,
-      attack: 60,
-      defense: 120,
-      speed: 40,
-      level: 20,
-      xp: 1000,
-      wins: 18,
-      losses: 2,
-      totalEarnings: 4.1
-    }
-  }
-]
-
+// Landing page data
 const stats = [
   { label: 'Total Volume', value: '$2.4M', icon: TrendingUp },
   { label: 'Active Users', value: '1,234', icon: Users },
   { label: 'NFTs Sold', value: '5,678', icon: Coins },
   { label: 'Collections', value: '89', icon: Star },
+]
+
+const benefits = [
+  {
+    icon: Shield,
+    title: 'Bitcoin Security',
+    description: 'Your NFTs are secured by Bitcoin\'s immutable blockchain. No compromises, no bridges, no wrapped tokens.',
+    color: 'from-green-500 to-emerald-600',
+    glowColor: 'bitcoin-glow'
+  },
+  {
+    icon: Coins,
+    title: 'Dual-Token Payments',
+    description: 'Pay with STX or sBTC (trustless Bitcoin peg). No centralized custodians, no wrapped tokens.',
+    color: 'from-bitcoin-500 to-orange-600',
+    glowColor: 'bitcoin-glow'
+  },
+  {
+    icon: Zap,
+    title: 'Dynamic Pricing',
+    description: 'Prices change based on Bitcoin blockchain events. Special discounts during "lucky" Bitcoin blocks.',
+    color: 'from-yellow-500 to-orange-500',
+    glowColor: 'bitcoin-glow'
+  },
+  {
+    icon: Lock,
+    title: 'Bitcoin Block Verification',
+    description: 'Prove your NFT was minted during specific Bitcoin events. Verifiable rarity using Bitcoin blocks.',
+    color: 'from-purple-500 to-pink-500',
+    glowColor: 'stacks-glow'
+  },
+  {
+    icon: Star,
+    title: 'Gas-Free Listings',
+    description: 'Lazy minting like OpenSea Pro. Mint on first sale, creators list for free.',
+    color: 'from-blue-500 to-cyan-500',
+    glowColor: 'neon-glow'
+  },
+  {
+    icon: Globe,
+    title: 'Global Accessibility',
+    description: 'Access from anywhere in the world. No geographic restrictions, no KYC requirements.',
+    color: 'from-indigo-500 to-purple-500',
+    glowColor: 'neon-glow'
+  }
+]
+
+const features = [
+  {
+    title: 'Bitcoin-Native NFTs',
+    description: 'The first NFTs that are truly native to Bitcoin, not just stored on Bitcoin.',
+    icon: CheckCircle,
+    highlight: true
+  },
+  {
+    title: 'Automated Royalties',
+    description: '0-50% customizable royalties that work for both STX and sBTC sales.',
+    icon: CheckCircle,
+    highlight: false
+  },
+  {
+    title: 'Gamification',
+    description: 'Earn platform tokens for activity. Streak bonuses, referral rewards, exclusive perks.',
+    icon: CheckCircle,
+    highlight: false
+  },
+  {
+    title: 'DeFi Integration',
+    description: 'Stake, lend, and provide liquidity with your NFTs to earn up to 20% APY.',
+    icon: CheckCircle,
+    highlight: false
+  }
 ]
 
 export default function HomePage() {
@@ -155,8 +114,11 @@ export default function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+      <section className="relative -mt-[28rem] pt-0 pb-20 px-4 sm:px-6 lg:px-8">
+        {/* Bitcoin Symbols Animation Background */}
+        <BitcoinSymbolsIntense />
+        
+        <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left Column - Text */}
             <motion.div
@@ -166,12 +128,14 @@ export default function HomePage() {
               className="space-y-8"
             >
               <div className="space-y-4">
-                <h1 className="text-5xl lg:text-7xl font-bold">
+                <h1 className="text-5xl lg:text-7xl font-bold relative">
                   The First{' '}
-                  <span className="gradient-text">Bitcoin-Native</span>{' '}
+                  <span className="gradient-text animate-gradient-shift">
+                    Bitcoin-Native
+                  </span>{' '}
                   NFT Marketplace
                 </h1>
-                <p className="text-xl text-gray-300 max-w-2xl">
+                <p className="text-xl text-gray-300 max-w-2xl leading-relaxed">
                   Buy, sell, and create NFTs with Bitcoin's security and Stacks' programmability. 
                   Features impossible on any other blockchain.
                 </p>
@@ -183,11 +147,11 @@ export default function HomePage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 }}
-                  className="glass-card p-6 rounded-2xl border border-green-500/30"
+                  className="glass-card-bitcoin p-6 rounded-2xl border border-bitcoin-500/30 bitcoin-glow"
                 >
                   <div className="flex items-center space-x-3 mb-2">
-                    <Zap className="w-6 h-6 text-green-400" />
-                    <span className="text-lg font-semibold text-green-400">
+                    <Zap className="w-6 h-6 text-bitcoin-400 animate-neon-flicker" />
+                    <span className="text-lg font-semibold text-bitcoin-400">
                       Lucky Bitcoin Block Active!
                     </span>
                   </div>
@@ -202,16 +166,47 @@ export default function HomePage() {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="px-8 py-4 bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white rounded-xl font-semibold text-lg hover:shadow-lg hover:shadow-stacks-500/50 transition-all btn-hover"
+                  className="px-8 py-4 bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white rounded-xl font-semibold text-lg hover:shadow-lg hover:shadow-stacks-500/50 transition-all btn-hover btn-premium relative overflow-hidden"
                 >
-                  Explore NFTs
+                  <span className="relative z-10">Explore NFTs</span>
+                  {/* Animated Bitcoin symbols in button */}
+                  <motion.div
+                    className="absolute inset-0 flex items-center justify-center"
+                    animate={{
+                      opacity: [0, 0.3, 0],
+                      scale: [0.5, 1.2, 0.5]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    <span className="text-white text-xl">₿</span>
+                  </motion.div>
                 </motion.button>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="px-8 py-4 glass-card text-white rounded-xl font-semibold text-lg hover:bg-white/10 transition-all"
+                  className="px-8 py-4 glass-card-premium text-white rounded-xl font-semibold text-lg hover:bg-white/10 transition-all btn-hover relative overflow-hidden"
                 >
-                  Create NFT
+                  <span className="relative z-10">Create NFT</span>
+                  {/* Animated Bitcoin symbols in button */}
+                  <motion.div
+                    className="absolute inset-0 flex items-center justify-center"
+                    animate={{
+                      opacity: [0, 0.4, 0],
+                      scale: [0.3, 1, 0.3],
+                      rotate: [0, 180, 360]
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    <span className="text-bitcoin-400 text-lg">₿</span>
+                  </motion.div>
                 </motion.button>
               </div>
 
@@ -223,9 +218,9 @@ export default function HomePage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 + index * 0.1 }}
-                    className="glass-card p-4 rounded-xl text-center"
+                    className="glass-card-premium p-4 rounded-xl text-center hover:scale-105 transition-transform duration-300"
                   >
-                    <stat.icon className="w-6 h-6 text-stacks-500 mx-auto mb-2" />
+                    <stat.icon className="w-6 h-6 text-stacks-500 mx-auto mb-2 animate-pulse" />
                     <div className="text-2xl font-bold text-white">{stat.value}</div>
                     <div className="text-sm text-gray-400">{stat.label}</div>
                   </motion.div>
@@ -233,21 +228,49 @@ export default function HomePage() {
               </div>
             </motion.div>
 
-            {/* Right Column - 3D Bitcoin Orb */}
+            {/* Right Column - Benefits Preview */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative h-96 lg:h-[500px]"
+              className="space-y-6"
             >
-              <BitcoinOrb />
+              <div className="glass-card-premium p-8 rounded-2xl border border-bitcoin-500/20 bitcoin-glow">
+                <div className="flex items-center space-x-3 mb-4">
+                  <Shield className="w-8 h-8 text-bitcoin-500" />
+                  <h3 className="text-2xl font-bold text-white">Bitcoin Security</h3>
+                </div>
+                <p className="text-gray-300 leading-relaxed">
+                  Your NFTs are secured by Bitcoin's immutable blockchain. No compromises, no bridges, no wrapped tokens.
+                </p>
+              </div>
+
+              <div className="glass-card-premium p-8 rounded-2xl border border-stacks-500/20 stacks-glow">
+                <div className="flex items-center space-x-3 mb-4">
+                  <Coins className="w-8 h-8 text-stacks-500" />
+                  <h3 className="text-2xl font-bold text-white">Dual-Token Payments</h3>
+                </div>
+                <p className="text-gray-300 leading-relaxed">
+                  Pay with STX or sBTC (trustless Bitcoin peg). No centralized custodians, no wrapped tokens.
+                </p>
+              </div>
+
+              <div className="glass-card-premium p-8 rounded-2xl border border-yellow-500/20 neon-glow">
+                <div className="flex items-center space-x-3 mb-4">
+                  <Zap className="w-8 h-8 text-yellow-500" />
+                  <h3 className="text-2xl font-bold text-white">Dynamic Pricing</h3>
+                </div>
+                <p className="text-gray-300 leading-relaxed">
+                  Prices change based on Bitcoin blockchain events. Special discounts during "lucky" Bitcoin blocks.
+                </p>
+              </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
+      {/* Benefits Section */}
+      <section className="pt-8 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -257,73 +280,40 @@ export default function HomePage() {
           >
             <h2 className="text-4xl lg:text-6xl font-bold mb-6">
               Why BitcoinBazaar is{' '}
-              <span className="gradient-text">Revolutionary</span>
+              <span className="gradient-text animate-gradient-shift">Revolutionary</span>
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
               We're not just another NFT marketplace. We're the first platform that enables 
               true Bitcoin-native NFTs with features impossible on any other blockchain.
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                icon: Coins,
-                title: 'Dual-Token Payments',
-                description: 'Buy NFTs with STX or sBTC (trustless Bitcoin peg). No wrapped tokens, no centralized custodians.',
-                color: 'from-bitcoin-500 to-orange-600',
-              },
-              {
-                icon: Zap,
-                title: 'Dynamic Bitcoin Pricing',
-                description: 'Prices change based on Bitcoin blockchain. Special discounts during "lucky" Bitcoin blocks.',
-                color: 'from-yellow-500 to-orange-500',
-              },
-              {
-                icon: Shield,
-                title: 'Bitcoin Block Verification',
-                description: 'Prove NFT was minted during specific Bitcoin events. Verifiable rarity using Bitcoin blocks.',
-                color: 'from-green-500 to-emerald-600',
-              },
-              {
-                icon: TrendingUp,
-                title: 'Automated Royalties',
-                description: '0-50% customizable royalties that work for both STX and sBTC sales. Impossible to circumvent.',
-                color: 'from-purple-500 to-pink-500',
-              },
-              {
-                icon: Star,
-                title: 'Gas-Free Listings',
-                description: 'Lazy minting like OpenSea Pro. Mint on first sale, creators list for free.',
-                color: 'from-blue-500 to-cyan-500',
-              },
-              {
-                icon: Users,
-                title: 'Gamification',
-                description: 'Earn platform tokens for activity. Streak bonuses, referral rewards, exclusive perks.',
-                color: 'from-indigo-500 to-purple-500',
-              },
-            ].map((feature, index) => (
+            {benefits.map((benefit, index) => (
               <motion.div
-                key={feature.title}
+                key={benefit.title}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="glass-card p-8 rounded-2xl hover:shadow-lg hover:shadow-stacks-500/20 transition-all duration-300"
+                className="glass-card-premium p-8 rounded-2xl hover:shadow-lg hover:shadow-stacks-500/20 transition-all duration-300 hover:scale-105 group"
               >
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${feature.color} flex items-center justify-center mb-6`}>
-                  <feature.icon className="w-8 h-8 text-white" />
+                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${benefit.color} flex items-center justify-center mb-6 ${benefit.glowColor} group-hover:scale-110 transition-transform duration-300`}>
+                  <benefit.icon className="w-8 h-8 text-white animate-pulse" />
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-4">{feature.title}</h3>
-                <p className="text-gray-300 leading-relaxed">{feature.description}</p>
+                <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-stacks-400 transition-colors duration-300">
+                  {benefit.title}
+                </h3>
+                <p className="text-gray-300 leading-relaxed group-hover:text-gray-200 transition-colors duration-300">
+                  {benefit.description}
+                </p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Gaming NFTs Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
+      {/* Features Section */}
+      <section className="pt-8 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -332,85 +322,59 @@ export default function HomePage() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl lg:text-6xl font-bold mb-6">
-              Gaming <span className="gradient-text">NFTs</span>
+              Key <span className="gradient-text">Features</span>
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Battle, level up, and earn Bitcoin with playable NFTs. 
-              Each NFT has unique stats and can battle for sBTC prizes.
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+              Discover the unique features that make BitcoinBazaar the most advanced NFT marketplace.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {gamingNFTs.map((nft) => (
-              <GamingNFTCard
-                key={nft.id}
-                nft={nft}
-                onBattle={() => console.log('Battle started')}
-                onStake={() => console.log('Stake NFT')}
-              />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {features.map((feature, index) => (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className={`glass-card-premium p-8 rounded-2xl hover:shadow-lg transition-all duration-300 hover:scale-105 group ${
+                  feature.highlight ? 'border border-bitcoin-500/30 bitcoin-glow' : ''
+                }`}
+              >
+                <div className="flex items-start space-x-4">
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${
+                    feature.highlight ? 'from-bitcoin-500 to-orange-600' : 'from-stacks-500 to-blue-600'
+                  } flex items-center justify-center flex-shrink-0 ${feature.highlight ? 'bitcoin-glow' : 'stacks-glow'}`}>
+                    <feature.icon className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-stacks-400 transition-colors duration-300">
+                      {feature.title}
+                    </h3>
+                    <p className="text-gray-300 leading-relaxed group-hover:text-gray-200 transition-colors duration-300">
+                      {feature.description}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* DeFi Dashboard Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl lg:text-6xl font-bold mb-6">
-              DeFi <span className="gradient-text">Dashboard</span>
-            </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Earn passive income with your NFTs. Stake, lend, and provide liquidity 
-              to earn up to 20% APY in Bitcoin.
-            </p>
-          </motion.div>
-
-          <DeFiDashboard />
-        </div>
-      </section>
-
-      {/* Trending NFTs Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl lg:text-6xl font-bold mb-6">
-              Trending <span className="gradient-text">NFTs</span>
-            </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Discover the most popular NFTs on BitcoinBazaar. 
-              From Bitcoin-native collections to Stacks pioneers.
-            </p>
-          </motion.div>
-
-          <NFTGrid nfts={trendingNFTs} showQuickBuy={true} />
-        </div>
-      </section>
-
       {/* CTA Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
+      <section className="pt-8 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="glass-card p-12 rounded-3xl"
+            className="glass-card-premium p-12 rounded-3xl holographic floating-particles"
           >
             <h2 className="text-4xl lg:text-6xl font-bold mb-6">
               Ready to Experience the{' '}
-              <span className="gradient-text">Future</span> of NFTs?
+              <span className="gradient-text animate-gradient-shift">Future</span> of NFTs?
             </h2>
-            <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
               Join thousands of users already trading Bitcoin-native NFTs. 
               Start your journey today.
             </p>
@@ -418,16 +382,18 @@ export default function HomePage() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white rounded-xl font-semibold text-lg hover:shadow-lg hover:shadow-stacks-500/50 transition-all btn-hover"
+                className="px-8 py-4 bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white rounded-xl font-semibold text-lg hover:shadow-lg hover:shadow-stacks-500/50 transition-all btn-hover btn-premium bitcoin-glow flex items-center space-x-2"
               >
-                Start Trading
+                <span>Start Trading</span>
+                <ArrowRight className="w-5 h-5" />
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 glass-card text-white rounded-xl font-semibold text-lg hover:bg-white/10 transition-all"
+                className="px-8 py-4 glass-card-premium text-white rounded-xl font-semibold text-lg hover:bg-white/10 transition-all btn-hover stacks-glow flex items-center space-x-2"
               >
-                Learn More
+                <Sparkles className="w-5 h-5" />
+                <span>Learn More</span>
               </motion.button>
             </div>
           </motion.div>

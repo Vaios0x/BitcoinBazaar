@@ -4,6 +4,8 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { Clock, Filter, Grid, List, TrendingUp } from 'lucide-react'
 import { AuctionCard } from '@/components/auction/AuctionCard'
+import { BidModal } from '@/components/auction/BidModal'
+import { BitcoinSymbols } from '@/components/effects/BitcoinSymbols'
 import type { Auction } from '@/types/nft'
 
 // Mock auction data
@@ -42,6 +44,76 @@ const auctions: Auction[] = [
     auctionType: 'english',
     paymentToken: 'sBTC',
     status: 'ended'
+  },
+  {
+    id: 4,
+    nftId: 4,
+    seller: 'SP2J6ZY48GV1EZ5V2V5RB9MP66SW86PYKKNRV9EJ7',
+    startingPrice: 0.25,
+    currentPrice: 0.32,
+    highestBidder: 'SP3DX3H4FEYZJZ586MFBS25ZW3HZDMEW92260R2PR',
+    endTime: Math.floor(Date.now() / 1000) + 43200, // 12 hours
+    auctionType: 'english',
+    paymentToken: 'sBTC',
+    status: 'active'
+  },
+  {
+    id: 5,
+    nftId: 5,
+    seller: 'SP3DX3H4FEYZJZ586MFBS25ZW3HZDMEW92260R2PR',
+    startingPrice: 200,
+    currentPrice: 180,
+    endTime: Math.floor(Date.now() / 1000) + 7200, // 2 hours
+    auctionType: 'dutch',
+    paymentToken: 'STX',
+    status: 'active'
+  },
+  {
+    id: 6,
+    nftId: 6,
+    seller: 'SP1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    startingPrice: 0.15,
+    currentPrice: 0.18,
+    highestBidder: 'SP2J6ZY48GV1EZ5V2V5RB9MP66SW86PYKKNRV9EJ7',
+    endTime: Math.floor(Date.now() / 1000) + 3600, // 1 hour
+    auctionType: 'english',
+    paymentToken: 'sBTC',
+    status: 'active'
+  },
+  {
+    id: 7,
+    nftId: 7,
+    seller: 'SP2J6ZY48GV1EZ5V2V5RB9MP66SW86PYKKNRV9EJ7',
+    startingPrice: 0.08,
+    currentPrice: 0.12,
+    highestBidder: 'SP3DX3H4FEYZJZ586MFBS25ZW3HZDMEW92260R2PR',
+    endTime: Math.floor(Date.now() / 1000) - 7200, // Ended 2 hours ago
+    auctionType: 'english',
+    paymentToken: 'sBTC',
+    status: 'ended'
+  },
+  {
+    id: 8,
+    nftId: 8,
+    seller: 'SP3DX3H4FEYZJZ586MFBS25ZW3HZDMEW92260R2PR',
+    startingPrice: 150,
+    currentPrice: 120,
+    endTime: Math.floor(Date.now() / 1000) + 14400, // 4 hours
+    auctionType: 'dutch',
+    paymentToken: 'STX',
+    status: 'active'
+  },
+  {
+    id: 9,
+    nftId: 9,
+    seller: 'SP1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    startingPrice: 0.3,
+    currentPrice: 0.35,
+    highestBidder: 'SP2J6ZY48GV1EZ5V2V5RB9MP66SW86PYKKNRV9EJ7',
+    endTime: Math.floor(Date.now() / 1000) + 21600, // 6 hours
+    auctionType: 'english',
+    paymentToken: 'sBTC',
+    status: 'active'
   }
 ]
 
@@ -61,6 +133,8 @@ export default function AuctionsPage() {
   })
   const [viewMode, setViewMode] = React.useState<'grid' | 'list'>('grid')
   const [showFilters, setShowFilters] = React.useState(false)
+  const [selectedAuction, setSelectedAuction] = React.useState<Auction | null>(null)
+  const [isBidModalOpen, setIsBidModalOpen] = React.useState(false)
 
   // Filter auctions
   const filteredAuctions = auctions.filter(auction => {
@@ -90,9 +164,28 @@ export default function AuctionsPage() {
     // Implement bid logic here
   }
 
+  const handleOpenBidModal = (auction: Auction) => {
+    setSelectedAuction(auction)
+    setIsBidModalOpen(true)
+  }
+
+  const handleCloseBidModal = () => {
+    setIsBidModalOpen(false)
+    setSelectedAuction(null)
+  }
+
+  const handlePlaceBid = (auctionId: number, amount: number) => {
+    console.log(`Placing bid: ${amount} on auction ${auctionId}`)
+    // Implement actual bid placement logic here
+    handleBid(auctionId, amount)
+  }
+
   return (
-    <div className="min-h-screen pt-20 pb-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen -mt-[28rem] pt-0 pb-8 px-4 sm:px-6 lg:px-8 relative">
+      {/* Bitcoin Symbols Animation Background */}
+      <BitcoinSymbols />
+      
+      <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -272,7 +365,7 @@ export default function AuctionsPage() {
                 >
                   <AuctionCard 
                     auction={auction} 
-                    onBid={handleBid}
+                    onBid={handleOpenBidModal}
                   />
                 </motion.div>
               ))}
@@ -297,6 +390,14 @@ export default function AuctionsPage() {
           )}
         </motion.div>
       </div>
+
+      {/* Bid Modal */}
+      <BidModal
+        isOpen={isBidModalOpen}
+        onClose={handleCloseBidModal}
+        auction={selectedAuction}
+        onPlaceBid={handlePlaceBid}
+      />
     </div>
   )
 }

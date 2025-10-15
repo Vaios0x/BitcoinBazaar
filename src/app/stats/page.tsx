@@ -3,6 +3,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { TrendingUp, TrendingDown, Users, Coins, Star, Zap, Activity } from 'lucide-react'
+import { BitcoinSymbols } from '@/components/effects/BitcoinSymbols'
 
 // Mock analytics data
 const stats = {
@@ -44,8 +45,13 @@ export default function StatsPage() {
   }, [])
 
   return (
-    <div className="min-h-screen pt-20 pb-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen relative">
+      {/* Bitcoin Symbols Animation Background */}
+      <BitcoinSymbols />
+      
+      {/* Hero Section */}
+      <section className="relative -mt-[28rem] pt-0 pb-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -334,7 +340,8 @@ export default function StatsPage() {
             </div>
           </div>
         </motion.div>
-      </div>
+        </div>
+      </section>
     </div>
   )
 }

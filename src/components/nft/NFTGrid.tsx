@@ -7,9 +7,10 @@ interface NFTGridProps {
   nfts: NFT[]
   showQuickBuy?: boolean
   columns?: number
+  onAddToCart?: (nft: NFT) => void
 }
 
-export function NFTGrid({ nfts, showQuickBuy = false, columns = 4 }: NFTGridProps) {
+export function NFTGrid({ nfts, showQuickBuy = false, columns = 4, onAddToCart }: NFTGridProps) {
   const gridCols = {
     1: 'grid-cols-1',
     2: 'grid-cols-1 md:grid-cols-2',
@@ -25,6 +26,7 @@ export function NFTGrid({ nfts, showQuickBuy = false, columns = 4 }: NFTGridProp
           key={nft.id}
           nft={nft}
           showQuickBuy={showQuickBuy}
+          onAddToCart={onAddToCart}
         />
       ))}
     </div>

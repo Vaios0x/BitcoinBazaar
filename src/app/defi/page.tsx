@@ -3,13 +3,17 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { DeFiDashboard } from '@/components/defi/DeFiDashboard'
+import { BitcoinSymbols } from '@/components/effects/BitcoinSymbols'
 
 export default function DeFiPage() {
   return (
-    <div className="min-h-screen pt-20">
+    <div className="min-h-screen relative">
+      {/* Bitcoin Symbols Animation Background */}
+      <BitcoinSymbols />
+      
       {/* Hero Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+      <section className="relative -mt-[28rem] pt-0 pb-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -52,14 +56,14 @@ export default function DeFiPage() {
       </section>
 
       {/* DeFi Dashboard */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
+      <section className="pt-8 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <DeFiDashboard />
         </div>
       </section>
 
       {/* How It Works */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
+      <section className="pt-8 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 50 }}

@@ -10,9 +10,10 @@ import type { NFT } from '@/types/nft'
 interface NFTCardProps {
   nft: NFT
   showQuickBuy?: boolean
+  onAddToCart?: (nft: NFT) => void
 }
 
-export function NFTCard({ nft, showQuickBuy = false }: NFTCardProps) {
+export function NFTCard({ nft, showQuickBuy = false, onAddToCart }: NFTCardProps) {
   const [isLiked, setIsLiked] = React.useState(false)
   const [isHovered, setIsHovered] = React.useState(false)
 
@@ -20,13 +21,13 @@ export function NFTCard({ nft, showQuickBuy = false }: NFTCardProps) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -8, scale: 1.02 }}
-      transition={{ duration: 0.3 }}
+      whileHover={{ y: -12, scale: 1.03 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      className="group relative nft-card"
+      className="group relative nft-card-premium"
     >
-      <div className="glass-card rounded-2xl overflow-hidden hover:shadow-2xl hover:shadow-stacks-500/20 transition-all duration-300">
+      <div className="glass-card-premium rounded-2xl overflow-hidden hover:shadow-2xl hover:shadow-stacks-500/30 transition-all duration-500 floating-particles">
         {/* NFT Image */}
         <div className="relative aspect-square overflow-hidden">
           <Image
@@ -65,9 +66,29 @@ export function NFTCard({ nft, showQuickBuy = false }: NFTCardProps) {
               animate={{ opacity: 1 }}
               className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center"
             >
-              <button className="px-6 py-3 bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white rounded-full font-semibold hover:shadow-lg hover:shadow-stacks-500/50 transition-all">
-                Quick Buy
-              </button>
+              <motion.button
+                onClick={() => onAddToCart?.(nft)}
+                className="px-6 py-3 bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white rounded-full font-semibold hover:shadow-lg hover:shadow-stacks-500/50 transition-all relative overflow-hidden"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <span className="relative z-10">Quick Buy</span>
+                {/* Animated Bitcoin symbols in button */}
+                <motion.div
+                  className="absolute inset-0 flex items-center justify-center"
+                  animate={{
+                    opacity: [0, 0.3, 0],
+                    scale: [0.5, 1.2, 0.5]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  <span className="text-white text-xl">₿</span>
+                </motion.div>
+              </motion.button>
             </motion.div>
           )}
         </div>

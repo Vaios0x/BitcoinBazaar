@@ -2,8 +2,9 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
-import { Upload, Image, DollarSign, Percent, Hash, Zap, Info } from 'lucide-react'
+import { Upload, Image, DollarSign, Percent, Hash, Zap, Info, Sparkles, Copy } from 'lucide-react'
 import { useWalletStore } from '@/lib/stores/walletStore'
+import { BitcoinSymbols } from '@/components/effects/BitcoinSymbols'
 
 export default function CreatePage() {
   const [formData, setFormData] = React.useState({
@@ -18,7 +19,72 @@ export default function CreatePage() {
   })
   const [isUploading, setIsUploading] = React.useState(false)
   const [isCreating, setIsCreating] = React.useState(false)
+  const [templateApplied, setTemplateApplied] = React.useState(false)
   const { isConnected } = useWalletStore()
+
+  // NFT Templates in English
+  const nftTemplates = [
+    {
+      id: 'bitcoin-art',
+      name: 'Bitcoin Digital Art',
+      description: 'A unique digital artwork inspired by Bitcoin\'s revolutionary technology. This piece represents the decentralized future of digital currency and blockchain innovation.',
+      category: 'Digital Art',
+      suggestedPrice: '0.005',
+      suggestedToken: 'sBTC'
+    },
+    {
+      id: 'crypto-meme',
+      name: 'Crypto Meme Collection',
+      description: 'A humorous take on cryptocurrency culture. This meme captures the essence of the crypto community with wit and creativity.',
+      category: 'Meme',
+      suggestedPrice: '0.002',
+      suggestedToken: 'STX'
+    },
+    {
+      id: 'blockchain-tech',
+      name: 'Blockchain Technology',
+      description: 'An educational NFT showcasing blockchain technology concepts. Perfect for crypto enthusiasts and technology learners.',
+      category: 'Educational',
+      suggestedPrice: '0.008',
+      suggestedToken: 'sBTC'
+    },
+    {
+      id: 'bitcoin-history',
+      name: 'Bitcoin Historical Moment',
+      description: 'Commemorating a significant moment in Bitcoin\'s history. This NFT captures the essence of cryptocurrency evolution.',
+      category: 'Historical',
+      suggestedPrice: '0.012',
+      suggestedToken: 'sBTC'
+    },
+    {
+      id: 'defi-protocol',
+      name: 'DeFi Protocol Visualization',
+      description: 'A visual representation of decentralized finance protocols. This NFT illustrates the complexity and beauty of DeFi ecosystems.',
+      category: 'DeFi',
+      suggestedPrice: '0.015',
+      suggestedToken: 'STX'
+    },
+    {
+      id: 'nft-gaming',
+      name: 'Gaming NFT Asset',
+      description: 'A unique gaming asset for blockchain-based games. This NFT can be used across multiple gaming platforms and metaverses.',
+      category: 'Gaming',
+      suggestedPrice: '0.003',
+      suggestedToken: 'STX'
+    }
+  ]
+
+  const applyTemplate = (template: any) => {
+    setFormData(prev => ({
+      ...prev,
+      name: template.name,
+      description: template.description,
+      price: template.suggestedPrice,
+      paymentToken: template.suggestedToken as 'STX' | 'sBTC'
+    }))
+    setTemplateApplied(true)
+    setTimeout(() => setTemplateApplied(false), 3000)
+  }
 
   const handleInputChange = (e: any) => {
     const { name, value, type } = e.target
@@ -57,21 +123,79 @@ export default function CreatePage() {
 
   if (!isConnected) {
     return (
-      <div className="min-h-screen pt-20 pb-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
+      <div className="min-h-screen -mt-[28rem] pt-0 pb-8 px-4 sm:px-6 lg:px-8 relative">
+        {/* Bitcoin Symbols Animation Background */}
+        <BitcoinSymbols />
+        
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="glass-card rounded-3xl p-12"
+            className="glass-card rounded-3xl p-12 relative overflow-hidden"
           >
-            <div className="text-6xl mb-6">🔐</div>
-            <h1 className="text-3xl font-bold text-white mb-4">Connect Your Wallet</h1>
+            <div className="text-6xl mb-6 relative">
+              🔐
+              {/* Animated Bitcoin symbol near the lock */}
+              <motion.span
+                className="absolute -top-2 -right-2 text-bitcoin-500 text-2xl"
+                animate={{
+                  y: [0, -8, 0],
+                  rotate: [0, 15, -15, 0],
+                  scale: [1, 1.2, 1]
+                }}
+                transition={{
+                  duration: 2.5,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                ₿
+              </motion.span>
+            </div>
+            <h1 className="text-3xl font-bold text-white mb-4 relative">
+              Connect Your Wallet
+              {/* Floating Bitcoin symbol near the title */}
+              <motion.span
+                className="absolute -top-2 -right-2 text-bitcoin-500 text-xl"
+                animate={{
+                  y: [0, -8, 0],
+                  rotate: [0, 15, -15, 0],
+                  scale: [1, 1.1, 1]
+                }}
+                transition={{
+                  duration: 2.5,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                ₿
+              </motion.span>
+            </h1>
             <p className="text-gray-300 mb-8">
               You need to connect your wallet to create NFTs on BitcoinBazaar
             </p>
-            <button className="px-8 py-4 bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-stacks-500/50 transition-all">
-              Connect Wallet
-            </button>
+            <motion.button 
+              className="px-8 py-4 bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-stacks-500/50 transition-all relative overflow-hidden"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <span className="relative z-10">Connect Wallet</span>
+              {/* Animated Bitcoin symbols in button */}
+              <motion.div
+                className="absolute inset-0 flex items-center justify-center"
+                animate={{
+                  opacity: [0, 0.3, 0],
+                  scale: [0.5, 1.2, 0.5]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                <span className="text-white text-xl">₿</span>
+              </motion.div>
+            </motion.button>
           </motion.div>
         </div>
       </div>
@@ -79,21 +203,167 @@ export default function CreatePage() {
   }
 
   return (
-    <div className="min-h-screen pt-20 pb-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen -mt-[28rem] pt-0 pb-8 px-4 sm:px-6 lg:px-8 relative">
+      {/* Bitcoin Symbols Animation Background */}
+      <BitcoinSymbols />
+      
+      <div className="max-w-4xl mx-auto relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="mb-8 text-center"
         >
-          <h1 className="text-4xl lg:text-6xl font-bold mb-4">
-            Create <span className="gradient-text">NFT</span>
+          <h1 className="text-4xl lg:text-6xl font-bold mb-4 relative">
+            Create <span className="gradient-text relative">
+              NFT
+              {/* Floating Bitcoin symbol near the text */}
+              <motion.span
+                className="absolute -top-4 -right-4 text-bitcoin-500 text-2xl"
+                animate={{
+                  y: [0, -10, 0],
+                  rotate: [0, 10, -10, 0],
+                  scale: [1, 1.2, 1]
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                ₿
+              </motion.span>
+            </span>
           </h1>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             Mint your unique NFT on BitcoinBazaar. Choose between STX or sBTC pricing with dynamic Bitcoin integration.
           </p>
         </motion.div>
+
+        {/* NFT Templates Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 }}
+          className="mb-8"
+        >
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-bold text-white mb-2 relative">
+              <Sparkles className="w-6 h-6 inline-block mr-2 text-bitcoin-500" />
+              NFT Templates
+              {/* Floating Bitcoin symbol near the title */}
+              <motion.span
+                className="absolute -top-1 -right-1 text-bitcoin-500 text-lg"
+                animate={{
+                  y: [0, -4, 0],
+                  rotate: [0, 8, -8, 0],
+                  scale: [1, 1.1, 1]
+                }}
+                transition={{
+                  duration: 2.5,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                ₿
+              </motion.span>
+            </h2>
+            <p className="text-gray-300">Choose a template to get started quickly</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {nftTemplates.map((template, index) => (
+              <motion.div
+                key={template.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="glass-card rounded-xl p-4 hover:bg-gradient-to-r hover:from-bitcoin-500/10 hover:to-stacks-500/10 transition-all cursor-pointer group"
+                onClick={() => applyTemplate(template)}
+              >
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-white group-hover:text-bitcoin-400 transition-colors">
+                      {template.name}
+                    </h3>
+                    <span className="text-xs text-bitcoin-500 bg-bitcoin-500/20 px-2 py-1 rounded-full">
+                      {template.category}
+                    </span>
+                  </div>
+                  <motion.button
+                    className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-bitcoin-500/20 rounded"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <Copy className="w-4 h-4 text-bitcoin-500" />
+                  </motion.button>
+                </div>
+                
+                <p className="text-sm text-gray-300 mb-3 line-clamp-2">
+                  {template.description}
+                </p>
+                
+                <div className="flex items-center justify-between text-xs">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-gray-400">Suggested:</span>
+                    <span className="text-bitcoin-500 font-semibold">
+                      {template.suggestedPrice} {template.suggestedToken}
+                    </span>
+                  </div>
+                  <motion.div
+                    className="text-bitcoin-500"
+                    animate={{
+                      scale: [1, 1.1, 1]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    ₿
+                  </motion.div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Template Applied Notification */}
+        {templateApplied && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="mb-6 p-4 bg-gradient-to-r from-bitcoin-500/20 to-stacks-500/20 border border-bitcoin-500/30 rounded-xl"
+          >
+            <div className="flex items-center space-x-3">
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+              >
+                <Sparkles className="w-5 h-5 text-bitcoin-500" />
+              </motion.div>
+              <div>
+                <h3 className="text-white font-semibold">Template Applied!</h3>
+                <p className="text-gray-300 text-sm">The template has been applied to your form. You can modify the details as needed.</p>
+              </div>
+              <motion.div
+                className="text-bitcoin-500 text-xl"
+                animate={{
+                  scale: [1, 1.2, 1]
+                }}
+                transition={{
+                  duration: 1,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                ₿
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
 
         {/* Form */}
         <motion.div
@@ -151,9 +421,25 @@ export default function CreatePage() {
             {/* NFT Details */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-semibold text-white mb-2">
-                  NFT Name *
-                </label>
+              <label className="block text-sm font-semibold text-white mb-2 relative">
+                NFT Name *
+                {/* Floating Bitcoin symbol near the label */}
+                <motion.span
+                  className="absolute -top-1 -right-1 text-bitcoin-500 text-sm"
+                  animate={{
+                    y: [0, -3, 0],
+                    rotate: [0, 5, -5, 0],
+                    scale: [1, 1.1, 1]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  ₿
+                </motion.span>
+              </label>
                 <input
                   type="text"
                   name="name"
@@ -181,8 +467,24 @@ export default function CreatePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-white mb-2">
+              <label className="block text-sm font-semibold text-white mb-2 relative">
                 Description *
+                {/* Floating Bitcoin symbol near the label */}
+                <motion.span
+                  className="absolute -top-1 -right-1 text-bitcoin-500 text-sm"
+                  animate={{
+                    y: [0, -3, 0],
+                    rotate: [0, 5, -5, 0],
+                    scale: [1, 1.1, 1]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  ₿
+                </motion.span>
               </label>
               <textarea
                 name="description"
@@ -197,9 +499,25 @@ export default function CreatePage() {
 
             {/* Pricing Section */}
             <div className="space-y-6">
-              <h3 className="text-xl font-bold text-white flex items-center space-x-2">
+              <h3 className="text-xl font-bold text-white flex items-center space-x-2 relative">
                 <DollarSign className="w-6 h-6" />
                 <span>Pricing & Royalties</span>
+                {/* Floating Bitcoin symbol near the title */}
+                <motion.span
+                  className="absolute -top-1 -right-1 text-bitcoin-500 text-lg"
+                  animate={{
+                    y: [0, -4, 0],
+                    rotate: [0, 8, -8, 0],
+                    scale: [1, 1.1, 1]
+                  }}
+                  transition={{
+                    duration: 2.5,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  ₿
+                </motion.span>
               </h3>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -214,7 +532,7 @@ export default function CreatePage() {
                       value={formData.price}
                       onChange={handleInputChange}
                       placeholder="0.00"
-                      step="0.01"
+                      step="0.001"
                       min="0"
                       className="flex-1 px-4 py-3 glass-card rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-stacks-500"
                     />
@@ -263,8 +581,24 @@ export default function CreatePage() {
                         onChange={handleInputChange}
                         className="w-4 h-4 rounded border-gray-600 text-green-500 focus:ring-green-500"
                       />
-                      <label className="text-sm font-semibold text-green-400">
+                      <label className="text-sm font-semibold text-green-400 relative">
                         Enable Dynamic Bitcoin Pricing
+                        {/* Floating Bitcoin symbol near the label */}
+                        <motion.span
+                          className="absolute -top-1 -right-1 text-bitcoin-500 text-sm"
+                          animate={{
+                            y: [0, -3, 0],
+                            rotate: [0, 5, -5, 0],
+                            scale: [1, 1.1, 1]
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                          }}
+                        >
+                          ₿
+                        </motion.span>
                       </label>
                     </div>
                     <p className="text-xs text-gray-400">
@@ -282,8 +616,24 @@ export default function CreatePage() {
                 <div className="flex items-start space-x-3">
                   <Info className="w-5 h-5 text-bitcoin-500 mt-0.5" />
                   <div>
-                    <h4 className="text-sm font-semibold text-bitcoin-500 mb-1">
+                    <h4 className="text-sm font-semibold text-bitcoin-500 mb-1 relative">
                       Bitcoin-Native NFT
+                      {/* Floating Bitcoin symbol near the title */}
+                      <motion.span
+                        className="absolute -top-1 -right-1 text-bitcoin-500 text-sm"
+                        animate={{
+                          y: [0, -3, 0],
+                          rotate: [0, 5, -5, 0],
+                          scale: [1, 1.1, 1]
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                      >
+                        ₿
+                      </motion.span>
                     </h4>
                     <p className="text-xs text-gray-400">
                       Your NFT will be minted with Bitcoin block verification. 
@@ -296,27 +646,44 @@ export default function CreatePage() {
 
             {/* Submit Button */}
             <div className="flex justify-center">
-              <button
+              <motion.button
                 type="submit"
                 disabled={!formData.name || !formData.description || !formData.image || isCreating}
-                className={`px-12 py-4 rounded-xl font-semibold text-lg transition-all ${
+                className={`px-12 py-4 rounded-xl font-semibold text-lg transition-all relative overflow-hidden ${
                   !formData.name || !formData.description || !formData.image || isCreating
                     ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
                     : 'bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white hover:shadow-lg hover:shadow-stacks-500/50'
                 }`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 {isCreating ? (
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-2 relative z-10">
                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                     <span>Creating NFT...</span>
                   </div>
                 ) : (
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-2 relative z-10">
                     <Hash className="w-5 h-5" />
                     <span>Create NFT</span>
                   </div>
                 )}
-              </button>
+                {/* Animated Bitcoin symbols in button */}
+                <motion.div
+                  className="absolute inset-0 flex items-center justify-center"
+                  animate={{
+                    opacity: [0, 0.3, 0],
+                    scale: [0.5, 1.2, 0.5]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  <span className="text-white text-xl">₿</span>
+                </motion.div>
+              </motion.button>
             </div>
           </form>
         </motion.div>

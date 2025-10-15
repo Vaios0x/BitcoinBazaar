@@ -4,9 +4,10 @@ import './globals.css'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { NeuralBackground } from '@/components/effects/NeuralBackground'
+import { FloatingParticles } from '@/components/effects/FloatingParticles'
+import { LightEffects } from '@/components/effects/LightEffects'
 import { WalletProvider } from '@/components/providers/WalletProvider'
 import { Toaster } from 'react-hot-toast'
-import { ChatbotProvider } from '@/components/providers/ChatbotProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,16 +16,30 @@ export const metadata: Metadata = {
   description: 'Buy, sell, and create NFTs with Bitcoin\'s security and Stacks\' programmability. Features impossible on any other blockchain.',
   keywords: 'NFT, Bitcoin, Stacks, Marketplace, Blockchain, sBTC, STX',
   authors: [{ name: 'Vaios0x' }],
+  icons: {
+    icon: '/images/logo-bitcoinbazaar.png',
+    shortcut: '/images/logo-bitcoinbazaar.png',
+    apple: '/images/logo-bitcoinbazaar.png',
+  },
   openGraph: {
     title: 'BitcoinBazaar - Bitcoin-Native NFT Marketplace',
     description: 'The first NFT marketplace powered by Bitcoin. Dynamic pricing, dual-token payments, and Bitcoin-native features.',
     type: 'website',
     locale: 'en_US',
+    images: [
+      {
+        url: '/images/logo-bitcoinbazaar.png',
+        width: 512,
+        height: 512,
+        alt: 'BitcoinBaazar Logo',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'BitcoinBazaar - Bitcoin-Native NFT Marketplace',
     description: 'The first NFT marketplace powered by Bitcoin.',
+    images: ['/images/logo-bitcoinbazaar.png'],
   },
 }
 
@@ -37,16 +52,16 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={`${inter.className} bg-neural-background text-white antialiased`}>
         <WalletProvider>
-          <ChatbotProvider>
-            <div className="min-h-screen flex flex-col">
-              <NeuralBackground />
-              <Navbar />
-              <main className="flex-1 relative z-10">
-                {children}
-              </main>
-              <Footer />
-            </div>
-          </ChatbotProvider>
+          <div className="min-h-screen flex flex-col">
+            <NeuralBackground />
+            <FloatingParticles />
+            <LightEffects />
+            <Navbar />
+            <main className="flex-1 relative z-10">
+              {children}
+            </main>
+            <Footer />
+          </div>
           <Toaster
             position="bottom-right"
             toastOptions={{

@@ -4,6 +4,10 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { Filter, Search, Grid, List } from 'lucide-react'
 import { NFTGrid } from '@/components/nft/NFTGrid'
+import { BitcoinSymbols } from '@/components/effects/BitcoinSymbols'
+import { ShoppingCartModal } from '@/components/cart/ShoppingCartModal'
+import { CartButton } from '@/components/cart/CartButton'
+import { useShoppingCart } from '@/hooks/useShoppingCart'
 import type { NFT } from '@/types/nft'
 
 // Mock data for demo
@@ -120,6 +124,19 @@ export default function ExplorePage() {
   })
   const [viewMode, setViewMode] = React.useState<'grid' | 'list'>('grid')
   const [showFilters, setShowFilters] = React.useState(false)
+  
+  // Shopping cart functionality
+  const {
+    cartItems,
+    isCartOpen,
+    addToCart,
+    updateQuantity,
+    removeFromCart,
+    clearCart,
+    openCart,
+    closeCart,
+    getCartItemCount
+  } = useShoppingCart()
 
   // Filter NFTs based on search and filters
   const filteredNFTs = allNFTs.filter(nft => {
@@ -143,16 +160,37 @@ export default function ExplorePage() {
   })
 
   return (
-    <div className="min-h-screen pt-20 pb-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen -mt-[28rem] pt-0 pb-8 px-4 sm:px-6 lg:px-8 relative">
+      {/* Bitcoin Symbols Animation Background */}
+      <BitcoinSymbols />
+      
+      <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <h1 className="text-4xl lg:text-6xl font-bold mb-4">
-            Explore <span className="gradient-text">NFTs</span>
+          <h1 className="text-4xl lg:text-6xl font-bold mb-4 relative">
+            Explore <span className="gradient-text relative">
+              NFTs
+              {/* Floating Bitcoin symbol near the text */}
+              <motion.span
+                className="absolute -top-4 -right-4 text-bitcoin-500 text-2xl"
+                animate={{
+                  y: [0, -10, 0],
+                  rotate: [0, 10, -10, 0],
+                  scale: [1, 1.2, 1]
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                ₿
+              </motion.span>
+            </span>
           </h1>
           <p className="text-xl text-gray-300 max-w-3xl">
             Discover unique NFTs powered by Bitcoin. From Bitcoin-native collections to Stacks pioneers.
@@ -211,6 +249,12 @@ export default function ExplorePage() {
                   <List className="w-5 h-5" />
                 </button>
               </div>
+
+              {/* Shopping Cart Button */}
+              <CartButton
+                itemCount={getCartItemCount()}
+                onClick={openCart}
+              />
             </div>
           </div>
 
@@ -305,13 +349,14 @@ export default function ExplorePage() {
               nfts={filteredNFTs} 
               showQuickBuy={true}
               columns={viewMode === 'grid' ? 4 : 1}
+              onAddToCart={addToCart}
             />
           ) : (
             <div className="text-center py-12">
               <div className="text-6xl mb-4">🔍</div>
               <h3 className="text-2xl font-bold text-white mb-2">No NFTs found</h3>
               <p className="text-gray-400 mb-6">Try adjusting your search or filters</p>
-              <button
+              <motion.button
                 onClick={() => {
                   setSearchQuery('')
                   setSelectedFilters({
@@ -321,14 +366,41 @@ export default function ExplorePage() {
                     sortBy: 'Recently Listed'
                   })
                 }}
-                className="px-6 py-3 bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-stacks-500/50 transition-all"
+                className="px-6 py-3 bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-stacks-500/50 transition-all relative overflow-hidden"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                Clear Filters
-              </button>
+                <span className="relative z-10">Clear Filters</span>
+                {/* Animated Bitcoin symbols in button */}
+                <motion.div
+                  className="absolute inset-0 flex items-center justify-center"
+                  animate={{
+                    opacity: [0, 0.3, 0],
+                    scale: [0.5, 1.2, 0.5]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  <span className="text-white text-xl">₿</span>
+                </motion.div>
+              </motion.button>
             </div>
           )}
         </motion.div>
       </div>
+
+      {/* Shopping Cart Modal */}
+      <ShoppingCartModal
+        isOpen={isCartOpen}
+        onClose={closeCart}
+        cartItems={cartItems}
+        onUpdateQuantity={updateQuantity}
+        onRemoveItem={removeFromCart}
+        onClearCart={clearCart}
+      />
     </div>
   )
 }

@@ -13,8 +13,117 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
-  background: #0A0E27;
+  background: linear-gradient(135deg, #0A0E27 0%, #1a1b3a 25%, #2d1b69 50%, #0A0E27 100%);
   color: white;
+  min-height: 100vh;
+}
+
+/* Advanced Design System Variables */
+:root {
+  /* Bitcoin Ecosystem - Premium Palette */
+  --bitcoin-50: #FFF7ED;
+  --bitcoin-100: #FFEDD5;
+  --bitcoin-200: #FED7AA;
+  --bitcoin-300: #FDBA74;
+  --bitcoin-400: #FB923C;
+  --bitcoin-500: #F97316;
+  --bitcoin-600: #EA580C;
+  --bitcoin-700: #C2410C;
+  --bitcoin-800: #9A3412;
+  --bitcoin-900: #7C2D12;
+
+  /* Stacks Ecosystem - Cyber Purple */
+  --stacks-50: #F0F9FF;
+  --stacks-100: #E0F2FE;
+  --stacks-200: #BAE6FD;
+  --stacks-300: #7DD3FC;
+  --stacks-400: #38BDF8;
+  --stacks-500: #5546FF;
+  --stacks-600: #4338CA;
+  --stacks-700: #3730A3;
+  --stacks-800: #312E81;
+  --stacks-900: #1E1B4B;
+
+  /* sBTC Ecosystem - Trust Gold */
+  --sbtc-50: #FEF3C7;
+  --sbtc-100: #FDE68A;
+  --sbtc-200: #FCD34D;
+  --sbtc-300: #FBBF24;
+  --sbtc-400: #F59E0B;
+  --sbtc-500: #D97706;
+  --sbtc-600: #B45309;
+  --sbtc-700: #92400E;
+  --sbtc-800: #78350F;
+  --sbtc-900: #451A03;
+
+  /* Neural Background - Space Theme */
+  --neural-bg: #0A0E27;
+  --neural-surface: rgba(15, 23, 42, 0.6);
+  --neural-glass: rgba(255, 255, 255, 0.05);
+  --neural-premium: rgba(255, 255, 255, 0.12);
+
+  /* Holographic Effects */
+  --holographic-primary: linear-gradient(45deg, #F97316 0%, #5546FF 25%, #06B6D4 50%, #5546FF 75%, #F97316 100%);
+  --holographic-secondary: linear-gradient(135deg, #0A0E27 0%, #1E1B4B 25%, #312E81 50%, #1E1B4B 75%, #0A0E27 100%);
+
+  /* Advanced Spacing System */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --space-4xl: 6rem;
+  --space-5xl: 8rem;
+
+  /* Typography Scale */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.75rem;
+  --text-7xl: 4.5rem;
+  --text-8xl: 6rem;
+
+  /* Advanced Blur System */
+  --blur-xs: 2px;
+  --blur-sm: 4px;
+  --blur-md: 8px;
+  --blur-lg: 16px;
+  --blur-xl: 24px;
+  --blur-2xl: 32px;
+  --blur-3xl: 48px;
+
+  /* Premium Shadow System */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.25);
+  --shadow-bitcoin: 0 0 20px rgba(249, 115, 22, 0.4);
+  --shadow-stacks: 0 0 20px rgba(85, 70, 255, 0.4);
+  --shadow-holographic: 0 0 40px rgba(6, 182, 212, 0.3);
+
+  /* Animation Timing */
+  --timing-fast: 0.15s;
+  --timing-normal: 0.3s;
+  --timing-slow: 0.5s;
+  --timing-slower: 0.8s;
+  --timing-slowest: 1.2s;
+
+  /* Easing Functions */
+  --ease-linear: linear;
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-elastic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 body {
@@ -23,39 +132,195 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  position: relative;
 }
 
-/* Glassmorphism effects */
+/* Advanced Glassmorphism System */
 .glass-card {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37), inset 0 1px 1px 0 rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 8px 32px 0 rgba(31, 38, 135, 0.4),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
 }
 
+/* Premium Glassmorphism Variants */
+.glass-card-holographic {
+  background: rgba(6, 182, 212, 0.08);
+  backdrop-filter: blur(32px) saturate(300%);
+  -webkit-backdrop-filter: blur(32px) saturate(300%);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  box-shadow: 
+    0 16px 64px 0 rgba(6, 182, 212, 0.3),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 0 1px rgba(6, 182, 212, 0.1),
+    0 0 40px rgba(6, 182, 212, 0.1);
+}
+
+.glass-card-cyber {
+  background: rgba(59, 130, 246, 0.08);
+  backdrop-filter: blur(32px) saturate(300%);
+  -webkit-backdrop-filter: blur(32px) saturate(300%);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  box-shadow: 
+    0 16px 64px 0 rgba(59, 130, 246, 0.3),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 0 1px rgba(59, 130, 246, 0.1),
+    0 0 40px rgba(59, 130, 246, 0.1);
+}
+
+.glass-card-neural {
+  background: rgba(139, 92, 246, 0.08);
+  backdrop-filter: blur(32px) saturate(300%);
+  -webkit-backdrop-filter: blur(32px) saturate(300%);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  box-shadow: 
+    0 16px 64px 0 rgba(139, 92, 246, 0.3),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 0 1px rgba(139, 92, 246, 0.1),
+    0 0 40px rgba(139, 92, 246, 0.1);
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+}
+
+.glass-card-premium {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(32px) saturate(250%);
+  -webkit-backdrop-filter: blur(32px) saturate(250%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 16px 64px 0 rgba(31, 38, 135, 0.5),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 0 40px rgba(85, 70, 255, 0.1);
+}
+
+.glass-card-bitcoin {
+  background: rgba(249, 115, 22, 0.08);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  border: 1px solid rgba(249, 115, 22, 0.2);
+  box-shadow: 
+    0 8px 32px 0 rgba(249, 115, 22, 0.3),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.1),
+    0 0 20px rgba(249, 115, 22, 0.1);
+}
+
+.glass-card-stacks {
+  background: rgba(85, 70, 255, 0.08);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  border: 1px solid rgba(85, 70, 255, 0.2);
+  box-shadow: 
+    0 8px 32px 0 rgba(85, 70, 255, 0.3),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.1),
+    0 0 20px rgba(85, 70, 255, 0.1);
+}
+
+/* Advanced Neural Grid System */
 .neural-grid {
   background-image: 
-    linear-gradient(rgba(85, 70, 255, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(85, 70, 255, 0.1) 1px, transparent 1px);
-  background-size: 50px 50px;
-  animation: neural-pulse 20s ease-in-out infinite;
+    linear-gradient(rgba(85, 70, 255, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(85, 70, 255, 0.15) 1px, transparent 1px),
+    radial-gradient(circle at 25% 25%, rgba(249, 115, 22, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(85, 70, 255, 0.1) 0%, transparent 50%);
+  background-size: 60px 60px, 60px 60px, 200px 200px, 200px 200px;
+  animation: neural-pulse 25s ease-in-out infinite, neural-drift 40s linear infinite;
+  position: relative;
 }
 
+.neural-grid::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(249, 115, 22, 0.05) 0%, transparent 30%),
+    radial-gradient(circle at 80% 80%, rgba(85, 70, 255, 0.05) 0%, transparent 30%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.02) 0%, transparent 20%);
+  animation: neural-aurora 30s ease-in-out infinite;
+}
+
+/* Advanced Glow Effects */
 .neon-glow {
   box-shadow: 
-    0 0 5px rgba(85, 70, 255, 0.5),
-    0 0 10px rgba(85, 70, 255, 0.4),
-    0 0 20px rgba(85, 70, 255, 0.3),
-    0 0 40px rgba(85, 70, 255, 0.2);
-  animation: neon-flicker 3s ease-in-out infinite;
+    0 0 10px rgba(85, 70, 255, 0.6),
+    0 0 20px rgba(85, 70, 255, 0.5),
+    0 0 40px rgba(85, 70, 255, 0.4),
+    0 0 80px rgba(85, 70, 255, 0.3),
+    inset 0 0 20px rgba(85, 70, 255, 0.1);
+  animation: neon-flicker 4s ease-in-out infinite, neon-pulse 2s ease-in-out infinite;
 }
 
 .bitcoin-glow {
   box-shadow: 
-    0 0 5px rgba(249, 115, 22, 0.5),
-    0 0 10px rgba(249, 115, 22, 0.4),
-    0 0 20px rgba(249, 115, 22, 0.3);
+    0 0 10px rgba(249, 115, 22, 0.6),
+    0 0 20px rgba(249, 115, 22, 0.5),
+    0 0 40px rgba(249, 115, 22, 0.4),
+    0 0 80px rgba(249, 115, 22, 0.3),
+    inset 0 0 20px rgba(249, 115, 22, 0.1);
+  animation: bitcoin-pulse 3s ease-in-out infinite;
+}
+
+.stacks-glow {
+  box-shadow: 
+    0 0 10px rgba(85, 70, 255, 0.6),
+    0 0 20px rgba(85, 70, 255, 0.5),
+    0 0 40px rgba(85, 70, 255, 0.4),
+    0 0 80px rgba(85, 70, 255, 0.3),
+    inset 0 0 20px rgba(85, 70, 255, 0.1);
+  animation: stacks-pulse 2.5s ease-in-out infinite;
+}
+
+/* Holographic Effects */
+.holographic {
+  background: linear-gradient(45deg, 
+    rgba(249, 115, 22, 0.1) 0%, 
+    rgba(85, 70, 255, 0.1) 25%, 
+    rgba(255, 255, 255, 0.1) 50%, 
+    rgba(85, 70, 255, 0.1) 75%, 
+    rgba(249, 115, 22, 0.1) 100%);
+  background-size: 200% 200%;
+  animation: holographic-shift 6s ease-in-out infinite;
+}
+
+/* Floating Particles */
+.floating-particles {
+  position: relative;
+  overflow: hidden;
+}
+
+.floating-particles::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, rgba(249, 115, 22, 0.3), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(85, 70, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.2), transparent),
+    radial-gradient(1px 1px at 130px 80px, rgba(249, 115, 22, 0.2), transparent),
+    radial-gradient(2px 2px at 160px 30px, rgba(85, 70, 255, 0.3), transparent);
+  background-repeat: repeat;
+  background-size: 200px 100px;
+  animation: particles-float 20s linear infinite;
 }
 
 /* Custom scrollbar */
@@ -76,19 +341,40 @@ body {
   background: linear-gradient(45deg, #4338CA, #EA580C);
 }
 
-/* Gradient text */
+/* Advanced Gradient Text System */
 .gradient-text {
-  background: linear-gradient(45deg, #F97316, #5546FF);
+  background: linear-gradient(135deg, #F97316 0%, #EA580C 25%, #5546FF 50%, #4338CA 75%, #F97316 100%);
+  background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: gradient-shift 4s ease-in-out infinite;
 }
 
-/* Button hover effects */
+.gradient-text-bitcoin {
+  background: linear-gradient(135deg, #F97316 0%, #EA580C 50%, #F97316 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: bitcoin-gradient 3s ease-in-out infinite;
+}
+
+.gradient-text-stacks {
+  background: linear-gradient(135deg, #5546FF 0%, #4338CA 50%, #5546FF 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: stacks-gradient 3s ease-in-out infinite;
+}
+
+/* Advanced Button Effects */
 .btn-hover {
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(85, 70, 255, 0.1) 100%);
 }
 
 .btn-hover::before {
@@ -98,12 +384,55 @@ body {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.3), 
+    rgba(249, 115, 22, 0.2),
+    rgba(85, 70, 255, 0.2),
+    transparent);
+  transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-hover:hover::before {
   left: 100%;
+}
+
+.btn-hover:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 
+    0 10px 25px rgba(249, 115, 22, 0.3),
+    0 5px 15px rgba(85, 70, 255, 0.2);
+}
+
+/* Premium Button Effects */
+.btn-premium {
+  background: linear-gradient(135deg, 
+    rgba(249, 115, 22, 0.2) 0%, 
+    rgba(85, 70, 255, 0.2) 50%, 
+    rgba(249, 115, 22, 0.2) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-premium::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, 
+    transparent 30%, 
+    rgba(255, 255, 255, 0.1) 50%, 
+    transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.6s;
+}
+
+.btn-premium:hover::after {
+  transform: translateX(100%);
 }
 
 /* Loading animation */
@@ -181,9 +510,1358 @@ body {
   }
 }
 
+/* Advanced Animations */
+@keyframes neural-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes neural-drift {
+  0% { transform: translateX(0) translateY(0); }
+  25% { transform: translateX(10px) translateY(-5px); }
+  50% { transform: translateX(-5px) translateY(10px); }
+  75% { transform: translateX(-10px) translateY(-5px); }
+  100% { transform: translateX(0) translateY(0); }
+}
+
+@keyframes neural-aurora {
+  0%, 100% { 
+    background-position: 0% 0%, 100% 100%, 50% 50%; 
+    opacity: 0.3; 
+  }
+  50% { 
+    background-position: 100% 100%, 0% 0%, 25% 75%; 
+    opacity: 0.6; 
+  }
+}
+
+@keyframes neon-flicker {
+  0%, 100% { opacity: 1; }
+  25% { opacity: 0.8; }
+  50% { opacity: 0.9; }
+  75% { opacity: 0.7; }
+}
+
+@keyframes neon-pulse {
+  0%, 100% { 
+    box-shadow: 
+      0 0 10px rgba(85, 70, 255, 0.6),
+      0 0 20px rgba(85, 70, 255, 0.5),
+      0 0 40px rgba(85, 70, 255, 0.4);
+  }
+  50% { 
+    box-shadow: 
+      0 0 15px rgba(85, 70, 255, 0.8),
+      0 0 30px rgba(85, 70, 255, 0.7),
+      0 0 60px rgba(85, 70, 255, 0.6);
+  }
+}
+
+@keyframes bitcoin-pulse {
+  0%, 100% { 
+    box-shadow: 
+      0 0 10px rgba(249, 115, 22, 0.6),
+      0 0 20px rgba(249, 115, 22, 0.5),
+      0 0 40px rgba(249, 115, 22, 0.4);
+  }
+  50% { 
+    box-shadow: 
+      0 0 15px rgba(249, 115, 22, 0.8),
+      0 0 30px rgba(249, 115, 22, 0.7),
+      0 0 60px rgba(249, 115, 22, 0.6);
+  }
+}
+
+@keyframes stacks-pulse {
+  0%, 100% { 
+    box-shadow: 
+      0 0 10px rgba(85, 70, 255, 0.6),
+      0 0 20px rgba(85, 70, 255, 0.5),
+      0 0 40px rgba(85, 70, 255, 0.4);
+  }
+  50% { 
+    box-shadow: 
+      0 0 15px rgba(85, 70, 255, 0.8),
+      0 0 30px rgba(85, 70, 255, 0.7),
+      0 0 60px rgba(85, 70, 255, 0.6);
+  }
+}
+
+@keyframes holographic-shift {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+@keyframes particles-float {
+  0% { transform: translateY(0) translateX(0); }
+  25% { transform: translateY(-10px) translateX(5px); }
+  50% { transform: translateY(-20px) translateX(-5px); }
+  75% { transform: translateY(-10px) translateX(10px); }
+  100% { transform: translateY(0) translateX(0); }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+@keyframes bitcoin-gradient {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+@keyframes stacks-gradient {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  25% { transform: translateY(-10px) rotate(1deg); }
+  50% { transform: translateY(-20px) rotate(0deg); }
+  75% { transform: translateY(-10px) rotate(-1deg); }
+}
+
+@keyframes glow {
+  0% { 
+    box-shadow: 
+      0 0 5px rgba(85, 70, 255, 0.5),
+      0 0 10px rgba(85, 70, 255, 0.3),
+      0 0 20px rgba(85, 70, 255, 0.2);
+  }
+  100% { 
+    box-shadow: 
+      0 0 10px rgba(85, 70, 255, 0.8),
+      0 0 20px rgba(85, 70, 255, 0.6),
+      0 0 40px rgba(85, 70, 255, 0.4);
+  }
+}
+
+/* Enhanced NFT Card Effects */
+.nft-card-premium {
+  background: linear-gradient(135deg, 
+    rgba(249, 115, 22, 0.1) 0%, 
+    rgba(85, 70, 255, 0.1) 50%, 
+    rgba(249, 115, 22, 0.1) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(24px);
+  position: relative;
+  overflow: hidden;
+}
+
+.nft-card-premium::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, 
+    transparent 30%, 
+    rgba(255, 255, 255, 0.1) 50%, 
+    transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.8s;
+}
+
+.nft-card-premium:hover::before {
+  transform: translateX(100%);
+}
+
+.nft-card-premium:hover {
+  transform: translateY(-12px) scale(1.03);
+  box-shadow: 
+    0 25px 50px rgba(249, 115, 22, 0.3),
+    0 15px 30px rgba(85, 70, 255, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive Enhancements */
+@media (max-width: 768px) {
+  .glass-card {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+  
+  .neural-grid {
+    background-size: 30px 30px, 30px 30px, 100px 100px, 100px 100px;
+  }
+  
+  .floating-particles::before {
+    background-size: 100px 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .glass-card {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  
+  .neural-grid {
+    background-size: 20px 20px, 20px 20px, 80px 80px, 80px 80px;
+  }
+}
+
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .glass-card {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .gradient-text {
+    -webkit-text-fill-color: #ffffff;
+    color: #ffffff;
+  }
+}
+
+/* Enhanced 3D Battle Arena Effects */
+.battle-arena-3d {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.battle-card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.battle-card-3d:hover {
+  transform: rotateY(10deg) rotateX(5deg) translateZ(20px);
+}
+
+.battle-arena-glow {
+  background: radial-gradient(circle at center, 
+    rgba(249, 115, 22, 0.1) 0%, 
+    rgba(85, 70, 255, 0.05) 50%, 
+    transparent 100%);
+  animation: arena-pulse 4s ease-in-out infinite;
+}
+
+@keyframes arena-pulse {
+  0%, 100% { 
+    background: radial-gradient(circle at center, 
+      rgba(249, 115, 22, 0.1) 0%, 
+      rgba(85, 70, 255, 0.05) 50%, 
+      transparent 100%);
+  }
+  50% { 
+    background: radial-gradient(circle at center, 
+      rgba(249, 115, 22, 0.2) 0%, 
+      rgba(85, 70, 255, 0.1) 50%, 
+      transparent 100%);
+  }
+}
+
+.battle-effect-lightning {
+  background: linear-gradient(45deg, 
+    transparent 30%, 
+    rgba(255, 255, 255, 0.8) 50%, 
+    transparent 70%);
+  animation: lightning-strike 0.5s ease-out;
+}
+
+@keyframes lightning-strike {
+  0% { transform: translateX(-100%) skewX(-15deg); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateX(100%) skewX(-15deg); opacity: 0; }
+}
+
+.battle-effect-fire {
+  background: linear-gradient(45deg, 
+    rgba(255, 0, 0, 0.3) 0%, 
+    rgba(255, 165, 0, 0.5) 50%, 
+    rgba(255, 255, 0, 0.3) 100%);
+  animation: fire-flicker 0.3s ease-in-out infinite alternate;
+}
+
+@keyframes fire-flicker {
+  0% { opacity: 0.8; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.1); }
+}
+
+.battle-effect-ice {
+  background: linear-gradient(45deg, 
+    rgba(0, 191, 255, 0.3) 0%, 
+    rgba(135, 206, 250, 0.5) 50%, 
+    rgba(255, 255, 255, 0.3) 100%);
+  animation: ice-crystal 0.8s ease-in-out infinite;
+}
+
+@keyframes ice-crystal {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.2); }
+}
+
+.battle-health-bar {
+  background: linear-gradient(90deg, 
+    rgba(0, 0, 0, 0.3) 0%, 
+    rgba(0, 0, 0, 0.1) 100%);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 0 20px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+.battle-progress-bar {
+  background: linear-gradient(90deg, 
+    #F97316 0%, 
+    #EA580C 50%, 
+    #DC2626 100%);
+  box-shadow: 
+    0 0 10px rgba(249, 115, 22, 0.6),
+    0 0 20px rgba(249, 115, 22, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  animation: progress-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes progress-glow {
+  0% { 
+    box-shadow: 
+      0 0 10px rgba(249, 115, 22, 0.6),
+      0 0 20px rgba(249, 115, 22, 0.4);
+  }
+  100% { 
+    box-shadow: 
+      0 0 15px rgba(249, 115, 22, 0.8),
+      0 0 30px rgba(249, 115, 22, 0.6);
+  }
+}
+
+.battle-log-entry {
+  background: linear-gradient(90deg, 
+    rgba(0, 0, 0, 0.2) 0%, 
+    rgba(0, 0, 0, 0.1) 100%);
+  border-left: 3px solid rgba(249, 115, 22, 0.6);
+  animation: log-slide-in 0.5s ease-out;
+}
+
+@keyframes log-slide-in {
+  0% { 
+    transform: translateX(-20px); 
+    opacity: 0; 
+  }
+  100% { 
+    transform: translateX(0); 
+    opacity: 1; 
+  }
+}
+
+.battle-result-victory {
+  background: linear-gradient(135deg, 
+    rgba(34, 197, 94, 0.2) 0%, 
+    rgba(16, 185, 129, 0.3) 50%, 
+    rgba(5, 150, 105, 0.2) 100%);
+  animation: victory-celebration 2s ease-in-out infinite;
+}
+
+@keyframes victory-celebration {
+  0%, 100% { 
+    transform: scale(1) rotate(0deg);
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+  }
+  50% { 
+    transform: scale(1.05) rotate(2deg);
+    box-shadow: 0 0 30px rgba(34, 197, 94, 0.6);
+  }
+}
+
+.battle-result-defeat {
+  background: linear-gradient(135deg, 
+    rgba(239, 68, 68, 0.2) 0%, 
+    rgba(220, 38, 38, 0.3) 50%, 
+    rgba(185, 28, 28, 0.2) 100%);
+  animation: defeat-shake 0.5s ease-in-out infinite;
+}
+
+@keyframes defeat-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}
+
+.battle-opponent-card {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.05) 0%, 
+    rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.battle-opponent-card:hover {
+  background: linear-gradient(135deg, 
+    rgba(249, 115, 22, 0.1) 0%, 
+    rgba(85, 70, 255, 0.05) 100%);
+  border-color: rgba(249, 115, 22, 0.3);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(249, 115, 22, 0.2);
+}
+
+.battle-arena-backdrop {
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(249, 115, 22, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(85, 70, 255, 0.1) 0%, transparent 50%),
+    linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+  animation: backdrop-shift 20s ease-in-out infinite;
+}
+
+@keyframes backdrop-shift {
+  0%, 100% { 
+    background-position: 0% 0%, 100% 100%, 0% 0%;
+  }
+  50% { 
+    background-position: 100% 100%, 0% 0%, 100% 100%;
+  }
+}
+
+/* Battle Modal Ultra Compact */
+.battle-arena-3d {
+  max-width: 600px;
+  margin: 0 auto;
+  scrollbar-width: thin;
+  scrollbar-color: #f97316 #1f2937;
+  height: 75vh;
+  max-height: 75vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+@media (min-width: 640px) {
+  .battle-arena-3d {
+    height: 80vh;
+    max-height: 80vh;
+  }
+}
+
+@media (min-width: 1024px) {
+  .battle-modal-container {
+    padding-top: 8rem; /* 128px */
+    padding-bottom: 4rem; /* 64px - espacio del footer */
+  }
+  
+  .battle-arena-3d {
+    height: 75vh; /* Reducido para dar espacio al footer */
+    max-height: 75vh;
+  }
+}
+
+@media (min-width: 1280px) {
+  .battle-modal-container {
+    padding-top: 9rem; /* 144px */
+    padding-bottom: 5rem; /* 80px - más espacio del footer */
+  }
+  
+  .battle-arena-3d {
+    height: 70vh; /* Más espacio para pantallas grandes */
+    max-height: 70vh;
+  }
+}
+
+/* Custom scrollbar for battle modal */
+.battle-arena-3d::-webkit-scrollbar {
+  width: 8px;
+}
+
+.battle-arena-3d::-webkit-scrollbar-track {
+  background: rgba(31, 41, 55, 0.5);
+  border-radius: 4px;
+}
+
+.battle-arena-3d::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #f97316, #dc2626);
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.battle-arena-3d::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #ea580c, #b91c1c);
+}
+
+/* Battle Modal Container Spacing */
+.battle-modal-container {
+  padding-top: 6rem; /* 96px - más espacio del navbar en mobile */
+}
+
+@media (min-width: 640px) {
+  .battle-modal-container {
+    padding-top: 7rem; /* 112px */
+  }
+}
+
+@media (min-width: 1024px) {
+  .battle-modal-container {
+    padding-top: 8rem; /* 128px */
+    padding-bottom: 4rem; /* 64px - espacio del footer */
+  }
+}
+
+@media (max-width: 768px) {
+  .battle-modal-container {
+    padding-top: 7rem; /* 112px - espacio extra para mobile */
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  
+  .battle-arena-3d {
+    max-width: calc(100vw - 1rem);
+    margin: 0 0.5rem;
+    max-height: 65vh;
+    height: 65vh;
+    overflow-y: auto;
+  }
+  
+  .battle-opponent-card {
+    min-height: 120px;
+  }
+  
+  .battle-opponent-card img {
+    height: 80px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 0.5rem;
+  }
+  
+  .battle-health-bar {
+    height: 4px;
+  }
+  
+  .battle-progress-bar {
+    height: 3px;
+  }
+}
+
+@media (max-width: 640px) {
+  .battle-modal-container {
+    padding-top: 8rem; /* 128px - espacio extra para móviles pequeños */
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+  
+  .battle-arena-3d {
+    max-width: calc(100vw - 0.5rem);
+    margin: 0 0.25rem;
+    max-height: 60vh;
+    height: 60vh;
+    overflow-y: auto;
+  }
+  
+  .battle-opponent-card {
+    min-height: 100px;
+  }
+  
+  .battle-opponent-card img {
+    height: 70px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 0.5rem;
+  }
+  
+  .battle-arena-3d .text-xl {
+    font-size: 1rem;
+  }
+  
+  .battle-arena-3d .text-lg {
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .battle-modal-container {
+    padding-top: 9rem; /* 144px - espacio máximo para móviles muy pequeños */
+    padding-left: 0.125rem;
+    padding-right: 0.125rem;
+  }
+  
+  .battle-arena-3d {
+    max-width: calc(100vw - 0.25rem);
+    margin: 0 0.125rem;
+    max-height: 55vh;
+    height: 55vh;
+    overflow-y: auto;
+  }
+  
+  .battle-opponent-card {
+    min-height: 90px;
+  }
+  
+  .battle-opponent-card img {
+    height: 60px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 0.5rem;
+  }
+  
+  .battle-arena-3d .text-xl {
+    font-size: 0.875rem;
+  }
+  
+  .battle-arena-3d .text-lg {
+    font-size: 0.75rem;
+  }
+}
+
+/* Battle Opponent Card Images - Mobile Optimization */
+@media (max-width: 768px) {
+  .battle-opponent-card .aspect-square {
+    aspect-ratio: 1/1;
+    min-height: 80px;
+  }
+  
+  .battle-opponent-card .aspect-square img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 0.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .battle-opponent-card .aspect-square {
+    min-height: 70px;
+  }
+}
+
+@media (max-width: 480px) {
+  .battle-opponent-card .aspect-square {
+    min-height: 60px;
+  }
+}
+
+/* Collection Modal Scrollbar */
+.collection-modal-container .glass-card-premium::-webkit-scrollbar {
+  width: 8px;
+}
+
+.collection-modal-container .glass-card-premium::-webkit-scrollbar-track {
+  background: rgba(31, 41, 55, 0.5);
+  border-radius: 4px;
+}
+
+.collection-modal-container .glass-card-premium::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #f97316, #5546ff);
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.collection-modal-container .glass-card-premium::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #ea580c, #4338ca);
+}
+
+/* Cart Modal Spacing */
+.cart-modal-container {
+  padding-top: 6rem; /* 96px - espacio del navbar */
+}
+
+@media (min-width: 640px) {
+  .cart-modal-container {
+    padding-top: 7rem; /* 112px */
+  }
+}
+
+@media (min-width: 1024px) {
+  .cart-modal-container {
+    padding-top: 8rem; /* 128px */
+  }
+}
+
+@media (max-width: 768px) {
+  .cart-modal-container {
+    padding-top: 7rem; /* 112px - espacio extra para mobile */
+  }
+}
+
+@media (max-width: 640px) {
+  .cart-modal-container {
+    padding-top: 8rem; /* 128px - espacio extra para móviles pequeños */
+  }
+}
+
+@media (max-width: 480px) {
+  .cart-modal-container {
+    padding-top: 9rem; /* 144px - espacio máximo para móviles muy pequeños */
+  }
+}
+
+/* Bid Modal Scrollbar */
+.bid-modal-container .glass-card-premium::-webkit-scrollbar {
+  width: 8px;
+}
+
+.bid-modal-container .glass-card-premium::-webkit-scrollbar-track {
+  background: rgba(31, 41, 55, 0.5);
+  border-radius: 4px;
+}
+
+.bid-modal-container .glass-card-premium::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #f97316, #5546ff);
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bid-modal-container .glass-card-premium::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #ea580c, #4338ca);
+}
+
+/* Bid Modal Spacing */
+.bid-modal-container {
+  padding-top: 6rem; /* 96px - espacio del navbar */
+  padding-bottom: 4rem; /* 64px - espacio del footer */
+}
+
+@media (min-width: 640px) {
+  .bid-modal-container {
+    padding-top: 7rem; /* 112px */
+    padding-bottom: 5rem; /* 80px */
+  }
+}
+
+@media (min-width: 1024px) {
+  .bid-modal-container {
+    padding-top: 8rem; /* 128px */
+    padding-bottom: 6rem; /* 96px */
+  }
+}
+
+@media (max-width: 768px) {
+  .bid-modal-container {
+    padding-top: 7rem; /* 112px - espacio extra para mobile */
+    padding-bottom: 4rem; /* 64px */
+  }
+}
+
+@media (max-width: 640px) {
+  .bid-modal-container {
+    padding-top: 8rem; /* 128px - espacio extra para móviles pequeños */
+    padding-bottom: 5rem; /* 80px */
+  }
+}
+
+@media (max-width: 480px) {
+  .bid-modal-container {
+    padding-top: 9rem; /* 144px - espacio máximo para móviles muy pequeños */
+    padding-bottom: 6rem; /* 96px */
+  }
+}
+
+/* Collection Modal Spacing */
+.collection-modal-container {
+  padding-top: 5rem; /* 80px - espacio del navbar */
+  padding-bottom: 4rem; /* 64px - espacio del footer */
+}
+
+@media (min-width: 640px) {
+  .collection-modal-container {
+    padding-top: 6rem; /* 96px */
+    padding-bottom: 5rem; /* 80px */
+  }
+}
+
+@media (min-width: 1024px) {
+  .collection-modal-container {
+    padding-top: 7rem; /* 112px */
+    padding-bottom: 6rem; /* 96px */
+  }
+}
+
+@media (max-width: 768px) {
+  .collection-modal-container {
+    padding-top: 6rem; /* 96px - espacio extra para mobile */
+    padding-bottom: 4rem; /* 64px */
+  }
+}
+
+@media (max-width: 640px) {
+  .collection-modal-container {
+    padding-top: 7rem; /* 112px - espacio extra para móviles pequeños */
+    padding-bottom: 5rem; /* 80px */
+  }
+}
+
+@media (max-width: 480px) {
+  .collection-modal-container {
+    padding-top: 8rem; /* 128px - espacio máximo para móviles muy pequeños */
+    padding-bottom: 6rem; /* 96px */
+  }
+}
+
+/* Premium Animations */
+@keyframes holographic-glow {
+  0%, 100% { 
+    box-shadow: 
+      0 0 10px rgba(6, 182, 212, 0.6),
+      0 0 20px rgba(6, 182, 212, 0.5),
+      0 0 40px rgba(6, 182, 212, 0.4);
+  }
+  50% { 
+    box-shadow: 
+      0 0 15px rgba(6, 182, 212, 0.8),
+      0 0 30px rgba(6, 182, 212, 0.7),
+      0 0 60px rgba(6, 182, 212, 0.6);
+  }
+}
+
+@keyframes cyber-scan {
+  0% { transform: translateX(-100%) skewX(-15deg); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateX(100%) skewX(-15deg); opacity: 0; }
+}
+
+@keyframes bitcoin-mining {
+  0%, 100% { 
+    transform: scale(1) rotate(0deg);
+    box-shadow: 0 0 20px rgba(249, 115, 22, 0.4);
+  }
+  50% { 
+    transform: scale(1.1) rotate(180deg);
+    box-shadow: 0 0 30px rgba(249, 115, 22, 0.6);
+  }
+}
+
+@keyframes neural-connection {
+  0%, 100% { 
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% { 
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes particle-burst {
+  0% { 
+    transform: scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% { 
+    transform: scale(2) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes energy-flow {
+  0% { 
+    background-position: 0% 0%;
+    opacity: 0.3;
+  }
+  50% { 
+    background-position: 100% 100%;
+    opacity: 1;
+  }
+  100% { 
+    background-position: 0% 0%;
+    opacity: 0.3;
+  }
+}
+
+@keyframes blockchain-pulse {
+  0%, 100% { 
+    box-shadow: 
+      0 0 10px rgba(16, 185, 129, 0.6),
+      0 0 20px rgba(16, 185, 129, 0.5),
+      0 0 40px rgba(16, 185, 129, 0.4);
+  }
+  50% { 
+    box-shadow: 
+      0 0 15px rgba(16, 185, 129, 0.8),
+      0 0 30px rgba(16, 185, 129, 0.7),
+      0 0 60px rgba(16, 185, 129, 0.6);
+  }
+}
+
+@keyframes holographic-rainbow {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+@keyframes cyber-grid {
+  0% { transform: translateX(0) translateY(0); }
+  25% { transform: translateX(10px) translateY(-5px); }
+  50% { transform: translateX(-5px) translateY(10px); }
+  75% { transform: translateX(-10px) translateY(-5px); }
+  100% { transform: translateX(0) translateY(0); }
+}
+
+@keyframes bitcoin-symbol-float {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.3;
+  }
+  25% { 
+    transform: translateY(-10px) rotate(90deg);
+    opacity: 0.8;
+  }
+  50% { 
+    transform: translateY(-20px) rotate(180deg);
+    opacity: 1;
+  }
+  75% { 
+    transform: translateY(-10px) rotate(270deg);
+    opacity: 0.8;
+  }
+}
+
+@keyframes stacks-network {
+  0%, 100% { 
+    opacity: 0.3;
+    transform: scale(0.9);
+  }
+  50% { 
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes premium-shimmer {
+  0% { 
+    background-position: -200% 0;
+    opacity: 0;
+  }
+  50% { 
+    background-position: 0% 0;
+    opacity: 1;
+  }
+  100% { 
+    background-position: 200% 0;
+    opacity: 0;
+  }
+}
+
+@keyframes cyber-wave {
+  0%, 100% { 
+    transform: translateY(0) scaleX(1);
+    opacity: 0.3;
+  }
+  50% { 
+    transform: translateY(-10px) scaleX(1.1);
+    opacity: 1;
+  }
+}
+
+@keyframes holographic-shift-advanced {
+  0% { 
+    background-position: 0% 0%;
+    filter: hue-rotate(0deg);
+  }
+  25% { 
+    background-position: 100% 0%;
+    filter: hue-rotate(90deg);
+  }
+  50% { 
+    background-position: 100% 100%;
+    filter: hue-rotate(180deg);
+  }
+  75% { 
+    background-position: 0% 100%;
+    filter: hue-rotate(270deg);
+  }
+  100% { 
+    background-position: 0% 0%;
+    filter: hue-rotate(360deg);
+  }
+}
+
+@keyframes neural-sync {
+  0%, 100% { 
+    opacity: 0.3;
+    transform: scale(0.8) rotate(0deg);
+  }
+  50% { 
+    opacity: 1;
+    transform: scale(1.2) rotate(180deg);
+  }
+}
+
+@keyframes blockchain-verify {
+  0% { 
+    background-position: 0% 0%;
+    opacity: 0.3;
+  }
+  50% { 
+    background-position: 100% 100%;
+    opacity: 1;
+  }
+  100% { 
+    background-position: 0% 0%;
+    opacity: 0.3;
+  }
+}
+
+@keyframes cyber-aurora {
+  0%, 100% { 
+    background-position: 0% 0%;
+    opacity: 0.3;
+  }
+  25% { 
+    background-position: 100% 0%;
+    opacity: 0.6;
+  }
+  50% { 
+    background-position: 100% 100%;
+    opacity: 1;
+  }
+  75% { 
+    background-position: 0% 100%;
+    opacity: 0.6;
+  }
+}
+
+@keyframes premium-glow {
+  0% { 
+    box-shadow: 
+      0 0 5px rgba(255, 255, 255, 0.3),
+      0 0 10px rgba(255, 255, 255, 0.2),
+      0 0 20px rgba(255, 255, 255, 0.1);
+  }
+  100% { 
+    box-shadow: 
+      0 0 10px rgba(255, 255, 255, 0.6),
+      0 0 20px rgba(255, 255, 255, 0.4),
+      0 0 40px rgba(255, 255, 255, 0.2);
+  }
+}
+
+@keyframes cyber-pulse {
+  0%, 100% { 
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  50% { 
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+@keyframes holographic-float {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.3;
+  }
+  25% { 
+    transform: translateY(-5px) rotate(90deg);
+    opacity: 0.6;
+  }
+  50% { 
+    transform: translateY(-10px) rotate(180deg);
+    opacity: 1;
+  }
+  75% { 
+    transform: translateY(-5px) rotate(270deg);
+    opacity: 0.6;
+  }
+}
+
+@keyframes neural-network {
+  0%, 100% { 
+    opacity: 0.3;
+    transform: scale(0.9);
+  }
+  50% { 
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes cyber-energy {
+  0%, 100% { 
+    background-position: 0% 0%;
+    opacity: 0.3;
+  }
+  50% { 
+    background-position: 100% 100%;
+    opacity: 1;
+  }
+}
+
+@keyframes blockchain-flow {
+  0%, 100% { 
+    transform: translateX(0);
+    opacity: 0.3;
+  }
+  50% { 
+    transform: translateX(100%);
+    opacity: 1;
+  }
+}
+
+@keyframes premium-shine {
+  0% { 
+    background-position: -200% 0;
+    opacity: 0;
+  }
+  50% { 
+    background-position: 0% 0;
+    opacity: 1;
+  }
+  100% { 
+    background-position: 200% 0;
+    opacity: 0;
+  }
+}
+
+@keyframes cyber-grid-pulse {
+  0%, 100% { 
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes holographic-scan {
+  0% { 
+    transform: translateY(-100%) skewX(-15deg);
+    opacity: 0;
+  }
+  50% { 
+    opacity: 1;
+  }
+  100% { 
+    transform: translateY(100%) skewX(-15deg);
+    opacity: 0;
+  }
+}
+
+@keyframes neural-ripple {
+  0% { 
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% { 
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+@keyframes cyber-connection {
+  0%, 100% { 
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% { 
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes blockchain-verify-success {
+  0% { 
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% { 
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes premium-float {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.3;
+  }
+  25% { 
+    transform: translateY(-5px) rotate(1deg);
+    opacity: 0.6;
+  }
+  50% { 
+    transform: translateY(-10px) rotate(0deg);
+    opacity: 1;
+  }
+  75% { 
+    transform: translateY(-5px) rotate(-1deg);
+    opacity: 0.6;
+  }
+}
+
+/* Premium Gradient Text */
+.gradient-text-holographic {
+  background: linear-gradient(135deg, #06B6D4 0%, #8B5CF6 25%, #F59E0B 50%, #8B5CF6 75%, #06B6D4 100%);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: holographic-rainbow 8s linear infinite;
+}
+
+.gradient-text-cyber {
+  background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 25%, #8B5CF6 50%, #1D4ED8 75%, #3B82F6 100%);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: cyber-wave 4s ease-in-out infinite;
+}
+
+.gradient-text-neural {
+  background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 25%, #F59E0B 50%, #EC4899 75%, #8B5CF6 100%);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: neural-sync 3s ease-in-out infinite;
+}
+
+/* Premium Shadow System */
+.shadow-bitcoin-lg {
+  box-shadow: 
+    0 0 20px rgba(249, 115, 22, 0.6),
+    0 0 40px rgba(249, 115, 22, 0.5),
+    0 0 80px rgba(249, 115, 22, 0.4);
+}
+
+.shadow-stacks-lg {
+  box-shadow: 
+    0 0 20px rgba(85, 70, 255, 0.6),
+    0 0 40px rgba(85, 70, 255, 0.5),
+    0 0 80px rgba(85, 70, 255, 0.4);
+}
+
+.shadow-holographic-lg {
+  box-shadow: 
+    0 0 20px rgba(6, 182, 212, 0.6),
+    0 0 40px rgba(6, 182, 212, 0.5),
+    0 0 80px rgba(6, 182, 212, 0.4);
+}
+
+.shadow-cyan-500\/50 {
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+}
+
+.shadow-cyan-500\/70 {
+  box-shadow: 0 0 30px rgba(6, 182, 212, 0.7);
+}
+
+.shadow-purple-500\/50 {
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+}
+
+.shadow-purple-500\/70 {
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.7);
+}
+
+/* Premium Holographic Background */
+.holographic-background {
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(249, 115, 22, 0.05) 0%, transparent 30%);
+  animation: cyber-aurora 30s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Neural Network Overlay */
+.neural-network-overlay {
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(6, 182, 212, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(6, 182, 212, 0.1) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: neural-network 12s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Floating Bitcoin Symbols */
+.floating-bitcoin-symbols {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  animation: bitcoin-symbol-float 6s ease-in-out infinite;
+}
+
+/* Cyber Grid */
+.cyber-grid {
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: cyber-grid 20s linear infinite;
+  pointer-events: none;
+}
+
+/* Energy Particles */
+.energy-particles {
+  position: fixed;
+  inset: 0;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, rgba(6, 182, 212, 0.3), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(139, 92, 246, 0.3), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.2), transparent);
+  background-repeat: repeat;
+  background-size: 200px 100px;
+  animation: particles-float 20s linear infinite;
+  pointer-events: none;
+}
+
+/* Cyber Aurora */
+.cyber-aurora {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(45deg, 
+    rgba(6, 182, 212, 0.1) 0%, 
+    rgba(59, 130, 246, 0.1) 25%, 
+    rgba(139, 92, 246, 0.1) 50%, 
+    rgba(59, 130, 246, 0.1) 75%, 
+    rgba(6, 182, 212, 0.1) 100%);
+  background-size: 200% 200%;
+  animation: cyber-aurora 15s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .battle-arena-3d,
+  .battle-card-3d,
+  .battle-arena-glow,
+  .battle-effect-lightning,
+  .battle-effect-fire,
+  .battle-effect-ice,
+  .battle-progress-bar,
+  .battle-log-entry,
+  .battle-result-victory,
+  .battle-result-defeat,
+  .battle-opponent-card,
+  .battle-arena-backdrop,
+  .holographic-background,
+  .neural-network-overlay,
+  .floating-bitcoin-symbols,
+  .cyber-grid,
+  .energy-particles,
+  .cyber-aurora {
+    animation: none !important;
+    transform: none !important;
   }
 }

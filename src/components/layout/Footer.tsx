@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { Twitter, Github, MessageCircle, Mail } from 'lucide-react'
+import { Logo } from '@/components/assets/OptimizedImage'
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
@@ -14,7 +15,13 @@ export function Footer() {
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-3 mb-4">
               <div className="w-10 h-10 bg-gradient-to-br from-bitcoin-500 to-stacks-500 rounded-full flex items-center justify-center">
-                <span className="text-xl font-bold text-white">₿</span>
+                <Logo 
+                  variant="main" 
+                  size="sm" 
+                  animate={true} 
+                  glow={true}
+                  className="w-6 h-6"
+                />
               </div>
               <h3 className="text-xl font-bold text-white">BitcoinBazaar</h3>
             </div>
