@@ -3,7 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { Search, Bell, User, Wallet, Menu, X } from 'lucide-react'
+import { Search, Bell, User, Wallet, Menu, X, Plus } from 'lucide-react'
 import { ConnectWallet } from '@/components/wallet/ConnectWallet'
 import { Logo } from '@/components/assets/OptimizedImage'
 import { LOGO_ASSETS } from '@/lib/assets'
@@ -129,6 +129,17 @@ export function Navbar() {
             <NavLink href="/collections">Collections</NavLink>
             <NavLink href="/auctions">Auctions</NavLink>
             <NavLink href="/stats">Stats</NavLink>
+          </div>
+          
+          {/* Create Button - Desktop */}
+          <div className="hidden lg:block">
+            <Link 
+              href="/create" 
+              className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white font-semibold rounded-full hover:from-bitcoin-600 hover:to-stacks-600 transition-all duration-300 transform hover:scale-105 bitcoin-glow group"
+            >
+              <Plus className="w-4 h-4 mr-2 group-hover:rotate-90 transition-transform duration-300" />
+              Crear
+            </Link>
           </div>
           
           {/* Search Bar - Hidden on mobile and tablet */}
@@ -265,6 +276,15 @@ export function Navbar() {
             <MobileNavLink href="/collections">Collections</MobileNavLink>
             <MobileNavLink href="/auctions">Auctions</MobileNavLink>
             <MobileNavLink href="/stats">Stats</MobileNavLink>
+            
+            {/* Create Button - Mobile */}
+            <Link 
+              href="/create" 
+              className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white font-semibold rounded-full hover:from-bitcoin-600 hover:to-stacks-600 transition-all duration-300 transform hover:scale-105 bitcoin-glow group mt-2"
+            >
+              <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
+              Crear NFT
+            </Link>
           </div>
 
           {/* Mobile Wallet Connection */}
