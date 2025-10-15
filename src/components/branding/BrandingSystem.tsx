@@ -36,7 +36,7 @@ interface PremiumButtonProps {
   className?: string
 }
 
-export const PremiumButton: React.FC<PremiumButtonProps> = ({
+export const PremiumButton = ({
   variant,
   size,
   children,
@@ -44,7 +44,7 @@ export const PremiumButton: React.FC<PremiumButtonProps> = ({
   disabled = false,
   loading = false,
   className = ''
-}) => {
+}: PremiumButtonProps) => {
   const baseClasses = 'relative overflow-hidden transition-all duration-300 ease-out'
   
   const variantClasses = {
@@ -110,13 +110,13 @@ interface PremiumCardProps {
   className?: string
 }
 
-export const PremiumCard: React.FC<PremiumCardProps> = ({
+export const PremiumCard = ({
   variant,
   children,
   hover = true,
   glow = false,
   className = ''
-}) => {
+}: PremiumCardProps) => {
   const baseClasses = 'relative overflow-hidden transition-all duration-300 ease-out'
   
   const variantClasses = {
@@ -169,12 +169,12 @@ interface PremiumTextProps {
   className?: string
 }
 
-export const PremiumText: React.FC<PremiumTextProps> = ({
+export const PremiumText = ({
   variant,
   size,
   children,
   className = ''
-}) => {
+}: PremiumTextProps) => {
   const baseClasses = 'font-bold'
   
   const variantClasses = {
@@ -215,20 +215,20 @@ export const PremiumText: React.FC<PremiumTextProps> = ({
 
 // Premium Icon Component
 interface PremiumIconProps {
-  icon: React.ComponentType<{ className?: string }>
+  icon: any
   variant: 'bitcoin' | 'stacks' | 'holographic' | 'cyber' | 'neural'
   size: 'sm' | 'md' | 'lg' | 'xl'
   animated?: boolean
   className?: string
 }
 
-export const PremiumIcon: React.FC<PremiumIconProps> = ({
+export const PremiumIcon = ({
   icon: Icon,
   variant,
   size,
   animated = false,
   className = ''
-}) => {
+}: PremiumIconProps) => {
   const baseClasses = 'transition-all duration-300 ease-out'
   
   const variantClasses = {
@@ -271,11 +271,11 @@ interface PremiumLoadingProps {
   className?: string
 }
 
-export const PremiumLoading: React.FC<PremiumLoadingProps> = ({
+export const PremiumLoading = ({
   variant,
   size,
   className = ''
-}) => {
+}: PremiumLoadingProps) => {
   const sizeClasses = {
     sm: 'w-4 h-4',
     md: 'w-6 h-6',
@@ -339,11 +339,11 @@ interface PremiumBadgeProps {
   className?: string
 }
 
-export const PremiumBadge: React.FC<PremiumBadgeProps> = ({
+export const PremiumBadge = ({
   variant,
   children,
   className = ''
-}) => {
+}: PremiumBadgeProps) => {
   const baseClasses = 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium'
   
   const variantClasses = {
@@ -377,14 +377,14 @@ interface PremiumProgressProps {
   className?: string
 }
 
-export const PremiumProgress: React.FC<PremiumProgressProps> = ({
+export const PremiumProgress = ({
   value,
   max = 100,
   variant,
   size,
   animated = false,
   className = ''
-}) => {
+}: PremiumProgressProps) => {
   const percentage = (value / max) * 100
   
   const baseClasses = 'w-full bg-gray-200 rounded-full overflow-hidden'
@@ -431,14 +431,14 @@ interface PremiumModalProps {
   className?: string
 }
 
-export const PremiumModal: React.FC<PremiumModalProps> = ({
+export const PremiumModal = ({
   isOpen,
   onClose,
   children,
   variant = 'default',
   size = 'md',
   className = ''
-}) => {
+}: PremiumModalProps) => {
   if (!isOpen) return null
   
   const sizeClasses = {
@@ -473,7 +473,7 @@ export const PremiumModal: React.FC<PremiumModalProps> = ({
           relative w-full ${sizeClasses[size]} ${variantClasses[variant]} p-6 rounded-2xl
           ${className}
         `}
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e: any) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button

@@ -504,7 +504,7 @@ export const PremiumEffectsContainer = ({
   effects = [], 
   className = '' 
 }: { 
-  children: React.ReactNode
+  children: any
   effects?: string[]
   className?: string
 }) => {
