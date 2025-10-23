@@ -1,424 +1,203 @@
-# 🚀 BitcoinBazaar - The First Bitcoin-Native NFT Marketplace
+# 🚀 BitcoinBaazar - Bitcoin-Native NFT Marketplace
 
-<div align="center">
+**El primer marketplace de NFTs nativo de Bitcoin que combina la seguridad de Bitcoin con la programabilidad de Stacks.**
 
-[![Next.js](https://img.shields.io/badge/Next.js-15.0.2-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
-[![Stacks](https://img.shields.io/badge/Stacks-2.1-green?style=for-the-badge&logo=stacks)](https://stacks.co/)
-[![Bitcoin](https://img.shields.io/badge/Bitcoin-Native-orange?style=for-the-badge&logo=bitcoin)](https://bitcoin.org/)
-[![React](https://img.shields.io/badge/React-18.2-blue?style=for-the-badge&logo=react)](https://reactjs.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
-[![Three.js](https://img.shields.io/badge/Three.js-0.160-black?style=for-the-badge&logo=three.js)](https://threejs.org/)
-[![Framer Motion](https://img.shields.io/badge/Framer_Motion-11.0-black?style=for-the-badge&logo=framer)](https://www.framer.com/motion/)
+## 📋 Descripción del Proyecto
 
-</div>
+BitcoinBaazar es un marketplace descentralizado de NFTs que opera nativamente sobre Bitcoin, aprovechando la seguridad de la red Bitcoin y la programabilidad de Stacks. Permite a los usuarios crear, comprar y vender NFTs usando tanto STX como sBTC (Bitcoin programable).
 
-> **🌟 The first NFT marketplace that enables true Bitcoin-native NFTs with features impossible on any other blockchain. Experience the future of digital ownership with Bitcoin's security and Stacks' programmability.**
+## 🚀 Smart Contracts Desplegados en Stacks Testnet
 
-## 🎯 **The Story**
+### 📍 **Contratos Activos**
 
-### **The Problem**
-Traditional NFT marketplaces are built on centralized systems or wrapped tokens that lose Bitcoin's security guarantees. Users are forced to choose between:
-- **Security** (Bitcoin) vs **Programmability** (Smart contracts)
-- **Decentralization** vs **User Experience**
-- **Trust** vs **Innovation**
+| 🎯 **Contrato** | 🔗 **Dirección** | ⚡ **Funcionalidad** |
+|----------------|------------------|---------------------|
+| **🔮 bitcoin-oracle** | [`STC5KHM41H6WHAST7MWWDD807YSPRQKJ68T330BQ.bitcoin-oracle`](https://explorer.stacks.co/txid/0xce751990482a3c9761e4ac9a1e?chain=testnet) | Oracle de Bitcoin para precios dinámicos |
+| **🏪 marketplace** | [`STC5KHM41H6WHAST7MWWDD807YSPRQKJ68T330BQ.marketplace`](https://explorer.stacks.co/txid/0x8d8c4ebfe40f709065b90726a8?chain=testnet) | Marketplace principal para NFTs |
+| **🎨 nft-core** | [`STC5KHM41H6WHAST7MWWDD807YSPRQKJ68T330BQ.nft-core`](https://explorer.stacks.co/txid/0x7792c440c251fbb8cd9f467dfa?chain=testnet) | Contrato core para NFTs |
 
-### **The Solution**
-**BitcoinBazaar** is the first marketplace that doesn't force you to choose. We leverage Bitcoin's security with Stacks' programmability to create:
+### 👨‍💻 **Desarrollador**
+- **Dirección**: `STC5KHM41H6WHAST7MWWDD807YSPRQKJ68T330BQ`
+- **Explorador**: [Ver en Stacks Explorer](https://explorer.stacks.co/address/STC5KHM41H6WHAST7MWWDD807YSPRQKJ68T330BQ?chain=testnet)
 
-- 🔐 **True Bitcoin Security** - Every transaction secured by Bitcoin's proof-of-work
-- ⚡ **Dual-Token Economy** - Pay with STX or sBTC (trustless Bitcoin peg)
-- 🎮 **Gaming Integration** - Battle NFTs in 3D arenas, earn Bitcoin rewards
-- 🏦 **DeFi Protocols** - Stake NFTs, lend against collateral, earn up to 20% APY
-- 💎 **Verifiable Rarity** - Prove NFT was minted during specific Bitcoin events
+### 🔍 **Enlaces Útiles**
+- **🌐 Explorador de Testnet**: [explorer.stacks.co](https://explorer.stacks.co/?chain=testnet)
+- **📡 API de Testnet**: [api.testnet.hiro.so](https://api.testnet.hiro.so)
+- **💻 Demo en Vivo**: [bitcoin-bazaar.vercel.app](https://bitcoin-bazaar.vercel.app)
 
-### **The Vision**
-We're building the future where Bitcoin's security meets Web3's innovation. No compromises, no wrapped tokens, no centralized custodians. Just pure Bitcoin-native NFTs with features impossible on any other blockchain.
+## 🎯 Características Principales
 
----
+- **Bitcoin-Native**: Operación nativa sobre la red Bitcoin
+- **Dual-Token**: Soporte para STX y sBTC
+- **Oracle de Bitcoin**: Precios dinámicos basados en bloques de Bitcoin
+- **Descuentos Especiales**: Descuentos automáticos en bloques "lucky" de Bitcoin
+- **Gaming NFTs**: Sistema de batallas 3D con recompensas en Bitcoin
+- **DeFi Integration**: Staking, lending y yield farming
+- **Verifiable Rarity**: NFTs verificables usando bloques de Bitcoin
 
-## 🌟 **Revolutionary Features**
+## 🛠️ Tecnologías
 
-### 🔐 **Dual-Token Payments**
-- Buy NFTs with **STX** or **sBTC** (trustless Bitcoin peg)
-- No wrapped tokens, no centralized custodians
-- True Bitcoin security with Stacks programmability
+### Frontend
+- **Next.js 15** - Framework React con App Router
+- **TypeScript** - Desarrollo type-safe
+- **Tailwind CSS** - Estilos utility-first
+- **Three.js** - Gráficos 3D para gaming
+- **Framer Motion** - Animaciones fluidas
 
-### ⚡ **Dynamic Bitcoin Pricing**
-- Prices change based on Bitcoin blockchain events
-- Special discounts during "lucky" Bitcoin blocks
-- Verifiable rarity using Bitcoin blocks
+### Blockchain
+- **Stacks** - Bitcoin L2 para smart contracts
+- **Clarity** - Lenguaje de contratos inteligentes
+- **sBTC** - Bitcoin programable 1:1
+- **SIP-009** - Estándar NFT en Stacks
 
-### 🎮 **Gaming NFTs**
-- Battle system with Three.js 3D arena
-- Level up and earn Bitcoin rewards
-- Unique stats and abilities per NFT
-
-### 🏦 **DeFi Integration**
-- Stake NFTs to earn up to 20% APY
-- Lend against your NFT collateral
-- Provide liquidity and earn rewards
-
-### 💎 **Bitcoin Block Verification**
-- Prove NFT was minted during specific Bitcoin events
-- Verifiable rarity using Bitcoin blocks
-- Impossible to fake or manipulate
-
----
-
-## 🛠️ **Tech Stack**
-
-### **Frontend Technologies**
-- **⚛️ React 18.2** - Modern React with hooks and concurrent features
-- **🚀 Next.js 15.0.2** - App Router, Server Components, and optimizations
-- **📘 TypeScript 5.0** - Type-safe development with strict mode
-- **🎨 Tailwind CSS 3.4** - Utility-first CSS with custom design system
-- **🎬 Framer Motion 11.0** - Smooth animations and transitions
-- **🎮 Three.js 0.160** - 3D graphics and WebGL effects
-
-### **Blockchain Technologies**
-- **🔗 Stacks.js 7.x** - Bitcoin-secured smart contracts
-- **👛 @stacks/connect** - Wallet integration
-- **🔐 @stacks/transactions** - Transaction building
-- **🌐 @stacks/network** - Network management
-- **💰 @stacks/stacking** - Stacking integration
-
-### **State Management & Utilities**
-- **🐻 Zustand 5.0** - Lightweight state management
-- **🔔 React Hot Toast** - Beautiful notifications
-- **🎭 Lucide React** - Beautiful icons
-- **📦 Class Variance Authority** - Component variants
-- **🔧 Tailwind Merge** - Utility merging
-
-### **Development Tools**
-- **🔍 ESLint** - Code linting
-- **📝 TypeScript** - Type checking
-- **🎯 Autoprefixer** - CSS vendor prefixes
-- **📱 PostCSS** - CSS processing
-
----
-
-## 🎨 **Visual Effects & Animations**
-
-### **🌟 Premium Animation System**
-- **60+ Custom Animations** - Bitcoin mining, neural connections, holographic effects
-- **🎭 Glassmorphism Effects** - 6 variants with advanced blur and transparency
-- **🌈 Holographic Gradients** - Dynamic color shifting and rainbow effects
-- **⚡ Cyber Grid System** - Animated grid backgrounds with energy flow
-- **🧠 Neural Network Overlay** - Animated neural connections and nodes
-- **💫 Particle Systems** - Floating particles with physics simulation
-- **🔥 Glow Effects** - Bitcoin orange, Stacks purple, and holographic glows
-
-### **🎮 3D Gaming Arena**
-- **Three.js Battle System** - Immersive 3D battle environment
-- **🎯 Real-time Combat** - Live battle animations and effects
-- **⚔️ NFT Stats Visualization** - 3D character models with stats
-- **🏆 Victory Animations** - Celebration effects and particle bursts
-
-### **📱 Responsive Design**
-- **Mobile-First Approach** - Optimized for all screen sizes
-- **🎨 Dark Theme** - Bitcoin-inspired color palette
-- **♿ Accessibility** - WCAG AA compliant with keyboard navigation
-- **⚡ Performance** - 60fps animations with reduced motion support
-
----
-
-## 🏗️ **Architecture**
-
-```
-BitcoinBazaar/
-├── 📱 Frontend (Next.js 15)
-│   ├── 🎨 UI Components
-│   │   ├── 🎮 Gaming (3D Battle Arena)
-│   │   ├── 🏦 DeFi (Staking & Lending)
-│   │   ├── 🖼️ NFT (Marketplace)
-│   │   ├── 👛 Wallet (Xverse & Leather)
-│   │   └── 🎭 Effects (Premium Animations)
-│   ├── 🧠 State Management (Zustand)
-│   ├── 🔗 Blockchain Integration (Stacks.js)
-│   └── 🎨 Design System (Tailwind + Custom)
-├── 🔐 Smart Contracts (Clarity)
-│   ├── 📄 NFT Core (SIP-009)
-│   ├── 🏪 Marketplace (Dual-Token)
-│   ├── 🎮 Gaming (Battle System)
-│   ├── 🏦 DeFi (Staking & Lending)
-│   ├── 🔮 Oracle (Bitcoin Events)
-│   └── 🗳️ Governance (DAO)
-└── 🚀 Deployment
-    ├── 🌐 Vercel (Frontend)
-    ├── ⛓️ Stacks Testnet (Contracts)
-    └── 📊 Analytics (On-chain)
-```
-
----
-
-## 🔧 **Smart Contracts**
-
-### **📄 Core Contracts**
-- **`nft-core.clar`** - SIP-009 NFT standard implementation
-- **`marketplace-core.clar`** - Dual-token payment system (STX/sBTC)
-- **`bitcoin-oracle.clar`** - Bitcoin block verification and events
-- **`lazy-mint.clar`** - Gas-free minting like OpenSea
-- **`analytics.clar`** - On-chain metrics and statistics
-
-### **🎮 Gaming Contracts**
-- **`gaming-nft.clar`** - NFT stats, leveling, and abilities
-- **`nft-defi.clar`** - Staking, lending, and yield farming
-
-### **🏦 DeFi Contracts**
-- **`escrow.clar`** - Secure escrow for offers and auctions
-- **`rewards.clar`** - Loyalty program and incentives
-- **`governance.clar`** - DAO governance with voting
-
-### **🔐 Security Features**
-- **Bitcoin Security** - All transactions secured by Bitcoin's proof-of-work
-- **Trustless Design** - No centralized custodians or admin keys
-- **Open Source** - Fully auditable Clarity code
-- **Decentralized** - No single point of failure
-
----
-
-## 🚀 **Quick Start**
-
-### **Prerequisites**
-- **Node.js 18+** 
-- **npm** or **yarn**
-- **Xverse** or **Leather** wallet
-
-### **Installation**
+## 🚀 Instalación
 
 ```bash
-# Clone the repository
-git clone https://github.com/Vaios0x/BitcoinBaazar.git
-cd BitcoinBaazar
+# Clonar el repositorio
+git clone https://github.com/Vaios0x/BitcoinBazaar.git
+cd BitcoinBazaar
 
-# Install dependencies
+# Instalar dependencias
 npm install
 
-# Start development server
+# Iniciar servidor de desarrollo
 npm run dev
 ```
 
-### **Environment Setup**
+## 📱 Demo en Vivo
 
-```bash
-# Copy environment variables
-cp env.example .env.local
+🌐 **URL**: [https://bitcoin-bazaar.vercel.app](https://bitcoin-bazaar.vercel.app)
 
-# Configure your environment
-NEXT_PUBLIC_NETWORK=testnet
-NEXT_PUBLIC_API_URL=https://api.testnet.hiro.so
-```
+## 🔧 Smart Contracts
 
----
+### Contratos Desplegados
+- **bitcoin-oracle**: Oracle para eventos de Bitcoin y precios dinámicos
+- **marketplace**: Marketplace principal con pagos dual-token
+- **nft-core**: Implementación del estándar SIP-009 para NFTs
 
-## 📱 **Live Demo**
+### Características de Seguridad
+- **Bitcoin Security**: Todas las transacciones aseguradas por Bitcoin
+- **Trustless Design**: Sin custodios centralizados
+- **Open Source**: Código completamente auditable
+- **Decentralized**: Sin punto único de falla
 
-🌐 **Production URL**: [https://bitcoin-bazaar.vercel.app](https://bitcoin-bazaar.vercel.app)
+## 🎮 Gaming System
 
-🔧 **Development**: `http://localhost:3000`
+### Sistema de Batallas
+- **Arena 3D**: Entorno inmersivo con Three.js
+- **Combate en Tiempo Real**: Animaciones y efectos en vivo
+- **Sistema de Stats**: HP, Ataque, Defensa, Velocidad, Nivel
+- **Recompensas**: Premios en sBTC para ganadores
+- **Nivelación**: Sistema XP con mejoras de stats
 
----
+## 💰 DeFi Features
 
-## 🎯 **Key Features Implemented**
+### Staking System
+- **Staking Flexible**: Elige tu período de staking
+- **Alto APY**: Gana hasta 20% APY en NFTs staked
+- **Auto-compounding**: Reinvierte recompensas automáticamente
+- **Liquid Staking**: Unstake en cualquier momento
 
-### ✅ **Wallet Integration**
-- [x] **Xverse Wallet** - Full integration with balance updates
-- [x] **Leather Wallet** - Complete support with session persistence
-- [x] **Network Switching** - Testnet/Mainnet with auto-detection
-- [x] **Real-time Balances** - STX and sBTC balance tracking
-- [x] **Transaction History** - Complete transaction logging
+### Lending Protocol
+- **NFT Collateral**: Usa tus NFTs como garantía de préstamo
+- **Rates Competitivos**: Tasas de interés basadas en mercado
+- **Protección de Liquidación**: Sistema automatizado de liquidación
+- **Términos Flexibles**: Elige la duración de tu préstamo
 
-### ✅ **NFT Marketplace**
-- [x] **Create NFTs** - Upload, mint, and list with metadata
-- [x] **Buy/Sell** - Dual-token payments (STX/sBTC)
-- [x] **Lazy Minting** - Gas-free listings like OpenSea
-- [x] **Dynamic Pricing** - Bitcoin block-based price adjustments
-- [x] **Automated Royalties** - 0-50% royalty system
-- [x] **Auctions** - Time-based bidding with escrow
+## 🔐 Seguridad
 
-### ✅ **Gaming System**
-- [x] **3D Battle Arena** - Three.js powered immersive battles
-- [x] **NFT Stats** - HP, Attack, Defense, Speed, Level
-- [x] **Battle System** - Real-time combat with animations
-- [x] **Rewards** - sBTC prizes for winners
-- [x] **Leveling** - XP system with stat improvements
+### Bitcoin Security
+- **Proof-of-Work**: Todas las transacciones aseguradas por Bitcoin
+- **Trustless Design**: Sin custodios centralizados
+- **Open Source**: Contratos Clarity completamente auditables
+- **Decentralized**: Sin punto único de falla
 
-### ✅ **DeFi Dashboard**
-- [x] **NFT Staking** - Earn up to 20% APY on staked NFTs
-- [x] **Lending** - Use NFTs as collateral for loans
-- [x] **Liquidity Provision** - Provide liquidity and earn rewards
-- [x] **Yield Farming** - Multiple farming strategies
+## 📊 Performance
 
-### ✅ **UI/UX Excellence**
-- [x] **Mobile Responsive** - Perfect on all devices
-- [x] **Dark Theme** - Bitcoin-inspired aesthetic
-- [x] **Smooth Animations** - 60fps with Framer Motion
-- [x] **3D Effects** - Three.js particles and effects
-- [x] **Accessibility** - WCAG AA compliant
-- [x] **Performance** - Optimized for speed
+### Frontend Performance
+- **Build Size**: 289 kB First Load JS
+- **Lighthouse Score**: 95+ Performance
+- **Mobile Optimized**: Diseño responsive
+- **Fast Loading**: Assets optimizados y lazy loading
 
----
+### Blockchain Performance
+- **Fast Transactions**: Tiempo de bloque Stacks ~10 minutos
+- **Low Fees**: Costos de transacción mínimos
+- **Scalable**: Seguridad de Bitcoin con velocidad de smart contracts
+- **Reliable**: 99.9% uptime con la red Bitcoin
 
-## 🎮 **Gaming System**
+## 🤝 Contribuir
 
-### **⚔️ Battle Mechanics**
-- **3D Arena** - Immersive Three.js battle environment
-- **Real-time Combat** - Live battle animations and effects
-- **Stats System** - HP, Attack, Defense, Speed, Level
-- **Rewards** - sBTC prizes for winners
-- **Leveling** - XP system with stat improvements
+¡Bienvenidas las contribuciones de la comunidad!
 
-### **📊 NFT Stats Interface**
-```typescript
-interface NFTStats {
-  hp: number          // Health Points
-  attack: number      // Attack Power
-  defense: number     // Defense Rating
-  speed: number       // Speed Rating
-  level: number       // Current Level
-  xp: number         // Experience Points
-  wins: number       // Battle Wins
-  losses: number     // Battle Losses
-  totalEarnings: number // Total sBTC Earned
-}
-```
+### Reportar Bugs
+- Usa GitHub Issues para reportar bugs
+- Incluye pasos para reproducir
+- Proporciona información del sistema
 
----
+### Solicitar Features
+- Sugiere nuevas features via GitHub Issues
+- Explica el caso de uso y beneficios
+- Considera la complejidad de implementación
 
-## 💰 **DeFi Features**
+### Contribuciones de Código
+1. Fork el repositorio
+2. Crea una rama de feature (`git checkout -b feature/amazing-feature`)
+3. Commit tus cambios (`git commit -m 'Add amazing feature'`)
+4. Push a la rama (`git push origin feature/amazing-feature`)
+5. Abre un Pull Request
 
-### **🏦 Staking System**
-- **Flexible Staking** - Choose your staking period
-- **High APY** - Earn up to 20% APY on staked NFTs
-- **Auto-compounding** - Reinvest rewards automatically
-- **Liquid Staking** - Unstake anytime with penalties
+## 📄 Licencia
 
-### **💳 Lending Protocol**
-- **NFT Collateral** - Use your NFTs as loan collateral
-- **Competitive Rates** - Market-based interest rates
-- **Liquidation Protection** - Automated liquidation system
-- **Flexible Terms** - Choose your loan duration
+Este proyecto está licenciado bajo la **MIT License** - ver el archivo [LICENSE](LICENSE) para detalles.
 
----
+## 🏆 Hackathon Submission
 
-## 🔐 **Security**
+Este proyecto fue construido para el **Bitcoin Hackathon 2025** y demuestra:
 
-### **🛡️ Bitcoin Security**
-- **Proof-of-Work** - All transactions secured by Bitcoin's hash power
-- **Trustless Design** - No centralized custodians or admin keys
-- **Open Source** - Fully auditable Clarity smart contracts
-- **Decentralized** - No single point of failure
+### ✅ Innovación Bitcoin-Native
+- [x] **True Bitcoin Security** - Cada transacción asegurada por Bitcoin
+- [x] **Dual-Token Economy** - Pagos con STX y sBTC
+- [x] **Verifiable Rarity** - Verificación de NFTs basada en bloques Bitcoin
+- [x] **No Wrapped Tokens** - Integración directa con Bitcoin
 
-### **🔒 Smart Contract Security**
-- **Clarity Language** - Predictable and secure smart contracts
-- **Formal Verification** - Mathematically proven correctness
-- **Audit Ready** - Clean, readable, and well-documented code
-- **Upgradeable** - Governance-controlled upgrades
+### ✅ Excelencia Técnica
+- [x] **Production-Ready** - Integración completa de wallet y deployment
+- [x] **3D Gaming** - Sistema de batallas inmersivo con Three.js
+- [x] **DeFi Protocols** - Staking, lending y yield farming
+- [x] **Premium UI/UX** - 60+ animaciones y efectos
 
----
+### ✅ Innovación
+- [x] **Gaming NFTs** - Sistema de batallas con recompensas Bitcoin
+- [x] **Dynamic Pricing** - Ajustes de precio basados en eventos Bitcoin
+- [x] **Lazy Minting** - Creación de NFTs sin gas
+- [x] **On-chain Analytics** - Métricas completas del marketplace
 
-## 📊 **Performance**
+## 📞 Soporte y Comunidad
 
-### **⚡ Frontend Performance**
-- **Build Size** - 289 kB First Load JS
-- **Lighthouse Score** - 95+ Performance
-- **Mobile Optimized** - Responsive design
-- **Fast Loading** - Optimized assets and lazy loading
-
-### **🔗 Blockchain Performance**
-- **Fast Transactions** - Stacks block time ~10 minutes
-- **Low Fees** - Minimal transaction costs
-- **Scalable** - Bitcoin's security with smart contract speed
-- **Reliable** - 99.9% uptime with Bitcoin's network
-
----
-
-## 🤝 **Contributing**
-
-We welcome contributions from the community! Here's how you can help:
-
-### **🐛 Bug Reports**
-- Use GitHub Issues to report bugs
-- Include steps to reproduce
-- Provide system information
-
-### **💡 Feature Requests**
-- Suggest new features via GitHub Issues
-- Explain the use case and benefits
-- Consider implementation complexity
-
-### **🔧 Code Contributions**
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-### **📚 Documentation**
-- Improve README and documentation
-- Add code comments and examples
-- Create tutorials and guides
-
----
-
-## 📄 **License**
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🏆 **Hackathon Submission**
-
-This project was built for the **Bitcoin Hackathon 2025** and demonstrates:
-
-### **✅ Bitcoin-Native Innovation**
-- [x] **True Bitcoin Security** - Every transaction secured by Bitcoin
-- [x] **Dual-Token Economy** - STX and sBTC payments
-- [x] **Verifiable Rarity** - Bitcoin block-based NFT verification
-- [x] **No Wrapped Tokens** - Direct Bitcoin integration
-
-### **✅ Technical Excellence**
-- [x] **Production-Ready** - Full wallet integration and deployment
-- [x] **3D Gaming** - Immersive Three.js battle system
-- [x] **DeFi Protocols** - Staking, lending, and yield farming
-- [x] **Premium UI/UX** - 60+ animations and effects
-
-### **✅ Innovation**
-- [x] **Gaming NFTs** - Battle system with Bitcoin rewards
-- [x] **Dynamic Pricing** - Bitcoin event-based price adjustments
-- [x] **Lazy Minting** - Gas-free NFT creation
-- [x] **On-chain Analytics** - Complete marketplace metrics
-
----
-
-## 📞 **Support & Community**
-
-### **💬 Community**
-- **Discord** - [Join our community](https://discord.gg/bitcoinbazaar)
+### 💬 Comunidad
+- **Discord** - [Únete a nuestra comunidad](https://discord.gg/bitcoinbazaar)
 - **Twitter** - [@BitcoinBazaar](https://twitter.com/bitcoinbazaar)
-- **GitHub** - [Report issues](https://github.com/Vaios0x/BitcoinBaazar/issues)
+- **GitHub** - [Reportar issues](https://github.com/Vaios0x/BitcoinBaazar/issues)
 
-### **📧 Contact**
+### 📧 Contacto
 - **Email** - hello@bitcoinbazaar.com
 - **Website** - [bitcoinbazaar.com](https://bitcoinbazaar.com)
 - **Documentation** - [docs.bitcoinbazaar.com](https://docs.bitcoinbazaar.com)
 
----
+## 🎉 ¿Listo para Experimentar el Futuro de los NFTs?
 
-## 🎉 **Ready to Experience the Future of NFTs?**
-
-**BitcoinBazaar** is the first marketplace that truly leverages Bitcoin's security with Stacks' programmability. Join the revolution of Bitcoin-native NFTs!
+**BitcoinBaazar** es el primer marketplace que verdaderamente aprovecha la seguridad de Bitcoin con la programabilidad de Stacks. ¡Únete a la revolución de los NFTs nativos de Bitcoin!
 
 <div align="center">
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Vaios0x/BitcoinBaazar)
 
-**Built with ❤️ for the Bitcoin ecosystem**
+**Construido con ❤️ para el ecosistema Bitcoin**
 
 ---
 
-### **🌟 Star this repository if you find it helpful!**
+### **🌟 ¡Dale una estrella a este repositorio si te resulta útil!**
 
 [![GitHub stars](https://img.shields.io/github/stars/Vaios0x/BitcoinBaazar?style=social)](https://github.com/Vaios0x/BitcoinBaazar)
 [![GitHub forks](https://img.shields.io/github/forks/Vaios0x/BitcoinBaazar?style=social)](https://github.com/Vaios0x/BitcoinBaazar)

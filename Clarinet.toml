@@ -6,41 +6,31 @@ telemetry = false
 cache_dir = ".cache"
 
 [contracts.nft-core]
-path = "contracts/nft-core.clar"
-clarity_version = 2
+path = "contracts/nft-core-simple.clar"
 
 [contracts.marketplace-core]
-path = "contracts/marketplace-core.clar"
-clarity_version = 2
+path = "contracts/marketplace-core-simple.clar"
 
 [contracts.bitcoin-oracle]
-path = "contracts/bitcoin-oracle.clar"
-clarity_version = 2
+path = "contracts/bitcoin-oracle-simple.clar"
 
-[contracts.auction]
-path = "contracts/auction.clar"
-clarity_version = 2
+[contracts.gaming-nft]
+path = "contracts/gaming-nft-simple.clar"
+
+[contracts.nft-defi]
+path = "contracts/nft-defi-simple.clar"
 
 [contracts.lazy-mint]
-path = "contracts/lazy-mint.clar"
-clarity_version = 2
+path = "contracts/lazy-mint-simple.clar"
 
 [contracts.analytics]
-path = "contracts/analytics.clar"
-clarity_version = 2
+path = "contracts/analytics-simple.clar"
 
 [contracts.governance]
-path = "contracts/governance.clar"
-clarity_version = 2
+path = "contracts/governance-simple.clar"
 
 [contracts.escrow]
-path = "contracts/escrow.clar"
-clarity_version = 2
+path = "contracts/escrow-simple-fixed.clar"
 
 [contracts.rewards]
-path = "contracts/rewards.clar"
-clarity_version = 2
-
-[repl]
-costs_version = 2
-parser_version = 2
+path = "contracts/rewards-simple.clar"
