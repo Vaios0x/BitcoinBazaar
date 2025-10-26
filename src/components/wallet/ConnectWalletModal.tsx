@@ -80,7 +80,7 @@ export function ConnectWalletModal({ isOpen, onClose }: ConnectWalletModalProps)
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="fixed inset-0 z-50 flex items-start justify-center pt-24 px-4"
+            className="fixed inset-0 z-50 flex items-start justify-center pt-256 px-4"
           >
             <div className="glass-card rounded-2xl max-w-sm w-full p-4 relative">
               {/* Close Button */}

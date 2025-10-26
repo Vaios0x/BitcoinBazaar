@@ -132,8 +132,8 @@ export function Navbar() {
             <NavLink href="/collections">Collections</NavLink>
             <NavLink href="/auctions">Auctions</NavLink>
             <NavLink href="/stats">Stats</NavLink>
-            <NavLink href="/testing" className="text-blue-400 hover:text-blue-300 font-semibold">
-              🧪 Testing
+            <NavLink href="/testing" className="text-green-400 hover:text-green-300 font-semibold">
+              🚀 Demo
             </NavLink>
           </div>
           
@@ -285,8 +285,8 @@ export function Navbar() {
             <MobileNavLink href="/collections">Collections</MobileNavLink>
             <MobileNavLink href="/auctions">Auctions</MobileNavLink>
             <MobileNavLink href="/stats">Stats</MobileNavLink>
-            <MobileNavLink href="/testing" className="text-blue-400 hover:text-blue-300 font-semibold">
-              🧪 Testing Suite
+            <MobileNavLink href="/testing" className="text-green-400 hover:text-green-300 font-semibold">
+              🚀 Demo
             </MobileNavLink>
             
             {/* Create Button - Mobile */}

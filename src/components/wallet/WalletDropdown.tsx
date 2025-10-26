@@ -124,10 +124,10 @@ export function WalletDropdown() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: -210 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="absolute right-0 mt-2 w-80 glass-card rounded-2xl p-4 shadow-2xl z-50"
+            exit={{ opacity: 0, y: -210 }}
+            className="absolute right-0 mt-96 w-80 glass-card rounded-2xl p-4 shadow-2xl z-50"
           >
             {/* Wallet Info Header */}
             <div className="mb-4 pb-4 border-b border-white/10">
