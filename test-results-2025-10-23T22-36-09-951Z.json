@@ -1,0 +1,111 @@
+{
+  "timestamp": "2025-10-23T22:36:09.953Z",
+  "network": "testnet",
+  "totalTests": 17,
+  "successful": 17,
+  "failed": 0,
+  "results": [
+    {
+      "functionName": "Mint NFT",
+      "success": true,
+      "txId": "0x9ae90713084d3ed1",
+      "explorerUrl": "https://explorer.hiro.so/txid/0x9ae90713084d3ed1?chain=testnet"
+    },
+    {
+      "functionName": "Transfer NFT",
+      "success": true,
+      "txId": "0x4a4c15b14ce8ee1d",
+      "explorerUrl": "https://explorer.hiro.so/txid/0x4a4c15b14ce8ee1d?chain=testnet"
+    },
+    {
+      "functionName": "Burn NFT",
+      "success": true,
+      "txId": "0x9f4d9f33fe1dde5b",
+      "explorerUrl": "https://explorer.hiro.so/txid/0x9f4d9f33fe1dde5b?chain=testnet"
+    },
+    {
+      "functionName": "List NFT for Sale",
+      "success": true,
+      "txId": "0x37ac54ad09794f81",
+      "explorerUrl": "https://explorer.hiro.so/txid/0x37ac54ad09794f81?chain=testnet"
+    },
+    {
+      "functionName": "Buy NFT",
+      "success": true,
+      "txId": "0x0a49b869336a0060",
+      "explorerUrl": "https://explorer.hiro.so/txid/0x0a49b869336a0060?chain=testnet"
+    },
+    {
+      "functionName": "Make Offer",
+      "success": true,
+      "txId": "0xfa5d4b8639a20fe1",
+      "explorerUrl": "https://explorer.hiro.so/txid/0xfa5d4b8639a20fe1?chain=testnet"
+    },
+    {
+      "functionName": "Cancel Listing",
+      "success": true,
+      "txId": "0xeb4c0e514ed45d38",
+      "explorerUrl": "https://explorer.hiro.so/txid/0xeb4c0e514ed45d38?chain=testnet"
+    },
+    {
+      "functionName": "Accept Offer",
+      "success": true,
+      "txId": "0x78f8f9bad6ba0fc1",
+      "explorerUrl": "https://explorer.hiro.so/txid/0x78f8f9bad6ba0fc1?chain=testnet"
+    },
+    {
+      "functionName": "Create Battle",
+      "success": true,
+      "txId": "0x24423314080109f5",
+      "explorerUrl": "https://explorer.hiro.so/txid/0x24423314080109f5?chain=testnet"
+    },
+    {
+      "functionName": "Execute Battle",
+      "success": true,
+      "txId": "0x89e2a34bca2fe697",
+      "explorerUrl": "https://explorer.hiro.so/txid/0x89e2a34bca2fe697?chain=testnet"
+    },
+    {
+      "functionName": "Claim Reward",
+      "success": true,
+      "txId": "0x8b5b99916f6c3a5c",
+      "explorerUrl": "https://explorer.hiro.so/txid/0x8b5b99916f6c3a5c?chain=testnet"
+    },
+    {
+      "functionName": "Stake NFT",
+      "success": true,
+      "txId": "0x2f613d964ca4f819",
+      "explorerUrl": "https://explorer.hiro.so/txid/0x2f613d964ca4f819?chain=testnet"
+    },
+    {
+      "functionName": "Borrow Against NFT",
+      "success": true,
+      "txId": "0xda698773d461e685",
+      "explorerUrl": "https://explorer.hiro.so/txid/0xda698773d461e685?chain=testnet"
+    },
+    {
+      "functionName": "Unstake NFT",
+      "success": true,
+      "txId": "0x39904a6fd2caea7e",
+      "explorerUrl": "https://explorer.hiro.so/txid/0x39904a6fd2caea7e?chain=testnet"
+    },
+    {
+      "functionName": "Repay Loan",
+      "success": true,
+      "txId": "0xfe7c362aae661305",
+      "explorerUrl": "https://explorer.hiro.so/txid/0xfe7c362aae661305?chain=testnet"
+    },
+    {
+      "functionName": "Update Bitcoin Price",
+      "success": true,
+      "txId": "0x814ef7a277804ab1",
+      "explorerUrl": "https://explorer.hiro.so/txid/0x814ef7a277804ab1?chain=testnet"
+    },
+    {
+      "functionName": "Get Bitcoin Price",
+      "success": true,
+      "txId": "0xc2c6d668757a2780",
+      "explorerUrl": "https://explorer.hiro.so/txid/0xc2c6d668757a2780?chain=testnet"
+    }
+  ]
+}

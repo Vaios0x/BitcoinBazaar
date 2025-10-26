@@ -17,9 +17,7 @@ export function WalletExamples() {
       toast.loading('Minting NFT...')
       const txId = await mintNFT(
         'My Awesome NFT',
-        'This is a test NFT minted from BitcoinBazaar',
-        'https://example.com/image.png',
-        5
+        'https://example.com/image.png'
       )
       toast.success(`NFT minted successfully! TxID: ${txId}`)
     } catch (error) {
@@ -68,7 +66,7 @@ export function WalletExamples() {
 
     try {
       toast.loading('Creating battle...')
-      const txId = await createBattle(1, 2, 0.01, 'sBTC')
+      const txId = await createBattle(1, 2, 0.01)
       toast.success(`Battle created successfully! TxID: ${txId}`)
     } catch (error) {
       toast.error('Failed to create battle')

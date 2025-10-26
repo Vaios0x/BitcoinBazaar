@@ -110,17 +110,11 @@ export function WalletDropdown() {
           </div>
         </div>
 
-        {/* Wallet Icon */}
+        {/* Wallet Icon - Leather only */}
         <div className="w-8 h-8 bg-gradient-to-br from-bitcoin-500 to-stacks-500 rounded-full flex items-center justify-center">
-          {walletType === 'xverse' ? (
-            <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
-            </svg>
-          ) : (
             <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
               <circle cx="12" cy="12" r="10"/>
             </svg>
-          )}
         </div>
 
         <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
@@ -142,7 +136,7 @@ export function WalletDropdown() {
                 <div className="flex items-center space-x-2">
                   <div className="px-2 py-1 bg-green-500/20 text-green-400 rounded-full text-xs font-semibold flex items-center space-x-1">
                     <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                    <span>{walletType === 'xverse' ? 'Xverse' : 'Leather'}</span>
+                    <span>Leather</span>
                   </div>
                 </div>
               </div>

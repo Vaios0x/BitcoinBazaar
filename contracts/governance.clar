@@ -57,7 +57,7 @@
           description: description,
           votes-for: u0,
           votes-against: u0,
-          status: (string-ascii 20 "active"),
+          status: "active",
           start-block: burn-block-height,
           end-block: (+ burn-block-height duration),
           execution-block: (+ burn-block-height duration u100), ;; 100 blocks after voting ends
@@ -123,7 +123,7 @@
             ;; Proposal passed - execute
             (map-set proposals {proposal-id: proposal-id}
               (merge proposal {
-                status: (string-ascii 20 "passed"),
+                status: "passed",
                 executed: true
               })
             )
@@ -132,7 +132,7 @@
           (begin
             ;; Proposal failed
             (map-set proposals {proposal-id: proposal-id}
-              (merge proposal {status: (string-ascii 20 "failed")})
+              (merge proposal {status: "failed"})
             )
             (ok false)
           )

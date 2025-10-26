@@ -1,0 +1,29 @@
+id: 0
+name: "BitcoinBazaar sBTC Real Integration - Testnet"
+network: testnet
+genesis:
+  wallets:
+    - name: deployer
+      address: ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR
+      balance: "100000000000000"
+      sbtc-balance: "1000000000"
+plan:
+  batches:
+    - id: 0
+      transactions:
+        - contract-publish:
+            contract-name: marketplace-sbtc-real
+            path: "contracts/marketplace-sbtc-real.clar"
+            clarity-version: 3
+        - contract-publish:
+            contract-name: gaming-nft-sbtc-real
+            path: "contracts/gaming-nft-sbtc-real.clar"
+            clarity-version: 3
+        - contract-publish:
+            contract-name: nft-defi-sbtc-real
+            path: "contracts/nft-defi-sbtc-real.clar"
+            clarity-version: 3
+        - contract-publish:
+            contract-name: analytics-sbtc-real
+            path: "contracts/analytics-sbtc-real.clar"
+            clarity-version: 3

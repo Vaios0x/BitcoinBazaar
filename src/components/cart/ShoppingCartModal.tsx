@@ -3,6 +3,12 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ShoppingCart, Trash2, Plus, Minus, CreditCard, Bitcoin } from 'lucide-react'
+import { toast } from 'react-hot-toast'
+import { buyNFTSimple } from '@/lib/stacks/transactions-simple'
+import { useWalletStore } from '@/lib/stores/walletStore'
+import { NeuralNotification } from '@/components/notifications/NeuralNotification'
+import { useNFTEvents } from '@/contexts/NFTEventsContext'
+import { useNFTs } from '@/hooks/useNFTs'
 import type { NFT } from '@/types/nft'
 
 interface CartItem {
@@ -28,6 +34,16 @@ export function ShoppingCartModal({
   onClearCart
 }: ShoppingCartModalProps) {
   const [isProcessing, setIsProcessing] = useState(false)
+  const [transactionStatus, setTransactionStatus] = useState<{
+    type: 'loading' | 'success' | 'error'
+    message: string
+    txId?: string
+    explorerUrl?: string
+  } | null>(null)
+  
+  const { isConnected, address } = useWalletStore()
+  const { addEvent } = useNFTEvents()
+  const { refreshNFTs } = useNFTs()
 
   // Calculate totals
   const calculateTotals = () => {
@@ -50,19 +66,115 @@ export function ShoppingCartModal({
   const { totalSTX, totalsBTC, totalItems } = calculateTotals()
 
   const handleCheckout = async () => {
+    if (!isConnected || !address) {
+      toast.error('Por favor conecta tu wallet primero')
+      return
+    }
+
+    if (cartItems.length === 0) {
+      toast.error('El carrito está vacío')
+      return
+    }
+
     setIsProcessing(true)
+    setTransactionStatus({
+      type: 'loading',
+      message: 'Procesando compra de NFTs...'
+    })
+
     try {
-      // Simulate checkout process
-      await new Promise(resolve => setTimeout(resolve, 2000))
+      const purchaseResults = []
       
-      // Show success message
-      alert('Purchase successful! Your NFTs have been transferred to your wallet.')
+      // Process each NFT purchase
+      for (const item of cartItems) {
+        for (let i = 0; i < item.quantity; i++) {
+          try {
+            setTransactionStatus({
+              type: 'loading',
+              message: `Comprando ${item.nft.name}...`
+            })
+
+            const txId = await buyNFTSimple(item.nft.id, item.nft.paymentToken)
+            const explorerUrl = `https://explorer.stacks.co/txid/${txId}?chain=testnet`
+            
+            purchaseResults.push({
+              nft: item.nft,
+              txId,
+              explorerUrl
+            })
+
+            // Emit NFT purchase event
+            addEvent({
+              type: 'nft_sold',
+              nftId: item.nft.id,
+              transactionHash: txId,
+              creator: address,
+              name: item.nft.name
+            })
+
+          } catch (itemError: any) {
+            console.error(`Error purchasing ${item.nft.name}:`, itemError)
+            throw new Error(`Error al comprar ${item.nft.name}: ${itemError.message}`)
+          }
+        }
+      }
+
+      // All purchases successful
+      const totalPurchased = purchaseResults.length
+      const firstTxId = purchaseResults[0]?.txId
+      const firstExplorerUrl = purchaseResults[0]?.explorerUrl
+
+      setTransactionStatus({
+        type: 'success',
+        message: `¡Compra exitosa! ${totalPurchased} NFT${totalPurchased > 1 ? 's' : ''} transferido${totalPurchased > 1 ? 's' : ''} a tu wallet`,
+        txId: firstTxId,
+        explorerUrl: firstExplorerUrl
+      })
+
+      toast.success(`¡Compra exitosa! ${totalPurchased} NFT${totalPurchased > 1 ? 's' : ''} comprado${totalPurchased > 1 ? 's' : ''}`, {
+        duration: 8000,
+        style: {
+          background: '#10B981',
+          color: '#fff',
+          fontSize: '14px',
+          fontWeight: '500'
+        }
+      })
+
+      // Refresh NFTs to show updated ownership
+      setTimeout(() => {
+        refreshNFTs()
+      }, 2000)
+
+      // Clear cart and close modal after delay
+      setTimeout(() => {
+        onClearCart()
+        onClose()
+        setTransactionStatus(null)
+      }, 15000)
+
+    } catch (error: any) {
+      const errorMessage = error?.message || 'Error desconocido'
+      console.error('Purchase failed:', errorMessage)
       
-      // Clear cart and close modal
-      onClearCart()
-      onClose()
-    } catch (error) {
-      alert('Purchase failed. Please try again.')
+      setTransactionStatus({
+        type: 'error',
+        message: `Error en la compra: ${errorMessage}`
+      })
+
+      toast.error(`Error en la compra: ${errorMessage}`, {
+        duration: 6000,
+        style: {
+          background: '#EF4444',
+          color: '#fff',
+          fontSize: '14px',
+          fontWeight: '500'
+        }
+      })
+
+      setTimeout(() => {
+        setTransactionStatus(null)
+      }, 8000)
     } finally {
       setIsProcessing(false)
     }
@@ -96,7 +208,7 @@ export function ShoppingCartModal({
                     <ShoppingCart className="w-3 h-3 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-base font-bold text-white">Shopping Cart</h2>
+                    <h2 className="text-base font-bold text-white">Carrito de Compras</h2>
                     <p className="text-xs text-gray-400">{totalItems} item{totalItems !== 1 ? 's' : ''}</p>
                   </div>
                 </div>
@@ -115,8 +227,8 @@ export function ShoppingCartModal({
                     <div className="w-24 h-24 mx-auto mb-4 bg-gray-800 rounded-full flex items-center justify-center">
                       <ShoppingCart className="w-12 h-12 text-gray-400" />
                     </div>
-                    <h3 className="text-xl font-semibold text-white mb-2">Your cart is empty</h3>
-                    <p className="text-gray-400">Add some NFTs to get started!</p>
+                    <h3 className="text-xl font-semibold text-white mb-2">Tu carrito está vacío</h3>
+                    <p className="text-gray-400">¡Agrega algunos NFTs para comenzar!</p>
                   </div>
                 ) : (
                   <div className="space-y-2">
@@ -202,13 +314,13 @@ export function ShoppingCartModal({
                   <div className="space-y-1 mb-3">
                     {totalSTX > 0 && (
                       <div className="flex items-center justify-between">
-                        <span className="text-gray-400">STX Total:</span>
+                        <span className="text-gray-400">Total STX:</span>
                         <span className="text-white font-semibold">{totalSTX.toFixed(2)} STX</span>
                       </div>
                     )}
                     {totalsBTC > 0 && (
                       <div className="flex items-center justify-between">
-                        <span className="text-gray-400">sBTC Total:</span>
+                        <span className="text-gray-400">Total sBTC:</span>
                         <div className="flex items-center space-x-2">
                           <span className="text-white font-semibold">{totalsBTC.toFixed(6)} sBTC</span>
                           <motion.span
@@ -241,7 +353,7 @@ export function ShoppingCartModal({
                       onClick={onClearCart}
                       className="flex-1 px-2 py-1.5 bg-gray-800 text-gray-300 rounded hover:bg-gray-700 transition-colors text-xs"
                     >
-                      Clear Cart
+                      Limpiar Carrito
                     </button>
                     <motion.button
                       onClick={handleCheckout}
@@ -253,12 +365,12 @@ export function ShoppingCartModal({
                       {isProcessing ? (
                         <div className="flex items-center justify-center space-x-2">
                           <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                          <span>Processing...</span>
+                          <span>Procesando...</span>
                         </div>
                       ) : (
                         <div className="flex items-center justify-center space-x-2">
                           <CreditCard className="w-5 h-5" />
-                          <span>Checkout</span>
+                          <span>Comprar</span>
                         </div>
                       )}
                       
@@ -285,7 +397,7 @@ export function ShoppingCartModal({
                     <div className="flex items-center space-x-1">
                       <Bitcoin className="w-2.5 h-2.5 text-yellow-500" />
                       <span className="text-xs text-yellow-400">
-                        <strong>Testnet:</strong> No real transactions.
+                        <strong>Testnet:</strong> Sin transacciones reales.
                       </span>
                     </div>
                   </div>
@@ -293,6 +405,17 @@ export function ShoppingCartModal({
               )}
             </div>
           </motion.div>
+
+          {/* Neural Notification */}
+          {transactionStatus && (
+            <NeuralNotification
+              type={transactionStatus.type}
+              message={transactionStatus.message}
+              txId={transactionStatus.txId}
+              explorerUrl={transactionStatus.explorerUrl}
+              onClose={() => setTransactionStatus(null)}
+            />
+          )}
         </>
       )}
     </AnimatePresence>

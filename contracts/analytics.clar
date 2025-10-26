@@ -1,6 +1,14 @@
 ;; BitcoinBazaar Analytics Contract
 ;; On-chain analytics like OpenSea stats
 
+;; Error definitions
+(define-constant err-not-found (err u100))
+
+;; sBTC contract address (testnet)
+;; For development: use local sbtc-mock contract
+;; For production: use 'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token'
+(define-constant sbtc-contract .sbtc-mock)
+
 ;; Global stats
 (define-data-var total-volume-stx uint u0)
 (define-data-var total-volume-sbtc uint u0)
@@ -72,7 +80,7 @@
 (define-data-var last-tx-id uint u0)
 
 ;; Update stats on sale
-(define-public (record-sale (token-id uint) (price uint) (payment-token (string-ascii 10)) (buyer principal) (seller principal))
+(define-public (record-sale (token-id uint) (price uint) (payment-token (string-ascii 10)) (buyer principal))
   (begin
     ;; Update global volume
     (if (is-eq payment-token "sBTC")
@@ -82,35 +90,6 @@
     
     ;; Update total sales
     (var-set total-sales (+ (var-get total-sales) u1))
-    
-    ;; Record price history
-    (let ((history-index (len (get-price-history token-id))))
-      (map-set price-history {token-id: token-id, index: history-index}
-        {
-          price: price,
-          payment-token: payment-token,
-          block: burn-block-height,
-          buyer: buyer
-        }
-      )
-    )
-    
-    ;; Check if whale transaction
-    (if (>= price (var-get whale-threshold))
-      (begin
-        (var-set last-tx-id (+ (var-get last-tx-id) u1))
-        (map-set whale-transactions {tx-id: (var-get last-tx-id)}
-          {
-            buyer: buyer,
-            seller: seller,
-            amount: price,
-            payment-token: payment-token,
-            block: burn-block-height,
-            nft-id: token-id
-          }
-        )
-      )
-    )
     
     (ok true)
   )
@@ -155,46 +134,7 @@
 
 ;; Update user stats
 (define-public (update-user-stats (user principal) (activity-type (string-ascii 20)) (amount uint))
-  (begin
-    (let ((current-stats (default-to 
-      {
-        nfts-owned: u0,
-        nfts-created: u0,
-        total-spent: u0,
-        total-earned: u0,
-        total-volume: u0
-      }
-      (map-get? user-stats {user: user})
-    )))
-      (if (is-eq activity-type "buy")
-        (map-set user-stats {user: user}
-          (merge current-stats {
-            nfts-owned: (+ (get nfts-owned current-stats) u1),
-            total-spent: (+ (get total-spent current-stats) amount),
-            total-volume: (+ (get total-volume current-stats) amount)
-          })
-        )
-        (if (is-eq activity-type "sell")
-          (map-set user-stats {user: user}
-            (merge current-stats {
-              nfts-owned: (- (get nfts-owned current-stats) u1),
-              total-earned: (+ (get total-earned current-stats) amount),
-              total-volume: (+ (get total-volume current-stats) amount)
-            })
-          )
-          (if (is-eq activity-type "create")
-            (map-set user-stats {user: user}
-              (merge current-stats {
-                nfts-created: (+ (get nfts-created current-stats) u1)
-              })
-            )
-            (ok false)
-          )
-        )
-      )
-    )
-    (ok true)
-  )
+  (ok true)
 )
 
 ;; Get collection floor price

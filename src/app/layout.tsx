@@ -7,6 +7,7 @@ import { NeuralBackground } from '@/components/effects/NeuralBackground'
 import { FloatingParticles } from '@/components/effects/FloatingParticles'
 import { LightEffects } from '@/components/effects/LightEffects'
 import { WalletProvider } from '@/components/providers/WalletProvider'
+import { NFTEventsProvider } from '@/contexts/NFTEventsContext'
 import { Toaster } from 'react-hot-toast'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -52,33 +53,35 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={`${inter.className} bg-neural-background text-white antialiased`}>
         <WalletProvider>
-          <div className="min-h-screen flex flex-col">
-            <NeuralBackground />
-            <FloatingParticles />
-            <LightEffects />
-            <Navbar />
-            <main className="flex-1 relative z-10">
-              {children}
-            </main>
-            <Footer />
-          </div>
-          <Toaster
-            position="bottom-right"
-            toastOptions={{
-              style: {
-                background: 'rgba(15, 23, 42, 0.9)',
-                backdropFilter: 'blur(20px)',
-                color: '#fff',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-              },
-              success: {
-                iconTheme: {
-                  primary: '#F97316',
-                  secondary: '#fff',
+          <NFTEventsProvider>
+            <div className="min-h-screen flex flex-col">
+              <NeuralBackground />
+              <FloatingParticles />
+              <LightEffects />
+              <Navbar />
+              <main className="flex-1 relative z-10">
+                {children}
+              </main>
+              <Footer />
+            </div>
+            <Toaster
+              position="bottom-right"
+              toastOptions={{
+                style: {
+                  background: 'rgba(15, 23, 42, 0.9)',
+                  backdropFilter: 'blur(20px)',
+                  color: '#fff',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
                 },
-              },
-            }}
-          />
+                success: {
+                  iconTheme: {
+                    primary: '#F97316',
+                    secondary: '#fff',
+                  },
+                },
+              }}
+            />
+          </NFTEventsProvider>
         </WalletProvider>
       </body>
     </html>

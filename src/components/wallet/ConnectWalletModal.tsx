@@ -15,7 +15,6 @@ interface ConnectWalletModalProps {
 export function ConnectWalletModal({ isOpen, onClose }: ConnectWalletModalProps) {
   const { connect, isLoading } = useWalletStore()
   const [detectedWallets, setDetectedWallets] = React.useState({
-    xverse: false,
     leather: false
   })
 
@@ -24,15 +23,11 @@ export function ConnectWalletModal({ isOpen, onClose }: ConnectWalletModalProps)
     if (typeof window === 'undefined') return
 
     const detectWallets = () => {
-      // Xverse detection
-      const xverseInstalled = !!(window as any).XverseProviders?.StacksProvider
-      
-      // Leather detection (previously Hiro Wallet)
+      // Only detect Leather wallet (previously Hiro Wallet)
       const leatherInstalled = !!(window as any).LeatherProvider || 
                                !!(window as any).HiroWalletProvider
 
       setDetectedWallets({
-        xverse: xverseInstalled,
         leather: leatherInstalled
       })
     }
@@ -44,10 +39,10 @@ export function ConnectWalletModal({ isOpen, onClose }: ConnectWalletModalProps)
     return () => clearTimeout(timeout)
   }, [isOpen])
 
-  const handleConnect = async (walletType: 'xverse' | 'leather') => {
+  const handleConnect = async (walletType: 'leather') => {
     try {
       await connect(walletType)
-      toast.success(`${walletType === 'xverse' ? 'Xverse' : 'Leather'} wallet connected!`)
+      toast.success('Leather wallet connected!')
       onClose()
     } catch (error) {
       console.error('Connection error:', error)
@@ -57,22 +52,13 @@ export function ConnectWalletModal({ isOpen, onClose }: ConnectWalletModalProps)
 
   const wallets = [
     {
-      id: 'xverse' as const,
-      name: 'Xverse',
-      description: 'Bitcoin & Stacks wallet',
-      icon: '/wallets/xverse.png',
-      downloadUrl: 'https://www.xverse.app/download',
-      isInstalled: detectedWallets.xverse,
-      features: ['Bitcoin', 'Stacks', 'sBTC', 'Ordinals']
-    },
-    {
       id: 'leather' as const,
       name: 'Leather',
-      description: 'Stacks wallet',
+      description: 'Stacks wallet (Required for BitcoinBazaar)',
       icon: '/wallets/leather.png',
       downloadUrl: 'https://leather.io/install-extension',
       isInstalled: detectedWallets.leather,
-      features: ['Stacks', 'Bitcoin', 'sBTC']
+      features: ['Stacks', 'Bitcoin', 'sBTC', 'Testing Section']
     }
   ]
 
@@ -132,15 +118,9 @@ export function ConnectWalletModal({ isOpen, onClose }: ConnectWalletModalProps)
                       <div className="flex items-center space-x-4">
                         {/* Wallet Icon */}
                         <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">
-                          {wallet.id === 'xverse' ? (
-                            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-                              <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" fill="#F7931A"/>
-                            </svg>
-                          ) : (
-                            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-                              <circle cx="12" cy="12" r="10" fill="#5546FF"/>
-                            </svg>
-                          )}
+                          <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                            <circle cx="12" cy="12" r="10" fill="#5546FF"/>
+                          </svg>
                         </div>
 
                         <div>
@@ -198,16 +178,17 @@ export function ConnectWalletModal({ isOpen, onClose }: ConnectWalletModalProps)
               </div>
 
               {/* Info Banner */}
-              <div className="mt-4 p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg">
+              <div className="mt-4 p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
                 <div className="flex items-start space-x-2">
-                  <AlertCircle className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
+                  <AlertCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
                   <div className="text-xs">
-                    <p className="text-blue-400 font-semibold mb-1">
-                      New to Stacks wallets?
+                    <p className="text-green-400 font-semibold mb-1">
+                      BitcoinBazaar requires Leather Wallet
                     </p>
                     <p className="text-gray-400">
-                      We recommend <span className="text-white font-semibold">Xverse</span> for 
-                      the best experience with Bitcoin, Stacks, and sBTC.
+                      All transactions in the <span className="text-white font-semibold">Testing Section</span> 
+                      require <span className="text-white font-semibold">Leather Wallet</span> for 
+                      Stacks and Bitcoin integration.
                     </p>
                   </div>
                 </div>

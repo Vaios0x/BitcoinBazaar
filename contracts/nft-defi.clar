@@ -1,5 +1,20 @@
 ;; nft-defi.clar - Advanced DeFi for NFTs
 
+;; Error definitions
+(define-constant err-not-found (err u100))
+(define-constant err-unauthorized (err u101))
+(define-constant err-excessive-borrow (err u102))
+(define-constant err-lock-period-not-met (err u103))
+
+;; sBTC contract address (testnet)
+;; For development: use local sbtc-mock contract
+;; For production: use 'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token'
+(define-constant sbtc-contract .sbtc-mock)
+
+;; Data variables
+(define-data-var loan-counter uint u0)
+(define-data-var stake-counter uint u0)
+
 ;; Lending protocol
 (define-map nft-loans
   { loan-id: uint }
@@ -19,7 +34,7 @@
 (define-public (borrow-against-nft (nft-id uint) (amount uint))
   (let (
     (nft-owner (unwrap! (contract-call? .nft-core get-owner nft-id) err-not-found))
-    (floor-price (unwrap! (contract-call? .analytics get-floor-price nft-id "sBTC") err-not-found))
+    (floor-price u1000000) ;; Mock floor price for demo
     (max-borrow (/ (* floor-price u50) u100)) ;; 50% LTV
     (loan-id (+ (var-get loan-counter) u1))
   )
@@ -33,7 +48,7 @@
     (try! (contract-call? .nft-core transfer nft-id tx-sender (as-contract tx-sender)))
     
     ;; Transfer sBTC to borrower
-    (try! (as-contract (contract-call? .sbtc-token transfer amount tx-sender nft-owner)))
+    (try! (as-contract (contract-call? sbtc-contract transfer amount tx-sender nft-owner)))
     
     ;; Record loan
     (map-set nft-loans
@@ -68,7 +83,7 @@
     (asserts! (is-eq tx-sender (get borrower loan)) err-unauthorized)
     
     ;; Transfer repayment
-    (try! (contract-call? .sbtc-token transfer total-repay tx-sender .treasury))
+    (try! (contract-call? sbtc-contract transfer total-repay tx-sender .treasury))
     
     ;; Return NFT to borrower
     (try! (as-contract (contract-call? .nft-core transfer (get nft-id loan) tx-sender (get borrower loan))))
@@ -100,7 +115,7 @@
     (apy (if (is-eq lock-period u1008) u1000 ;; 7d = 10% APY
       (if (is-eq lock-period u4320) u1500 ;; 30d = 15% APY
         u2000))) ;; 90d+ = 20% APY
-    (nft-level (get level (unwrap! (map-get? .gaming-nft.nft-stats { token-id: nft-id }) u1)))
+    (nft-level u1) ;; Default level for demo
     ;; Bonus APY for high-level NFTs
     (final-apy (+ apy (* nft-level u10)))
   )
@@ -137,7 +152,7 @@
     (asserts! (is-eq tx-sender (get staker stake)) err-unauthorized)
     
     ;; Pay rewards
-    (try! (as-contract (contract-call? .sbtc-token transfer unclaimed-rewards tx-sender (get staker stake))))
+    (try! (as-contract (contract-call? sbtc-contract transfer unclaimed-rewards tx-sender (get staker stake))))
     
     ;; Update claimed amount
     (map-set nft-stakes

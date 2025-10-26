@@ -15,6 +15,10 @@ export interface NFT {
   usdPrice?: number
   attributes?: NFTAttribute[]
   transferHistory?: TransferRecord[]
+  // Transaction info for newly created NFTs
+  transactionHash?: string
+  explorerUrl?: string
+  createdAt?: string
 }
 
 export interface NFTAttribute {

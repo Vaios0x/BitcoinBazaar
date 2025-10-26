@@ -1,0 +1,143 @@
+---
+id: 0
+name: Testnet deployment
+network: testnet
+stacks-node: "https://api.testnet.hiro.so"
+bitcoin-node: "http://blockstack:blockstacksystem@bitcoind.testnet.stacks.co:18332"
+plan:
+  batches:
+    - id: 0
+      transactions:
+        - requirement-publish:
+            contract-id: SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-registry
+            remap-sender: ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT
+            remap-principals:
+              SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4: ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT
+            cost: 112090
+            path: ".cache\\requirements\\SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-registry.clar"
+            clarity-version: 3
+        - requirement-publish:
+            contract-id: SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token
+            remap-sender: ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT
+            remap-principals:
+              SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4: ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT
+            cost: 47590
+            path: ".cache\\requirements\\SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token.clar"
+            clarity-version: 3
+        - requirement-publish:
+            contract-id: SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-deposit
+            remap-sender: ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT
+            remap-principals:
+              SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4: ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT
+            cost: 41510
+            path: ".cache\\requirements\\SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-deposit.clar"
+            clarity-version: 3
+      epoch: "3.0"
+    - id: 1
+      transactions:
+        - contract-publish:
+            contract-name: analytics
+            expected-sender: ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR
+            cost: 48630
+            path: "contracts\\analytics.clar"
+            anchor-block-only: true
+            clarity-version: 3
+        - contract-publish:
+            contract-name: analytics-sbtc-real
+            expected-sender: ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR
+            cost: 27040
+            path: "contracts\\analytics-sbtc-real.clar"
+            anchor-block-only: true
+            clarity-version: 3
+        - contract-publish:
+            contract-name: bitcoin-oracle
+            expected-sender: ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR
+            cost: 40730
+            path: "contracts\\bitcoin-oracle.clar"
+            anchor-block-only: true
+            clarity-version: 3
+        - contract-publish:
+            contract-name: nft-core
+            expected-sender: ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR
+            cost: 51260
+            path: "contracts\\nft-core.clar"
+            anchor-block-only: true
+            clarity-version: 3
+        - contract-publish:
+            contract-name: sbtc-mock
+            expected-sender: ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR
+            cost: 16980
+            path: "contracts\\sbtc-mock.clar"
+            anchor-block-only: true
+            clarity-version: 3
+        - contract-publish:
+            contract-name: gaming-nft
+            expected-sender: ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR
+            cost: 92570
+            path: "contracts\\gaming-nft.clar"
+            anchor-block-only: true
+            clarity-version: 3
+        - contract-publish:
+            contract-name: sbtc-token-mock
+            expected-sender: ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR
+            cost: 19980
+            path: "contracts\\sbtc-token-mock.clar"
+            anchor-block-only: true
+            clarity-version: 3
+        - contract-publish:
+            contract-name: gaming-nft-sbtc-real
+            expected-sender: ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR
+            cost: 55200
+            path: "contracts\\gaming-nft-sbtc-real.clar"
+            anchor-block-only: true
+            clarity-version: 3
+        - contract-publish:
+            contract-name: governance
+            expected-sender: ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR
+            cost: 54800
+            path: "contracts\\governance.clar"
+            anchor-block-only: true
+            clarity-version: 3
+        - contract-publish:
+            contract-name: marketplace
+            expected-sender: ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR
+            cost: 64200
+            path: "contracts\\marketplace.clar"
+            anchor-block-only: true
+            clarity-version: 3
+        - contract-publish:
+            contract-name: marketplace-sbtc-real
+            expected-sender: ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR
+            cost: 61740
+            path: "contracts\\marketplace-sbtc-real.clar"
+            anchor-block-only: true
+            clarity-version: 3
+        - contract-publish:
+            contract-name: nft-defi
+            expected-sender: ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR
+            cost: 64940
+            path: "contracts\\nft-defi.clar"
+            anchor-block-only: true
+            clarity-version: 3
+        - contract-publish:
+            contract-name: nft-defi-sbtc-real
+            expected-sender: ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR
+            cost: 66100
+            path: "contracts\\nft-defi-sbtc-real.clar"
+            anchor-block-only: true
+            clarity-version: 3
+        - contract-publish:
+            contract-name: rewards
+            expected-sender: ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR
+            cost: 53000
+            path: "contracts\\rewards.clar"
+            anchor-block-only: true
+            clarity-version: 3
+        - contract-publish:
+            contract-name: simple-sbtc-marketplace
+            expected-sender: ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR
+            cost: 12120
+            path: "contracts\\simple-sbtc-marketplace.clar"
+            anchor-block-only: true
+            clarity-version: 3
+      epoch: "3.2"

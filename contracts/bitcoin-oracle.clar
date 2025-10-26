@@ -1,65 +1,157 @@
-;; bitcoin-oracle.clar - BitcoinBaazar Bitcoin Oracle Contract
+;; bitcoin-oracle.clar - Advanced Bitcoin Price Oracle
+;; Implements decentralized Bitcoin price oracle with sBTC integration
 
 ;; Error codes
-(define-constant err-wrong-block (err u300))
+(define-constant err-unauthorized (err u300))
+(define-constant err-invalid-price (err u301))
+(define-constant err-stale-price (err u302))
+(define-constant err-invalid-oracle (err u303))
+
+;; Price data structure
+(define-map price-data
+  { timestamp: uint }
+  {
+    price: uint,
+    oracle: principal,
+    confidence: uint
+  }
+)
+
+;; Oracle registry
+(define-map oracle-registry
+  { oracle: principal }
+  {
+    is-active: bool,
+    weight: uint,
+    last-update: uint
+  }
+)
 
 ;; Data variables
-(define-data-var lucky-block-discount uint u10) ;; 10% discount
+(define-data-var current-price uint u0)
+(define-data-var last-update uint u0)
+(define-data-var price-staleness-threshold uint u144) ;; 24 hours in blocks
+(define-data-var min-oracle-weight uint u1)
+(define-data-var max-oracle-weight uint u10)
 
-;; Get current Bitcoin block height
-(define-read-only (get-bitcoin-block-height)
-  burn-block-height
-)
-
-;; Calculate dynamic price based on Bitcoin blockchain (simplified)
-(define-read-only (get-dynamic-price (base-price uint))
-  (let (
-    (current-btc-block burn-block-height)
-    (is-lucky-block (is-eq (mod current-btc-block u100) u0))
-    (entropy-discount (mod current-btc-block u20)) ;; 0-20% random discount based on block height
-  )
-    ;; Apply lucky block discount
-    (if is-lucky-block
-      (- base-price (/ (* base-price (var-get lucky-block-discount)) u100)) ;; 10% off
-      ;; Apply entropy-based discount
-      (- base-price (/ (* base-price entropy-discount) u100))
-    )
-  )
-)
-
-;; Special: Mint only during specific Bitcoin blocks (simplified)
-(define-public (mint-at-bitcoin-block (name (string-ascii 256)) (target-block uint))
+;; Update Bitcoin price (oracle only)
+(define-public (update-bitcoin-price (price uint) (confidence uint))
   (begin
-    (asserts! (is-eq burn-block-height target-block) err-wrong-block)
-    (ok true) ;; Placeholder for minting logic
-  )
-)
+    ;; Validate oracle is registered
+    (let ((oracle-data (unwrap! (map-get? oracle-registry {oracle: tx-sender}) err-unauthorized)))
+      (asserts! (get is-active oracle-data) err-unauthorized)
 
-;; Get current discount for user (simplified)
-(define-read-only (get-user-discount (user principal))
-  (let (
-    (current-block burn-block-height)
-    (is-lucky-block (is-eq (mod current-block u100) u0))
-  )
-    (if is-lucky-block
-      (var-get lucky-block-discount)
-      u0
+      ;; Validate price
+      (asserts! (> price u0) err-invalid-price)
+      (asserts! (and (>= confidence u0) (<= confidence u100)) err-invalid-price)
+
+      ;; Check for stale price
+      (let ((current-time u0))
+        (asserts! (or (is-eq (var-get last-update) u0)
+                      (> (- current-time (var-get last-update)) u0)) err-stale-price)
+
+        ;; Update price data
+        (map-set price-data {timestamp: current-time}
+          {
+            price: price,
+            oracle: tx-sender,
+            confidence: confidence
+          }
+        )
+
+        ;; Update global state
+        (var-set current-price price)
+        (var-set last-update current-time)
+
+        (ok true)
+      )
     )
   )
 )
 
-;; Get Bitcoin network stats (simplified)
-(define-read-only (get-bitcoin-stats)
+;; Get current Bitcoin price
+(define-read-only (get-bitcoin-price)
+  (ok (var-get current-price))
+)
+
+;; Get price with timestamp
+(define-read-only (get-price-with-timestamp)
   (ok {
-    current-block: burn-block-height,
-    is-lucky-block: (is-eq (mod burn-block-height u100) u0)
+    price: (var-get current-price),
+    timestamp: (var-get last-update)
   })
 )
 
-;; Set lucky block discount
-(define-public (set-lucky-block-discount (discount-percent uint))
+;; Register oracle (admin only)
+(define-public (register-oracle (oracle principal) (weight uint))
   (begin
-    (var-set lucky-block-discount discount-percent)
+    (asserts! (is-eq tx-sender 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM) err-unauthorized)
+    (asserts! (and (>= weight (var-get min-oracle-weight))
+                   (<= weight (var-get max-oracle-weight))) err-invalid-price)
+
+    (map-set oracle-registry {oracle: oracle}
+      {
+        is-active: true,
+        weight: weight,
+        last-update: u0
+      }
+    )
+
+    (ok true)
+  )
+)
+
+;; Deactivate oracle
+(define-public (deactivate-oracle (oracle principal))
+  (begin
+    (asserts! (is-eq tx-sender 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM) err-unauthorized)
+
+    (map-set oracle-registry {oracle: oracle}
+      {
+        is-active: false,
+        weight: u0,
+        last-update: u0
+      }
+    )
+
+    (ok true)
+  )
+)
+
+;; Get oracle info
+(define-read-only (get-oracle-info (oracle principal))
+  (ok (map-get? oracle-registry {oracle: oracle}))
+)
+
+;; Check if price is stale
+(define-read-only (is-price-stale)
+  (let ((current-time u0)
+        (last-update-time (var-get last-update)))
+    (ok (> (- current-time last-update-time) (var-get price-staleness-threshold)))
+  )
+)
+
+;; Get price history
+(define-read-only (get-price-history (from-timestamp uint) (to-timestamp uint))
+  (ok (map-get? price-data {timestamp: from-timestamp}))
+)
+
+;; Convert sBTC to BTC price
+(define-read-only (convert-sbtc-to-btc-price (sbtc-amount uint))
+  (let ((btc-price (var-get current-price)))
+    (ok (/ (* sbtc-amount btc-price) u100000000)) ;; sBTC has 8 decimals
+  )
+)
+
+;; Emergency price update (admin only)
+(define-public (emergency-price-update (price uint))
+  (begin
+    (asserts! (is-eq tx-sender 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM) err-unauthorized)
+    (asserts! (> price u0) err-invalid-price)
+
+    (var-set current-price price)
+    (var-set last-update u0)
+
     (ok true)
   )
 )

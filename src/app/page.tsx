@@ -208,6 +208,30 @@ export default function HomePage() {
                     <span className="text-bitcoin-400 text-base sm:text-lg">₿</span>
                   </motion.div>
                 </motion.button>
+                <motion.a
+                  href="/demo"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-xl font-semibold text-base sm:text-lg hover:shadow-lg hover:shadow-green-500/50 transition-all btn-hover relative overflow-hidden"
+                >
+                  <span className="relative z-10">🚀 Demo Interactivo</span>
+                  {/* Animated sparkles in button */}
+                  <motion.div
+                    className="absolute inset-0 flex items-center justify-center"
+                    animate={{
+                      opacity: [0, 0.5, 0],
+                      scale: [0.5, 1.5, 0.5],
+                      rotate: [0, 360]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    <span className="text-white text-lg sm:text-xl">✨</span>
+                  </motion.div>
+                </motion.a>
               </div>
 
               {/* Stats - Enhanced Responsive */}

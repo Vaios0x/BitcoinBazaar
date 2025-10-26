@@ -1,0 +1,38 @@
+id: 0
+name: "sBTC New Contracts Only"
+network: testnet
+stacks-node: "https://api.testnet.hiro.so"
+bitcoin-node: "http://blockstack:blockstacksystem@bitcoind.testnet.stacks.co:18332"
+plan:
+  batches:
+    - id: 0
+      transactions:
+        - contract-publish:
+            contract-name: marketplace-sbtc-real
+            expected-sender: ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR
+            cost: 61700
+            path: "contracts/marketplace-sbtc-real.clar"
+            anchor-block-only: true
+            clarity-version: 3
+        - contract-publish:
+            contract-name: gaming-nft-sbtc-real
+            expected-sender: ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR
+            cost: 55310
+            path: "contracts/gaming-nft-sbtc-real.clar"
+            anchor-block-only: true
+            clarity-version: 3
+        - contract-publish:
+            contract-name: nft-defi-sbtc-real
+            expected-sender: ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR
+            cost: 67430
+            path: "contracts/nft-defi-sbtc-real.clar"
+            anchor-block-only: true
+            clarity-version: 3
+        - contract-publish:
+            contract-name: analytics-sbtc-real
+            expected-sender: ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR
+            cost: 50810
+            path: "contracts/analytics-sbtc-real.clar"
+            anchor-block-only: true
+            clarity-version: 3
+      epoch: "3.2"
