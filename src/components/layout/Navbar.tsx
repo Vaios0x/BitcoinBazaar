@@ -132,9 +132,6 @@ export function Navbar() {
             <NavLink href="/collections">Collections</NavLink>
             <NavLink href="/auctions">Auctions</NavLink>
             <NavLink href="/stats">Stats</NavLink>
-            <NavLink href="/demo" className="text-green-400 hover:text-green-300 font-semibold">
-              🚀 Demo
-            </NavLink>
             <NavLink href="/testing" className="text-blue-400 hover:text-blue-300 font-semibold">
               🧪 Testing
             </NavLink>
@@ -288,9 +285,6 @@ export function Navbar() {
             <MobileNavLink href="/collections">Collections</MobileNavLink>
             <MobileNavLink href="/auctions">Auctions</MobileNavLink>
             <MobileNavLink href="/stats">Stats</MobileNavLink>
-            <MobileNavLink href="/demo" className="text-green-400 hover:text-green-300 font-semibold">
-              🚀 Demo Interactivo
-            </MobileNavLink>
             <MobileNavLink href="/testing" className="text-blue-400 hover:text-blue-300 font-semibold">
               🧪 Testing Suite
             </MobileNavLink>
