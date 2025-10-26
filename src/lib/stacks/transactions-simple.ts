@@ -978,6 +978,8 @@ export async function startBattleSimple(
 ): Promise<string> {
   try {
     console.log('Starting gaming battle:', { nftId, opponentId, wagerAmount, paymentToken })
+    console.log('Environment:', process.env.NODE_ENV)
+    console.log('Window object available:', typeof window !== 'undefined')
     
     // Validate wallet for testing
     validateWalletForTesting()
@@ -1031,6 +1033,8 @@ export async function startBattleSimple(
       }
 
       console.log('Opening Leather Wallet for battle transaction...')
+      console.log('Transaction options:', txOptions)
+      
       openContractCall(txOptions).catch((error) => {
         console.error('openContractCall error:', error)
         reject(error)

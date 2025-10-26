@@ -87,6 +87,12 @@ if (typeof window !== 'undefined') {
 export function validateTestingWallet(): boolean {
   if (typeof window === 'undefined') return false
   
+  // In production, be more permissive to allow wallet detection
+  if (process.env.NODE_ENV === 'production') {
+    console.log('Production environment: Allowing wallet validation')
+    return true
+  }
+  
   // Check if Leather wallet is available
   const leatherAvailable = !!(window as any).LeatherProvider || 
                           !!(window as any).HiroWalletProvider
