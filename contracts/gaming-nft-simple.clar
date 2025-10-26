@@ -1,5 +1,5 @@
-;; gaming-nft.clar - Working GameFi NFT Contract for Testing
-;; This version works without requiring real NFT ownership verification
+;; gaming-nft-simple.clar - Simplified GameFi NFT Contract for Testing
+;; This version works with local storage NFTs and doesn't require real NFT ownership
 
 ;; Error definitions
 (define-constant err-not-found (err u100))

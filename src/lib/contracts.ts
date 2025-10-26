@@ -64,9 +64,7 @@ export const CONTRACT_FUNCTIONS = {
     createBattle: 'create-battle',
     executeBattle: 'execute-battle',
     getBattle: 'get-battle',
-    getBattleHistory: 'get-battle-history',
-    setBattleRules: 'set-battle-rules',
-    getBattleRules: 'get-battle-rules'
+    getBattleCounter: 'get-battle-counter'
   },
   'gaming-nft-sbtc-real': {
     createBattle: 'create-battle',

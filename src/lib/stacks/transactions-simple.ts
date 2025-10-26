@@ -1012,7 +1012,7 @@ export async function startBattleSimple(
         functionArgs: [
           uintCV(nftId),
           uintCV(opponentId),
-          uintCV(Math.floor(wagerAmount * 1000000)), // Convert to micro-units
+          uintCV(100000), // 0.1 STX in microSTX (minimum required by contract)
           stringAsciiCV(paymentToken)
         ],
         network,

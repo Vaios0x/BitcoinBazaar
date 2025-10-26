@@ -1,4 +1,4 @@
-;; gaming-nft.clar - Working GameFi NFT Contract for Testing
+;; gaming-nft-working.clar - Working GameFi NFT Contract for Testing
 ;; This version works without requiring real NFT ownership verification
 
 ;; Error definitions
