@@ -20,6 +20,7 @@ export function BattleModal({ isOpen, onClose, nft }: BattleModalProps) {
   }
   const [battlePhase, setBattlePhase] = useState<'select' | 'battle' | 'result'>('select')
   const [selectedOpponent, setSelectedOpponent] = useState<any>(null)
+  const [battleOpponent, setBattleOpponent] = useState<any>(null) // Keep opponent data during battle
   const [battleResult, setBattleResult] = useState<'win' | 'lose' | null>(null)
   const [battleProgress, setBattleProgress] = useState(0)
   const [battleLog, setBattleLog] = useState<string[]>([])
@@ -222,6 +223,7 @@ export function BattleModal({ isOpen, onClose, nft }: BattleModalProps) {
 
   const startBattle = async (opponent: any) => {
     setSelectedOpponent(opponent)
+    setBattleOpponent(opponent) // Store opponent data for entire battle
     setBattlePhase('battle')
     setBattleProgress(0)
     setPlayerHealth(100)
@@ -230,23 +232,25 @@ export function BattleModal({ isOpen, onClose, nft }: BattleModalProps) {
     setSpecialEffects([])
     
     try {
-      // Start real blockchain battle transaction
+      // Start real blockchain battle transaction FIRST (payment before battle)
       const { startBattleSimple } = await import('@/lib/stacks/transactions-simple')
       
       // Add battle start log
-      setBattleLog(prev => [...prev, `🚀 Starting battle with ${opponent?.name || 'Unknown Opponent'}...`])
+      setBattleLog(prev => [...prev, `🚀 Initiating battle with ${opponent?.name || 'Unknown Opponent'}...`])
+      setBattleLog(prev => [...prev, `💳 Processing payment (0.1 STX)...`])
       
-      // Call the real battle function
+      // Call the real battle function FIRST - payment happens here
       const battleTxId = await startBattleSimple(
         nft.id,
         opponent.id,
-        0.1, // Default wager
+        0.1, // Default wager - this charges the user
         'STX' // Default payment token
       )
       
-      setBattleLog(prev => [...prev, `✅ Battle transaction submitted: ${battleTxId}`])
+      setBattleLog(prev => [...prev, `✅ Payment processed! Battle transaction: ${battleTxId}`])
+      setBattleLog(prev => [...prev, `⚔️ Battle begins!`])
       
-      // Enhanced battle simulation with real-time updates
+      // Now start the visual battle simulation (after payment is confirmed)
       const battleInterval = setInterval(() => {
         setBattleProgress(prev => {
           const newProgress = prev + 2
@@ -256,8 +260,10 @@ export function BattleModal({ isOpen, onClose, nft }: BattleModalProps) {
             setBattleResult(win ? 'win' : 'lose')
             setBattlePhase('result')
             
-            // Complete battle on blockchain
-            completeBattle(win ? 'win' : 'lose', battleTxId)
+            // Complete battle on blockchain (this distributes rewards)
+            if (battleOpponent) {
+              completeBattle(win ? 'win' : 'lose', battleTxId)
+            }
             return 100
           }
           return newProgress
@@ -294,12 +300,20 @@ export function BattleModal({ isOpen, onClose, nft }: BattleModalProps) {
       setTimeout(() => {
         setBattlePhase('select')
         setSelectedOpponent(null)
+        setBattleOpponent(null)
       }, 3000)
     }
   }
 
   const completeBattle = async (result: 'win' | 'lose', battleTxId: string) => {
     try {
+      // Safety check for required data
+      if (!battleOpponent || !nft) {
+        console.error('Complete battle: Missing required data', { battleOpponent, nft })
+        setBattleLog(prev => [...prev, `❌ Battle completion failed: Missing battle data`])
+        return
+      }
+
       const { completeBattleSimple } = await import('@/lib/stacks/transactions-simple')
       
       // Generate a battle ID (in real implementation, this would come from the start battle response)
@@ -320,6 +334,7 @@ export function BattleModal({ isOpen, onClose, nft }: BattleModalProps) {
   const resetBattle = () => {
     setBattlePhase('select')
     setSelectedOpponent(null)
+    setBattleOpponent(null)
     setBattleResult(null)
     setBattleProgress(0)
     setPlayerHealth(100)
@@ -490,7 +505,7 @@ export function BattleModal({ isOpen, onClose, nft }: BattleModalProps) {
                   </div>
                 )}
 
-                {battlePhase === 'battle' && selectedOpponent && nft && (
+                {battlePhase === 'battle' && battleOpponent && nft && (
                   <div className="space-y-3">
                     {/* 3D Battle Arena */}
                     <div className="glass-card rounded-xl p-3 mb-3">
@@ -524,8 +539,8 @@ export function BattleModal({ isOpen, onClose, nft }: BattleModalProps) {
                           {/* Opponent Health Bar */}
                           <div className="absolute top-2 right-2 sm:top-4 sm:right-4 w-32 sm:w-48">
                             <div className="flex items-center space-x-2 mb-1 justify-end">
-                              <span className="text-white font-bold">{selectedOpponent?.name || 'Opponent'}</span>
-                              <img src={selectedOpponent?.image || ''} alt={selectedOpponent?.name || 'Opponent'} className="w-8 h-8 rounded-full" />
+                              <span className="text-white font-bold">{battleOpponent?.name || 'Opponent'}</span>
+                              <img src={battleOpponent?.image || ''} alt={battleOpponent?.name || 'Opponent'} className="w-8 h-8 rounded-full" />
                             </div>
                             <div className="w-full bg-gray-700 rounded-full h-3 battle-health-bar">
                         <motion.div
@@ -599,7 +614,7 @@ export function BattleModal({ isOpen, onClose, nft }: BattleModalProps) {
                   </div>
                 )}
 
-                {battlePhase === 'result' && battleResult && selectedOpponent && (
+                {battlePhase === 'result' && battleResult && battleOpponent && (
                   <div className="text-center">
                     <motion.div
                       initial={{ scale: 0, rotate: -180 }}
@@ -646,8 +661,8 @@ export function BattleModal({ isOpen, onClose, nft }: BattleModalProps) {
                       className="text-gray-300 mb-8 text-lg"
                     >
                       {battleResult === 'win' 
-                        ? `You defeated ${selectedOpponent?.name || 'Opponent'} and earned ${selectedOpponent?.reward || 'XP'}!`
-                        : `${selectedOpponent?.name || 'Opponent'} was too strong. Better luck next time!`
+                        ? `You defeated ${battleOpponent?.name || 'Opponent'} and earned ${battleOpponent?.reward || 'XP'}!`
+                        : `${battleOpponent?.name || 'Opponent'} was too strong. Better luck next time!`
                       }
                     </motion.p>
 
