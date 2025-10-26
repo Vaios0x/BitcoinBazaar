@@ -54,16 +54,29 @@ const getContractInfo = (contractName: string) => {
 const validateWalletForTesting = () => {
   const { address, walletType } = useWalletStore.getState()
   
+  console.log('validateWalletForTesting called:', { address, walletType })
+  
   if (!address) {
     throw new Error('Wallet not connected')
   }
 
   // Validate Leather wallet for testing transactions
-  if (!validateTestingWallet()) {
+  const isValid = validateTestingWallet()
+  console.log('validateTestingWallet result:', isValid)
+  
+  if (!isValid) {
     throw new Error('Leather wallet is required for testing transactions')
   }
 
-  if (walletType !== 'leather') {
+  // In production, be more permissive with wallet type
+  const isProduction = process.env.NODE_ENV === 'production' || 
+                      process.env.NODE_ENV === undefined ||
+                      (typeof window !== 'undefined' && (
+                        window.location.hostname.includes('vercel.app') ||
+                        window.location.hostname.includes('bitcoinbazaar')
+                      ))
+  
+  if (!isProduction && walletType !== 'leather') {
     throw new Error('Only Leather wallet is supported for testing transactions')
   }
 }

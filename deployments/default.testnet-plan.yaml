@@ -57,24 +57,17 @@ plan:
             anchor-block-only: true
             clarity-version: 3
         - contract-publish:
-            contract-name: nft-core
-            expected-sender: ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR
-            cost: 51260
-            path: "contracts\\nft-core.clar"
-            anchor-block-only: true
-            clarity-version: 3
-        - contract-publish:
-            contract-name: sbtc-mock
-            expected-sender: ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR
-            cost: 16980
-            path: "contracts\\sbtc-mock.clar"
-            anchor-block-only: true
-            clarity-version: 3
-        - contract-publish:
             contract-name: gaming-nft
             expected-sender: ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR
-            cost: 92570
+            cost: 27910
             path: "contracts\\gaming-nft.clar"
+            anchor-block-only: true
+            clarity-version: 3
+        - contract-publish:
+            contract-name: nft-core
+            expected-sender: ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR
+            cost: 50850
+            path: "contracts\\nft-core.clar"
             anchor-block-only: true
             clarity-version: 3
         - contract-publish:
@@ -92,10 +85,24 @@ plan:
             anchor-block-only: true
             clarity-version: 3
         - contract-publish:
+            contract-name: gaming-nft-simple
+            expected-sender: ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR
+            cost: 29120
+            path: "contracts\\gaming-nft-simple.clar"
+            anchor-block-only: true
+            clarity-version: 3
+        - contract-publish:
             contract-name: governance
             expected-sender: ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR
             cost: 54800
             path: "contracts\\governance.clar"
+            anchor-block-only: true
+            clarity-version: 3
+        - contract-publish:
+            contract-name: sbtc-mock
+            expected-sender: ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR
+            cost: 16980
+            path: "contracts\\sbtc-mock.clar"
             anchor-block-only: true
             clarity-version: 3
         - contract-publish:

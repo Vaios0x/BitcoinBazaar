@@ -87,9 +87,14 @@ if (typeof window !== 'undefined') {
 export function validateTestingWallet(): boolean {
   if (typeof window === 'undefined') return false
   
-  // In production, be more permissive to allow wallet detection
-  if (process.env.NODE_ENV === 'production') {
-    console.log('Production environment: Allowing wallet validation')
+  // In production or when NODE_ENV is not available, be more permissive
+  const isProduction = process.env.NODE_ENV === 'production' || 
+                      process.env.NODE_ENV === undefined ||
+                      window.location.hostname.includes('vercel.app') ||
+                      window.location.hostname.includes('bitcoinbazaar')
+  
+  if (isProduction) {
+    console.log('Production environment detected: Allowing wallet validation')
     return true
   }
   
