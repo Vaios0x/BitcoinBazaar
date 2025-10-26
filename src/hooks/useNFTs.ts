@@ -97,6 +97,20 @@ export function useNFTs() {
     fetchNFTs(false)
   }
 
+  // Update NFT completely (for listing status, transaction IDs, etc.)
+  const updateNFT = (nftId: number, updates: Partial<NFT>) => {
+    const existingNFTs = nftStorage.getStoredNFTs()
+    const updatedNFTs = existingNFTs.map(nft => {
+      if (nft.id === nftId) {
+        return { ...nft, ...updates }
+      }
+      return nft
+    })
+    nftStorage.storeNFTs(updatedNFTs)
+    // Refresh the list to show the updated NFT
+    fetchNFTs(false)
+  }
+
   useEffect(() => {
     // Load stored NFTs immediately
     const storedNFTs = nftStorage.getStoredNFTs()
@@ -156,6 +170,7 @@ export function useNFTs() {
     getNFTsByCreator,
     addNFT,
     updateNFTPrice,
+    updateNFT,
     isPolling,
     startPolling,
     stopPolling,

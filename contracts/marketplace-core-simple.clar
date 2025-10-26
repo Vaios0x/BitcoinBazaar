@@ -1,5 +1,8 @@
 ;; marketplace-core-simple.clar - Simplified Marketplace Contract
 
+;; Contract references
+(define-constant nft-core-contract 'ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR.nft-core-simple)
+
 ;; Error codes
 (define-constant err-unauthorized (err u200))
 (define-constant err-not-found (err u201))
@@ -116,6 +119,9 @@
             (try! (stx-transfer? seller-amount tx-sender (get seller listing)))
           )
         )
+        
+        ;; Transfer NFT to buyer using the nft-core contract
+        (try! (contract-call? nft-core-contract transfer token-id (get seller listing) tx-sender))
         
         ;; Update listing status
         (map-set listings {token-id: token-id}

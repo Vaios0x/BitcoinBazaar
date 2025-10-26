@@ -49,14 +49,69 @@ export function BuyNFTModal({ nft, isOpen, onClose }: BuyNFTModalProps) {
     setIsProcessing(true)
 
     try {
-      // Simulate transaction
-      await new Promise(resolve => setTimeout(resolve, 3000))
+      // Import the correct transaction function
+      const { buyNFTSimple } = await import('@/lib/stacks/transactions-simple')
       
-      alert('Purchase successful!')
+      // Call the marketplace buy function instead of direct transfer
+      const txId = await buyNFTSimple(nft.id, paymentToken)
+      
+      console.log('Purchase transaction submitted:', txId)
+      
+      // Mark NFT as purchased in storage
+      const { useWalletStore } = await import('@/lib/stores/walletStore')
+      const { address } = useWalletStore.getState()
+      
+      if (address) {
+        // Import useNFTs hook to update NFT
+        const { useNFTs } = await import('@/hooks/useNFTs')
+        // Note: We can't use hooks here, so we'll update storage directly
+        const { nftStorage } = await import('@/lib/nft-storage')
+        
+        const existingNFTs = nftStorage.getStoredNFTs()
+        console.log('🔍 Existing NFTs before purchase update:', existingNFTs.length)
+        console.log('🔍 Looking for NFT ID:', nft.id)
+        
+        const updatedNFTs = existingNFTs.map(existingNft => {
+          if (existingNft.id === nft.id) {
+            console.log('✅ Found NFT to update:', existingNft.name, 'ID:', existingNft.id)
+            return {
+              ...existingNft,
+              isPurchased: true,
+              purchasedBy: address,
+              purchaseTxId: txId,
+              purchaseDate: new Date().toISOString(),
+              isListed: false, // Remove from marketplace after purchase
+              price: 0 // Reset price
+            }
+          }
+          return existingNft
+        })
+        
+        nftStorage.storeNFTs(updatedNFTs)
+        console.log('✅ NFT marked as purchased:', nft.id)
+        console.log('🔍 Updated NFTs count:', updatedNFTs.length)
+        
+        // Verify the update was saved
+        const verifyNFTs = nftStorage.getStoredNFTs()
+        const purchasedNFT = verifyNFTs.find(n => n.id === nft.id)
+        console.log('🔍 Verification - Purchased NFT:', purchasedNFT ? {
+          id: purchasedNFT.id,
+          name: purchasedNFT.name,
+          isPurchased: purchasedNFT.isPurchased,
+          purchasedBy: purchasedNFT.purchasedBy
+        } : 'NOT FOUND')
+        
+        // Force refresh of NFTs in all components
+        window.dispatchEvent(new CustomEvent('nft-purchased', { 
+          detail: { nftId: nft.id, txId } 
+        }))
+      }
+      
+      alert(`Purchase successful! Transaction ID: ${txId}`)
       onClose()
     } catch (error) {
       console.error('Purchase failed:', error)
-      alert('Purchase failed')
+      alert(`Purchase failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
     } finally {
       setIsProcessing(false)
     }
@@ -243,8 +298,22 @@ export function BuyNFTModal({ nft, isOpen, onClose }: BuyNFTModalProps) {
               </button>
               
               <p className="text-xs text-gray-500 text-center mt-3">
-                Transaction will be verified on Bitcoin blockchain via Stacks
+                La transacción será verificada en la blockchain de Bitcoin vía Stacks
               </p>
+              
+              {/* Transaction Info */}
+              <div className="mt-4 p-3 bg-blue-500/10 border border-blue-500/30 rounded-xl">
+                <div className="flex items-center space-x-2 mb-2">
+                  <Info className="w-4 h-4 text-blue-400" />
+                  <span className="text-sm font-semibold text-blue-400">Información de Transacción</span>
+                </div>
+                <div className="text-xs text-gray-300 space-y-1">
+                  <p>• Se utilizará el contrato marketplace para procesar la compra</p>
+                  <p>• El NFT será transferido automáticamente a tu wallet</p>
+                  <p>• Las comisiones se calcularán y distribuirán automáticamente</p>
+                  <p>• La transacción será verificada en la blockchain de Stacks</p>
+                </div>
+              </div>
             </div>
           </motion.div>
         </>

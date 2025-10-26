@@ -18,7 +18,6 @@ export default function CreatePage() {
     image: null as File | null,
     royaltyPercent: 10,
     collectionId: '',
-    price: '',
     paymentToken: 'STX' as 'STX' | 'sBTC',
     isDynamicPricing: false
   })
@@ -97,7 +96,6 @@ export default function CreatePage() {
       ...prev,
       name: template.name,
       description: template.description,
-      price: template.suggestedPrice,
       paymentToken: template.suggestedToken as 'STX' | 'sBTC'
     }))
     setTemplateApplied(true)
@@ -148,31 +146,30 @@ export default function CreatePage() {
         message: 'Creando NFT en la blockchain...'
       })
       
-      // Call the real mintNFTSimple function that works with Leather wallet
-      const txId = await mintNFTSimple(
+      // Step 1: Mint the NFT (ONLY)
+      const mintTxId = await mintNFTSimple(
         formData.name,
         imageUri
       )
       
+      console.log('✅ NFT minted successfully:', mintTxId)
+      
       // Success notification with transaction hash
-      const explorerUrl = `https://explorer.stacks.co/txid/${txId}?chain=testnet`
+      const explorerUrl = `https://explorer.stacks.co/txid/${mintTxId}?chain=testnet`
       setTransactionStatus({
         type: 'success',
-        message: `¡NFT creado exitosamente! Hash: ${txId}`,
-        txId,
+        message: `¡NFT creado exitosamente! Hash: ${mintTxId}`,
+        txId: mintTxId,
         explorerUrl
       })
       
-      // Add NFT to global storage for immediate visibility
-      // Use the price from the form, or generate a random price if not specified
-      const nftPrice = formData.price ? parseFloat(formData.price) : Math.random() * 0.49 + 0.01
-      
+      // Add NFT to global storage (NOT listed)
       const newNFT = {
         id: Date.now(), // Temporary ID until we get the real one from contract
         name: formData.name,
         description: formData.description,
         imageUri: imageUri,
-        price: nftPrice, // Use form price or random price
+        price: 0, // Not listed initially
         paymentToken: formData.paymentToken,
         creator: address || 'Unknown',
         royaltyPercent: formData.royaltyPercent,
@@ -181,16 +178,18 @@ export default function CreatePage() {
         isDynamicPricing: formData.isDynamicPricing,
         mintedAtBitcoinBlock: 0,
         lastSalePrice: undefined,
-        usdPrice: nftPrice * 0.5, // Approximate USD price
+        usdPrice: undefined,
         createdAt: new Date().toISOString(),
-        transactionHash: txId,
-        explorerUrl: explorerUrl
+        transactionHash: mintTxId,
+        explorerUrl: explorerUrl,
+        isListed: false, // Not listed - user can list later in /my-nfts
+        listingTxId: undefined
       }
       
       addNFT(newNFT)
       
       // Show success toast with transaction hash
-      toast.success(`¡NFT creado exitosamente! Hash: ${txId}`, {
+      toast.success(`¡NFT creado exitosamente! Hash: ${mintTxId}`, {
         duration: 8000,
         style: {
           background: '#10B981',
@@ -199,6 +198,19 @@ export default function CreatePage() {
           fontWeight: '500'
         }
       })
+      
+      // Show info about listing
+      setTimeout(() => {
+        toast.success('Ve a "Mis NFTs" para listar tu NFT cuando quieras venderlo', {
+          duration: 6000,
+          style: {
+            background: '#3B82F6',
+            color: '#fff',
+            fontSize: '14px',
+            fontWeight: '500'
+          }
+        })
+      }, 1000)
       
       // Auto-hide success notification after 15 seconds
       setTimeout(() => {
@@ -212,7 +224,6 @@ export default function CreatePage() {
         image: null,
         royaltyPercent: 10,
         collectionId: '',
-        price: '',
         paymentToken: 'STX',
         isDynamicPricing: false
       })
@@ -644,29 +655,20 @@ export default function CreatePage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-semibold text-white mb-2">
-                    Price
+                    Payment Token (for future listing)
                   </label>
-                  <div className="flex space-x-2">
-                    <input
-                      type="number"
-                      name="price"
-                      value={formData.price}
-                      onChange={handleInputChange}
-                      placeholder="0.00"
-                      step="0.001"
-                      min="0"
-                      className="flex-1 px-4 py-3 glass-card rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-stacks-500"
-                    />
                     <select
                       name="paymentToken"
                       value={formData.paymentToken}
                       onChange={handleInputChange}
-                      className="px-4 py-3 glass-card rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-stacks-500"
+                    className="w-full px-4 py-3 glass-card rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-stacks-500"
                     >
                       <option value="STX">STX</option>
                       <option value="sBTC">sBTC</option>
                     </select>
-                  </div>
+                  <p className="text-xs text-gray-400 mt-1">
+                    Token que usarás cuando listes el NFT en "Mis NFTs"
+                  </p>
                 </div>
 
                 <div>

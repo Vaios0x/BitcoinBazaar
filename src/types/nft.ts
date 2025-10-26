@@ -19,6 +19,14 @@ export interface NFT {
   transactionHash?: string
   explorerUrl?: string
   createdAt?: string
+  // Listing status
+  isListed?: boolean
+  listingTxId?: string
+  // Purchase info
+  isPurchased?: boolean
+  purchasedBy?: string
+  purchaseTxId?: string
+  purchaseDate?: string
 }
 
 export interface NFTAttribute {

@@ -439,13 +439,12 @@ export async function burnNFTSimple(tokenId: number): Promise<string> {
 }
 
 /**
- * Buy NFT using direct transfer (simplified approach)
- * This simulates a purchase by transferring the NFT directly to the buyer
- * In a real implementation, this would include payment logic
+ * Buy NFT using marketplace contract (proper approach)
+ * This calls the marketplace buy-nft function which handles payment and transfer
  */
 export async function buyNFTSimple(nftId: number, paymentToken: 'STX' | 'sBTC' = 'STX'): Promise<string> {
   try {
-    console.log('Buying NFT via direct transfer:', { nftId, paymentToken })
+    console.log('Buying NFT via marketplace:', { nftId, paymentToken })
     
     // Validate wallet for testing
     validateWalletForTesting()
@@ -456,40 +455,40 @@ export async function buyNFTSimple(nftId: number, paymentToken: 'STX' | 'sBTC' =
     }
 
     const network = getNetwork()
-    const { address: contractAddress, name: contractName } = getContractInfo('nft-core')
+    const { address: contractAddress, name: contractName } = getContractInfo('marketplace')
 
-    console.log('Preparing direct NFT transfer transaction...', {
+    console.log('Preparing marketplace buy NFT transaction...', {
       contractAddress,
       contractName,
-      functionName: 'transfer-to',
+      functionName: CONTRACT_FUNCTIONS.marketplace.buyNft,
       network: 'https://api.testnet.hiro.so',
       address,
-      nftId
+      nftId,
+      paymentToken
     })
 
     return new Promise((resolve, reject) => {
       const txOptions = {
         contractAddress,
         contractName,
-        functionName: 'transfer-to',
+        functionName: CONTRACT_FUNCTIONS.marketplace.buyNft,
         functionArgs: [
-          uintCV(nftId),
-          principalCV(address) // Transfer to the buyer
+          uintCV(nftId)
         ],
         network,
         onFinish: (data: any) => {
-          console.log('Direct NFT transfer transaction finished:', data)
+          console.log('Marketplace buy NFT transaction finished:', data)
           // Extract transaction ID from the response
           const txId = data?.txId || data?.txid || data?.transactionId || data?.txHash || 'unknown'
           resolve(txId)
         },
         onCancel: () => {
-          console.log('Direct NFT transfer transaction cancelled')
+          console.log('Marketplace buy NFT transaction cancelled')
           reject(new Error('Transaction cancelled by user'))
         }
       }
 
-      console.log('Opening Leather Wallet for direct NFT transfer transaction...')
+      console.log('Opening Leather Wallet for marketplace buy NFT transaction...')
       openContractCall(txOptions).catch((error) => {
         console.error('openContractCall error:', error)
         reject(error)

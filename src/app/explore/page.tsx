@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
-import { Filter, Search, Grid, List } from 'lucide-react'
+import { Filter, Search, Grid, List, Package } from 'lucide-react'
 import { NFTGrid } from '@/components/nft/NFTGrid'
 import { BitcoinSymbols } from '@/components/effects/BitcoinSymbols'
 import { ShoppingCartModal } from '@/components/cart/ShoppingCartModal'
@@ -169,6 +169,11 @@ export default function ExplorePage() {
 
   // Filter NFTs based on search and filters
   const filteredNFTs = allNFTsCombined.filter(nft => {
+    // Only show NFTs that have a price (are available for purchase)
+    if (nft.price <= 0) {
+      return false
+    }
+
     // Search filter
     if (searchQuery && !nft.name.toLowerCase().includes(searchQuery.toLowerCase()) && 
         !nft.collectionName?.toLowerCase().includes(searchQuery.toLowerCase())) {
@@ -458,8 +463,26 @@ export default function ExplorePage() {
           ) : !loading && !error ? (
             <div className="text-center py-8 sm:py-12">
               <div className="text-4xl sm:text-6xl mb-4">🔍</div>
-              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">No NFTs found</h3>
-              <p className="text-gray-400 mb-4 sm:mb-6 text-sm sm:text-base px-4">Try adjusting your search or filters</p>
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
+                {allNFTsCombined.length === 0 ? 'No hay NFTs disponibles' : 'No hay NFTs listados'}
+              </h3>
+              <p className="text-gray-400 mb-4 sm:mb-6 text-sm sm:text-base px-4">
+                {allNFTsCombined.length === 0 
+                  ? 'Los NFTs aparecerán aquí cuando se creen'
+                  : 'Los NFTs deben estar listados para aparecer aquí. Ve a "Mis NFTs" para listar tus NFTs.'
+                }
+              </p>
+              {allNFTsCombined.length > 0 && (
+                <motion.a
+                  href="/my-nfts"
+                  className="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-stacks-500/50 transition-all text-sm sm:text-base"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Package className="w-4 h-4" />
+                  <span>Mis NFTs</span>
+                </motion.a>
+              )}
               <motion.button
                 onClick={() => {
                   setSearchQuery('')
@@ -470,26 +493,11 @@ export default function ExplorePage() {
                     sortBy: 'Recently Listed'
                   })
                 }}
-                className="px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-stacks-500/50 transition-all relative overflow-hidden text-sm sm:text-base"
+                className="ml-4 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-xl font-semibold hover:shadow-lg transition-all relative overflow-hidden text-sm sm:text-base"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <span className="relative z-10">Clear Filters</span>
-                {/* Animated Bitcoin symbols in button */}
-                <motion.div
-                  className="absolute inset-0 flex items-center justify-center"
-                  animate={{
-                    opacity: [0, 0.3, 0],
-                    scale: [0.5, 1.2, 0.5]
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                >
-                  <span className="text-white text-lg sm:text-xl">₿</span>
-                </motion.div>
+                <span className="relative z-10">Limpiar Filtros</span>
               </motion.button>
             </div>
           ) : null}
