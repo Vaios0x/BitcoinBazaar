@@ -966,3 +966,147 @@ export async function updateBitcoinPriceSimple(
     throw new Error(`Failed to update Bitcoin price: ${error.message || 'Unknown error'}`)
   }
 }
+
+/**
+ * Start a gaming battle using real contract call that opens Leather Wallet
+ */
+export async function startBattleSimple(
+  nftId: number,
+  opponentId: number,
+  wagerAmount: number = 0.1,
+  paymentToken: 'STX' | 'sBTC' = 'STX'
+): Promise<string> {
+  try {
+    console.log('Starting gaming battle:', { nftId, opponentId, wagerAmount, paymentToken })
+    
+    // Validate wallet for testing
+    validateWalletForTesting()
+    
+    const { address } = useWalletStore.getState()
+    if (!address) {
+      throw new Error('Wallet address not available')
+    }
+
+    const network = getNetwork()
+    const { address: contractAddress, name: contractName } = getContractInfo('gaming-nft')
+
+    console.log('Preparing battle transaction...', {
+      contractAddress,
+      contractName: 'gaming-nft',
+      functionName: CONTRACT_FUNCTIONS['gaming-nft'].createBattle,
+      network: 'https://api.testnet.hiro.so',
+      address,
+      nftId,
+      opponentId,
+      wagerAmount,
+      paymentToken
+    })
+
+    return new Promise((resolve, reject) => {
+      const txOptions = {
+        contractAddress,
+        contractName,
+        functionName: CONTRACT_FUNCTIONS['gaming-nft'].createBattle,
+        functionArgs: [
+          uintCV(nftId),
+          uintCV(opponentId),
+          uintCV(Math.floor(wagerAmount * 1000000)), // Convert to micro-units
+          stringAsciiCV(paymentToken)
+        ],
+        network,
+        onFinish: (data: any) => {
+          console.log('Battle transaction finished:', data)
+          // Extract transaction ID from the response
+          const txId = data?.txId || data?.txid || data?.transactionId || data?.txHash || 'unknown'
+          resolve(txId)
+        },
+        onCancel: () => {
+          console.log('Battle transaction cancelled by user')
+          reject(new Error('Battle transaction cancelled by user'))
+        },
+        onError: (error: any) => {
+          console.error('Battle transaction error:', error)
+          reject(new Error(`Battle transaction failed: ${error.message || 'Unknown error'}`))
+        }
+      }
+
+      console.log('Opening Leather Wallet for battle transaction...')
+      openContractCall(txOptions).catch((error) => {
+        console.error('openContractCall error:', error)
+        reject(error)
+      })
+    })
+  } catch (error: any) {
+    console.error('Error in startBattleSimple:', error)
+    throw new Error(`Failed to start battle: ${error.message || 'Unknown error'}`)
+  }
+}
+
+/**
+ * Complete a gaming battle and claim rewards using real contract call
+ */
+export async function completeBattleSimple(
+  battleId: number,
+  result: 'win' | 'lose'
+): Promise<string> {
+  try {
+    console.log('Completing gaming battle:', { battleId, result })
+    
+    // Validate wallet for testing
+    validateWalletForTesting()
+    
+    const { address } = useWalletStore.getState()
+    if (!address) {
+      throw new Error('Wallet address not available')
+    }
+
+    const network = getNetwork()
+    const { address: contractAddress, name: contractName } = getContractInfo('gaming-nft')
+
+    console.log('Preparing complete battle transaction...', {
+      contractAddress,
+      contractName: 'gaming-nft',
+      functionName: CONTRACT_FUNCTIONS['gaming-nft'].executeBattle,
+      network: 'https://api.testnet.hiro.so',
+      address,
+      battleId,
+      result
+    })
+
+    return new Promise((resolve, reject) => {
+      const txOptions = {
+        contractAddress,
+        contractName,
+        functionName: CONTRACT_FUNCTIONS['gaming-nft'].executeBattle,
+        functionArgs: [
+          uintCV(battleId),
+          stringAsciiCV(result)
+        ],
+        network,
+        onFinish: (data: any) => {
+          console.log('Complete battle transaction finished:', data)
+          // Extract transaction ID from the response
+          const txId = data?.txId || data?.txid || data?.transactionId || data?.txHash || 'unknown'
+          resolve(txId)
+        },
+        onCancel: () => {
+          console.log('Complete battle transaction cancelled by user')
+          reject(new Error('Complete battle transaction cancelled by user'))
+        },
+        onError: (error: any) => {
+          console.error('Complete battle transaction error:', error)
+          reject(new Error(`Complete battle transaction failed: ${error.message || 'Unknown error'}`))
+        }
+      }
+
+      console.log('Opening Leather Wallet for complete battle transaction...')
+      openContractCall(txOptions).catch((error) => {
+        console.error('openContractCall error:', error)
+        reject(error)
+      })
+    })
+  } catch (error: any) {
+    console.error('Error in completeBattleSimple:', error)
+    throw new Error(`Failed to complete battle: ${error.message || 'Unknown error'}`)
+  }
+}
