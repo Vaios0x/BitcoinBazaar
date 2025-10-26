@@ -13,6 +13,11 @@ interface BattleModalProps {
 }
 
 export function BattleModal({ isOpen, onClose, nft }: BattleModalProps) {
+  // Safety check for nft prop
+  if (!nft) {
+    console.error('BattleModal: nft prop is undefined')
+    return null
+  }
   const [battlePhase, setBattlePhase] = useState<'select' | 'battle' | 'result'>('select')
   const [selectedOpponent, setSelectedOpponent] = useState<any>(null)
   const [battleResult, setBattleResult] = useState<'win' | 'lose' | null>(null)
@@ -229,7 +234,7 @@ export function BattleModal({ isOpen, onClose, nft }: BattleModalProps) {
       const { startBattleSimple } = await import('@/lib/stacks/transactions-simple')
       
       // Add battle start log
-      setBattleLog(prev => [...prev, `🚀 Starting battle with ${opponent.name}...`])
+      setBattleLog(prev => [...prev, `🚀 Starting battle with ${opponent?.name || 'Unknown Opponent'}...`])
       
       // Call the real battle function
       const battleTxId = await startBattleSimple(
@@ -260,8 +265,8 @@ export function BattleModal({ isOpen, onClose, nft }: BattleModalProps) {
 
         // Simulate battle actions
         const actions = [
-          `${nft.name} attacks with Bitcoin Strike!`,
-          `${opponent.name} uses ${opponent.specialAbilities[Math.floor(Math.random() * opponent.specialAbilities.length)]}!`,
+          `${nft?.name || 'Your NFT'} attacks with Bitcoin Strike!`,
+          `${opponent?.name || 'Opponent'} uses ${opponent?.specialAbilities?.[Math.floor(Math.random() * (opponent?.specialAbilities?.length || 1))] || 'Special Attack'}!`,
           'Critical hit!',
           'Blocked!',
           'Special ability activated!',
@@ -485,7 +490,7 @@ export function BattleModal({ isOpen, onClose, nft }: BattleModalProps) {
                   </div>
                 )}
 
-                {battlePhase === 'battle' && selectedOpponent && (
+                {battlePhase === 'battle' && selectedOpponent && nft && (
                   <div className="space-y-3">
                     {/* 3D Battle Arena */}
                     <div className="glass-card rounded-xl p-3 mb-3">
@@ -503,8 +508,8 @@ export function BattleModal({ isOpen, onClose, nft }: BattleModalProps) {
                           {/* Player Health Bar */}
                           <div className="absolute top-2 left-2 sm:top-4 sm:left-4 w-32 sm:w-48">
                             <div className="flex items-center space-x-2 mb-1">
-                              <img src={nft.imageUri} alt={nft.name} className="w-8 h-8 rounded-full" />
-                              <span className="text-white font-bold">{nft.name}</span>
+                              <img src={nft?.imageUri || ''} alt={nft?.name || 'NFT'} className="w-8 h-8 rounded-full" />
+                              <span className="text-white font-bold">{nft?.name || 'Your NFT'}</span>
                             </div>
                             <div className="w-full bg-gray-700 rounded-full h-3 battle-health-bar">
                               <motion.div 
@@ -519,8 +524,8 @@ export function BattleModal({ isOpen, onClose, nft }: BattleModalProps) {
                           {/* Opponent Health Bar */}
                           <div className="absolute top-2 right-2 sm:top-4 sm:right-4 w-32 sm:w-48">
                             <div className="flex items-center space-x-2 mb-1 justify-end">
-                              <span className="text-white font-bold">{selectedOpponent.name}</span>
-                              <img src={selectedOpponent.image} alt={selectedOpponent.name} className="w-8 h-8 rounded-full" />
+                              <span className="text-white font-bold">{selectedOpponent?.name || 'Opponent'}</span>
+                              <img src={selectedOpponent?.image || ''} alt={selectedOpponent?.name || 'Opponent'} className="w-8 h-8 rounded-full" />
                             </div>
                             <div className="w-full bg-gray-700 rounded-full h-3 battle-health-bar">
                         <motion.div
@@ -594,7 +599,7 @@ export function BattleModal({ isOpen, onClose, nft }: BattleModalProps) {
                   </div>
                 )}
 
-                {battlePhase === 'result' && battleResult && (
+                {battlePhase === 'result' && battleResult && selectedOpponent && (
                   <div className="text-center">
                     <motion.div
                       initial={{ scale: 0, rotate: -180 }}
@@ -641,8 +646,8 @@ export function BattleModal({ isOpen, onClose, nft }: BattleModalProps) {
                       className="text-gray-300 mb-8 text-lg"
                     >
                       {battleResult === 'win' 
-                        ? `You defeated ${selectedOpponent.name} and earned ${selectedOpponent.reward}!`
-                        : `${selectedOpponent.name} was too strong. Better luck next time!`
+                        ? `You defeated ${selectedOpponent?.name || 'Opponent'} and earned ${selectedOpponent?.reward || 'XP'}!`
+                        : `${selectedOpponent?.name || 'Opponent'} was too strong. Better luck next time!`
                       }
                     </motion.p>
 
