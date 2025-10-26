@@ -124,11 +124,20 @@ export function Navbar() {
           <div className="hidden lg:flex items-center space-x-6 xl:space-x-8">
             <NavLink href="/">Home</NavLink>
             <NavLink href="/explore">Explore</NavLink>
+            <NavLink href="/my-nfts" className="text-bitcoin-400 hover:text-bitcoin-300 font-semibold">
+              🎨 Mis NFTs
+            </NavLink>
             <NavLink href="/gaming">Gaming</NavLink>
             <NavLink href="/defi">DeFi</NavLink>
             <NavLink href="/collections">Collections</NavLink>
             <NavLink href="/auctions">Auctions</NavLink>
             <NavLink href="/stats">Stats</NavLink>
+            <NavLink href="/demo" className="text-green-400 hover:text-green-300 font-semibold">
+              🚀 Demo
+            </NavLink>
+            <NavLink href="/testing" className="text-blue-400 hover:text-blue-300 font-semibold">
+              🧪 Testing
+            </NavLink>
           </div>
           
           {/* Create Button - Desktop */}
@@ -271,11 +280,20 @@ export function Navbar() {
           <div className="flex flex-col space-y-3 sm:space-y-4">
             <MobileNavLink href="/">Home</MobileNavLink>
             <MobileNavLink href="/explore">Explore</MobileNavLink>
+            <MobileNavLink href="/my-nfts" className="text-bitcoin-400 hover:text-bitcoin-300 font-semibold">
+              🎨 Mis NFTs
+            </MobileNavLink>
             <MobileNavLink href="/gaming">Gaming</MobileNavLink>
             <MobileNavLink href="/defi">DeFi</MobileNavLink>
             <MobileNavLink href="/collections">Collections</MobileNavLink>
             <MobileNavLink href="/auctions">Auctions</MobileNavLink>
             <MobileNavLink href="/stats">Stats</MobileNavLink>
+            <MobileNavLink href="/demo" className="text-green-400 hover:text-green-300 font-semibold">
+              🚀 Demo Interactivo
+            </MobileNavLink>
+            <MobileNavLink href="/testing" className="text-blue-400 hover:text-blue-300 font-semibold">
+              🧪 Testing Suite
+            </MobileNavLink>
             
             {/* Create Button - Mobile */}
             <Link 
@@ -297,18 +315,18 @@ export function Navbar() {
   )
 }
 
-function NavLink({ href, children }: { href: string, children: any }) {
+function NavLink({ href, children, className = "" }: { href: string, children: any, className?: string }) {
   return (
-    <Link href={href} className="text-gray-300 hover:text-white transition-colors font-medium relative group hover:scale-105 transform duration-300">
+    <Link href={href} className={`text-gray-300 hover:text-white transition-colors font-medium relative group hover:scale-105 transform duration-300 ${className}`}>
       {children}
       <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-bitcoin-500 to-stacks-500 group-hover:w-full transition-all duration-300" />
     </Link>
   )
 }
 
-function MobileNavLink({ href, children }: { href: string, children: any }) {
+function MobileNavLink({ href, children, className = "" }: { href: string, children: any, className?: string }) {
   return (
-    <Link href={href} className="text-lg text-gray-300 hover:text-stacks-400 transition-colors font-medium hover:scale-105 transform duration-300">
+    <Link href={href} className={`text-lg text-gray-300 hover:text-stacks-400 transition-colors font-medium hover:scale-105 transform duration-300 ${className}`}>
       {children}
     </Link>
   )

@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import React from 'react'
 import { motion } from 'framer-motion'
@@ -7,7 +7,9 @@ import { NFTGrid } from '@/components/nft/NFTGrid'
 import { BitcoinSymbols } from '@/components/effects/BitcoinSymbols'
 import { ShoppingCartModal } from '@/components/cart/ShoppingCartModal'
 import { CartButton } from '@/components/cart/CartButton'
+import { useNFTs } from '@/hooks/useNFTs'
 import { useShoppingCart } from '@/hooks/useShoppingCart'
+import { useNFTEvents } from '@/contexts/NFTEventsContext'
 import type { NFT } from '@/types/nft'
 
 // Mock data for demo
@@ -138,8 +140,35 @@ export default function ExplorePage() {
     getCartItemCount
   } = useShoppingCart()
 
+  // Use the custom hook to get NFTs from the contract
+  const { nfts: contractNFTs, loading, error, refreshNFTs, isPolling, lastTokenId, addNFT } = useNFTs()
+  
+  // Use NFT events for real-time updates
+  const { hasNewEvents, markEventsAsRead, getLatestEvent } = useNFTEvents()
+
+  // Combine contract NFTs with mock data for demo
+  const allNFTsCombined = [...contractNFTs, ...allNFTs]
+
+  // Mark events as read when user interacts with the page
+  React.useEffect(() => {
+    if (hasNewEvents) {
+      const timer = setTimeout(() => {
+        markEventsAsRead()
+      }, 5000) // Auto-mark as read after 5 seconds
+      
+      return () => clearTimeout(timer)
+    }
+  }, [hasNewEvents, markEventsAsRead])
+
+  // Auto-refresh when new events are detected
+  React.useEffect(() => {
+    if (hasNewEvents) {
+      refreshNFTs()
+    }
+  }, [hasNewEvents, refreshNFTs])
+
   // Filter NFTs based on search and filters
-  const filteredNFTs = allNFTs.filter(nft => {
+  const filteredNFTs = allNFTsCombined.filter(nft => {
     // Search filter
     if (searchQuery && !nft.name.toLowerCase().includes(searchQuery.toLowerCase()) && 
         !nft.collectionName?.toLowerCase().includes(searchQuery.toLowerCase())) {
@@ -337,23 +366,96 @@ export default function ExplorePage() {
         >
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 gap-2 sm:gap-0">
             <p className="text-gray-400 text-sm sm:text-base">
-              Showing {filteredNFTs.length} of {allNFTs.length} NFTs
+              Showing {filteredNFTs.length} of {allNFTsCombined.length} NFTs
             </p>
             <div className="text-xs sm:text-sm text-gray-400">
               {selectedFilters.paymentToken !== 'All' && `Filtered by ${selectedFilters.paymentToken} • `}
               {selectedFilters.collection !== 'All' && `${selectedFilters.collection} • `}
               Sorted by {selectedFilters.sortBy}
+              <button
+                onClick={refreshNFTs}
+                className="ml-2 px-2 py-1 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 rounded text-xs transition-colors"
+              >
+                🔄 Refresh
+              </button>
+              {isPolling && (
+                <span className="ml-2 px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs">
+                  🔄 Auto-updating
+                </span>
+              )}
+              {hasNewEvents && (
+                <span className="ml-2 px-2 py-1 bg-orange-500/20 text-orange-400 rounded text-xs animate-pulse">
+                  ✨ New NFTs!
+                </span>
+              )}
+              <span className="ml-2 px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs">
+                🌐 Public NFTs
+              </span>
             </div>
           </div>
 
-          {filteredNFTs.length > 0 ? (
+          {/* Public NFTs Info */}
+          <div className="bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/30 rounded-xl p-4 mb-6">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center">
+                <span className="text-white text-sm">🌐</span>
+              </div>
+              <div>
+                <h3 className="text-purple-400 font-semibold">NFTs Públicos</h3>
+                <p className="text-gray-300 text-sm">
+                  Todos los NFTs creados en BitcoinBazaar son visibles públicamente para usuarios con wallet conectado. 
+                  Los NFTs se sincronizan automáticamente entre todos los usuarios.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Loading State */}
+          {loading && (
+            <div className="flex items-center justify-center py-12">
+              <div className="text-center">
+                <div className="loading-dots mb-4">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+                <p className="text-gray-400">Cargando NFTs desde la blockchain...</p>
+                <p className="text-gray-500 text-sm mt-2">Conectando con contrato nft-core-simple</p>
+              </div>
+            </div>
+          )}
+
+          {/* Error State */}
+          {error && !loading && (
+            <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-6 mb-8">
+              <div className="flex items-center space-x-3">
+                <div className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center">
+                  <span className="text-white text-sm">!</span>
+                </div>
+                <div>
+                  <h3 className="text-red-400 font-semibold">Error al cargar NFTs</h3>
+                  <p className="text-gray-300 text-sm">{error}</p>
+                  <button
+                    onClick={refreshNFTs}
+                    className="mt-2 px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg text-sm transition-colors"
+                  >
+                    Reintentar
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* NFT Grid */}
+          {!loading && !error && filteredNFTs.length > 0 ? (
             <NFTGrid 
               nfts={filteredNFTs} 
               showQuickBuy={true}
               columns={viewMode === 'grid' ? 4 : 1}
               onAddToCart={addToCart}
             />
-          ) : (
+          ) : !loading && !error ? (
             <div className="text-center py-8 sm:py-12">
               <div className="text-4xl sm:text-6xl mb-4">🔍</div>
               <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">No NFTs found</h3>
@@ -390,7 +492,7 @@ export default function ExplorePage() {
                 </motion.div>
               </motion.button>
             </div>
-          )}
+          ) : null}
         </motion.div>
       </div>
 

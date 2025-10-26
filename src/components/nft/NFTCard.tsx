@@ -16,6 +16,7 @@ interface NFTCardProps {
 export function NFTCard({ nft, showQuickBuy = false, onAddToCart }: NFTCardProps) {
   const [isLiked, setIsLiked] = React.useState(false)
   const [isHovered, setIsHovered] = React.useState(false)
+  const [imageError, setImageError] = React.useState(false)
 
   return (
     <motion.div
@@ -30,12 +31,24 @@ export function NFTCard({ nft, showQuickBuy = false, onAddToCart }: NFTCardProps
       <div className="glass-card-premium rounded-2xl overflow-hidden hover:shadow-2xl hover:shadow-stacks-500/30 transition-all duration-500 floating-particles">
         {/* NFT Image */}
         <div className="relative aspect-square overflow-hidden">
-          <Image
-            src={nft.imageUri || '/placeholder-nft.jpg'}
-            alt={nft.name}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-110"
-          />
+          {!imageError ? (
+            <Image
+              src={nft.imageUri || '/placeholder-nft.jpg'}
+              alt={nft.name}
+              fill
+              className="object-cover transition-transform duration-500 group-hover:scale-110"
+              onError={() => setImageError(true)}
+            />
+          ) : (
+            <div className="w-full h-full bg-gradient-to-br from-purple-900/50 to-blue-900/50 flex items-center justify-center">
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-2 bg-gradient-to-r from-bitcoin-500 to-stacks-500 rounded-full flex items-center justify-center">
+                  <span className="text-white text-2xl font-bold">₿</span>
+                </div>
+                <p className="text-gray-400 text-sm">BitcoinBazaar NFT</p>
+              </div>
+            </div>
+          )}
 
           {/* Bitcoin Block Badge */}
           {nft.mintedAtBitcoinBlock && (
@@ -116,12 +129,23 @@ export function NFTCard({ nft, showQuickBuy = false, onAddToCart }: NFTCardProps
           <div className="mt-3 flex items-center justify-between">
             <div>
               <p className="text-xs text-gray-400">Current Price</p>
-              <div className="flex items-center space-x-2">
-                <span className="text-xl font-bold text-white">
-                  {nft.price}
-                </span>
-                <span className="text-sm text-gray-400">{nft.paymentToken}</span>
-              </div>
+              {nft.price > 0 ? (
+                <div className="flex items-center space-x-2">
+                  <span className="text-xl font-bold text-white">
+                    {nft.price}
+                  </span>
+                  <span className="text-sm text-gray-400">{nft.paymentToken}</span>
+                </div>
+              ) : (
+                <div className="flex items-center space-x-2">
+                  <span className="text-lg font-semibold text-gray-500">
+                    No listado
+                  </span>
+                  <span className="text-xs text-gray-600 bg-gray-800 px-2 py-1 rounded">
+                    Disponible
+                  </span>
+                </div>
+              )}
               {nft.usdPrice && (
                 <span className="text-xs text-gray-500">${nft.usdPrice.toFixed(2)}</span>
               )}
@@ -145,6 +169,7 @@ export function NFTCard({ nft, showQuickBuy = false, onAddToCart }: NFTCardProps
             </div>
           )}
         </div>
+        
       </div>
     </motion.div>
   )

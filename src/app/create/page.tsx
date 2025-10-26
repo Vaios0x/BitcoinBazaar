@@ -1,10 +1,15 @@
-'use client'
+"use client"
 
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Upload, Image, DollarSign, Percent, Hash, Zap, Info, Sparkles, Copy } from 'lucide-react'
 import { useWalletStore } from '@/lib/stores/walletStore'
 import { BitcoinSymbols } from '@/components/effects/BitcoinSymbols'
+import { mintNFTSimple } from '@/lib/stacks/transactions-simple'
+import { NeuralNotification } from '@/components/notifications/NeuralNotification'
+import { useNFTs } from '@/hooks/useNFTs'
+import { ConnectWallet } from '@/components/wallet/ConnectWallet'
+import toast from 'react-hot-toast'
 
 export default function CreatePage() {
   const [formData, setFormData] = React.useState({
@@ -20,7 +25,20 @@ export default function CreatePage() {
   const [isUploading, setIsUploading] = React.useState(false)
   const [isCreating, setIsCreating] = React.useState(false)
   const [templateApplied, setTemplateApplied] = React.useState(false)
-  const { isConnected } = useWalletStore()
+  const [transactionStatus, setTransactionStatus] = React.useState<{
+    type: 'loading' | 'success' | 'error'
+    message: string
+    txId?: string
+    explorerUrl?: string
+  } | null>(null)
+  const [transactionError, setTransactionError] = React.useState<string | null>(null)
+  const { isConnected, address, userData, checkWalletConnection } = useWalletStore()
+  const { addNFT } = useNFTs()
+
+  // Check wallet connection on component mount
+  React.useEffect(() => {
+    checkWalletConnection()
+  }, [checkWalletConnection])
 
   // NFT Templates in English
   const nftTemplates = [
@@ -103,19 +121,132 @@ export default function CreatePage() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
-    if (!isConnected) {
-      alert('Please connect your wallet first')
+    
+    // Validate wallet connection
+    if (!isConnected || !address || !userData) {
+      toast.error('Por favor conecta tu wallet primero')
+      return
+    }
+
+    // Validate form data
+    if (!formData.name || !formData.description || !formData.image) {
+      toast.error('Por favor completa todos los campos requeridos')
       return
     }
 
     setIsCreating(true)
+    
     try {
-      // Simulate NFT creation
-      await new Promise(resolve => setTimeout(resolve, 3000))
-      alert('NFT created successfully!')
-    } catch (error) {
-      console.error('Creation failed:', error)
-      alert('Creation failed')
+      // Upload image to IPFS (simulated for now)
+            // Generate a more realistic image URI using Unsplash with random parameters
+            const imageId = Math.floor(Math.random() * 1000) + 1
+            const imageUri = `https://images.unsplash.com/photo-${1500000000000 + imageId}?w=400&h=400&fit=crop&crop=center&auto=format&q=80`
+      
+      // Show loading notification
+      setTransactionStatus({
+        type: 'loading',
+        message: 'Creando NFT en la blockchain...'
+      })
+      
+      // Call the real mintNFTSimple function that works with Leather wallet
+      const txId = await mintNFTSimple(
+        formData.name,
+        imageUri
+      )
+      
+      // Success notification with transaction hash
+      const explorerUrl = `https://explorer.stacks.co/txid/${txId}?chain=testnet`
+      setTransactionStatus({
+        type: 'success',
+        message: `¡NFT creado exitosamente! Hash: ${txId}`,
+        txId,
+        explorerUrl
+      })
+      
+      // Add NFT to global storage for immediate visibility
+      // Use the price from the form, or generate a random price if not specified
+      const nftPrice = formData.price ? parseFloat(formData.price) : Math.random() * 0.49 + 0.01
+      
+      const newNFT = {
+        id: Date.now(), // Temporary ID until we get the real one from contract
+        name: formData.name,
+        description: formData.description,
+        imageUri: imageUri,
+        price: nftPrice, // Use form price or random price
+        paymentToken: formData.paymentToken,
+        creator: address || 'Unknown',
+        royaltyPercent: formData.royaltyPercent,
+        collectionName: 'BitcoinBazaar Collection',
+        collectionId: 1,
+        isDynamicPricing: formData.isDynamicPricing,
+        mintedAtBitcoinBlock: 0,
+        lastSalePrice: undefined,
+        usdPrice: nftPrice * 0.5, // Approximate USD price
+        createdAt: new Date().toISOString(),
+        transactionHash: txId,
+        explorerUrl: explorerUrl
+      }
+      
+      addNFT(newNFT)
+      
+      // Show success toast with transaction hash
+      toast.success(`¡NFT creado exitosamente! Hash: ${txId}`, {
+        duration: 8000,
+        style: {
+          background: '#10B981',
+          color: '#fff',
+          fontSize: '14px',
+          fontWeight: '500'
+        }
+      })
+      
+      // Auto-hide success notification after 15 seconds
+      setTimeout(() => {
+        setTransactionStatus(null)
+      }, 15000)
+      
+      // Reset form
+      setFormData({
+        name: '',
+        description: '',
+        image: null,
+        royaltyPercent: 10,
+        collectionId: '',
+        price: '',
+        paymentToken: 'STX',
+        isDynamicPricing: false
+      })
+      
+    } catch (error: any) {
+      // Handle error more gracefully
+      const errorMessage = error?.message || 'Unknown error occurred'
+      console.error('NFT creation failed:', errorMessage)
+      
+      // Set transaction error for detailed handling
+      setTransactionError(errorMessage)
+      
+      // Also show in transaction status for consistency
+      setTransactionStatus({
+        type: 'error',
+        message: `Error al crear NFT: ${errorMessage}`
+      })
+      
+      // Show error toast
+      toast.error(`Error al crear NFT: ${errorMessage}`, {
+        duration: 6000,
+        style: {
+          background: '#EF4444',
+          color: '#fff',
+          fontSize: '14px',
+          fontWeight: '500'
+        }
+      })
+      
+      // Auto-hide error notification after 8 seconds
+      setTimeout(() => {
+        setTransactionStatus(null)
+        setTransactionError(null)
+      }, 8000)
     } finally {
       setIsCreating(false)
     }
@@ -174,28 +305,18 @@ export default function CreatePage() {
             <p className="text-gray-300 mb-8">
               You need to connect your wallet to create NFTs on BitcoinBazaar
             </p>
-            <motion.button 
-              className="px-8 py-4 bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-stacks-500/50 transition-all relative overflow-hidden"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <span className="relative z-10">Connect Wallet</span>
-              {/* Animated Bitcoin symbols in button */}
-              <motion.div
-                className="absolute inset-0 flex items-center justify-center"
-                animate={{
-                  opacity: [0, 0.3, 0],
-                  scale: [0.5, 1.2, 0.5]
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
+            <div className="space-y-4">
+              <ConnectWallet />
+              <motion.button
+                onClick={() => checkWalletConnection()}
+                className="px-6 py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-xl font-semibold hover:shadow-lg transition-all flex items-center space-x-2 mx-auto"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <span className="text-white text-xl">₿</span>
-              </motion.div>
-            </motion.button>
+                <span>🔄</span>
+                <span>Refresh Connection</span>
+              </motion.button>
+            </div>
           </motion.div>
         </div>
       </div>
@@ -660,12 +781,12 @@ export default function CreatePage() {
                 {isCreating ? (
                   <div className="flex items-center space-x-2 relative z-10">
                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    <span>Creating NFT...</span>
+                    <span>Creando NFT...</span>
                   </div>
                 ) : (
                   <div className="flex items-center space-x-2 relative z-10">
                     <Hash className="w-5 h-5" />
-                    <span>Create NFT</span>
+                    <span>Crear NFT</span>
                   </div>
                 )}
                 {/* Animated Bitcoin symbols in button */}
@@ -688,6 +809,20 @@ export default function CreatePage() {
           </form>
         </motion.div>
       </div>
+      
+      {/* Neural Notification */}
+      {transactionStatus && (
+        <NeuralNotification
+          type={transactionStatus.type}
+          message={transactionStatus.message}
+          txId={transactionStatus.txId}
+          explorerUrl={transactionStatus.explorerUrl}
+          onClose={() => setTransactionStatus(null)}
+          autoClose={true}
+          duration={15000}
+        />
+      )}
+
     </div>
   )
 }
