@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Sword, Shield, Zap, Target, Trophy, Flame, Skull, Crown, Star, Sparkles } from 'lucide-react'
+import { X, Sword, Shield, Zap, Target, Trophy, Flame, Skull, Crown, Star, Sparkles, ExternalLink } from 'lucide-react'
 import * as THREE from 'three'
 import type { NFT } from '@/types/nft'
 
@@ -27,6 +27,8 @@ export function BattleModal({ isOpen, onClose, nft }: BattleModalProps) {
   const [playerHealth, setPlayerHealth] = useState(100)
   const [opponentHealth, setOpponentHealth] = useState(100)
   const [specialEffects, setSpecialEffects] = useState<string[]>([])
+  const [battleTxId, setBattleTxId] = useState<string>('') // Store battle transaction ID
+  const [completeTxId, setCompleteTxId] = useState<string>('') // Store completion transaction ID
   
   const sceneRef = useRef<HTMLDivElement | null>(null)
   const animationRef = useRef<number | undefined>(undefined)
@@ -240,14 +242,17 @@ export function BattleModal({ isOpen, onClose, nft }: BattleModalProps) {
       setBattleLog(prev => [...prev, `💳 Processing payment (0.1 STX)...`])
       
       // Call the real battle function FIRST - payment happens here
-      const battleTxId = await startBattleSimple(
+      const txId = await startBattleSimple(
         nft.id,
         opponent.id,
         0.1, // Default wager - this charges the user
         'STX' // Default payment token
       )
       
-      setBattleLog(prev => [...prev, `✅ Payment processed! Battle transaction: ${battleTxId}`])
+      // Store transaction ID for later display
+      setBattleTxId(txId)
+      
+      setBattleLog(prev => [...prev, `✅ Payment processed! Battle transaction: ${txId}`])
       setBattleLog(prev => [...prev, `⚔️ Battle begins!`])
       
       // Now start the visual battle simulation (after payment is confirmed)
@@ -323,6 +328,9 @@ export function BattleModal({ isOpen, onClose, nft }: BattleModalProps) {
       
       const completeTxId = await completeBattleSimple(battleId, result)
       
+      // Store completion transaction ID for display
+      setCompleteTxId(completeTxId)
+      
       setBattleLog(prev => [...prev, `✅ Battle completed: ${completeTxId}`])
       
     } catch (error) {
@@ -341,6 +349,8 @@ export function BattleModal({ isOpen, onClose, nft }: BattleModalProps) {
     setOpponentHealth(100)
     setBattleLog([])
     setSpecialEffects([])
+    setBattleTxId('')
+    setCompleteTxId('')
   }
 
   return (
@@ -677,11 +687,42 @@ export function BattleModal({ isOpen, onClose, nft }: BattleModalProps) {
                         <Zap className="w-4 h-4 text-blue-400" />
                         <span className="text-sm font-semibold text-blue-400">Blockchain Transaction</span>
                       </div>
-                      <div className="text-xs text-gray-300 space-y-1">
+                      <div className="text-xs text-gray-300 space-y-1 mb-3">
                         <p>• Battle transaction signed with Leather Wallet</p>
                         <p>• Results recorded on Stacks blockchain</p>
                         <p>• Rewards distributed automatically</p>
                         <p>• Transaction verified on Bitcoin L2</p>
+                      </div>
+                      
+                      {/* Transaction Links */}
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-gray-400">Battle Transaction:</span>
+                          <a 
+                            href={`https://explorer.hiro.so/txid/${battleTxId}?chain=testnet`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs text-blue-400 hover:text-blue-300 underline flex items-center space-x-1"
+                          >
+                            <span>View on Explorer</span>
+                            <Zap className="w-3 h-3" />
+                          </a>
+                        </div>
+                        
+                        {completeTxId && (
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs text-gray-400">Completion Transaction:</span>
+                            <a 
+                              href={`https://explorer.hiro.so/txid/${completeTxId}?chain=testnet`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-xs text-blue-400 hover:text-blue-300 underline flex items-center space-x-1"
+                            >
+                            <span>View on Explorer</span>
+                            <Zap className="w-3 h-3" />
+                            </a>
+                          </div>
+                        )}
                       </div>
                     </motion.div>
 
