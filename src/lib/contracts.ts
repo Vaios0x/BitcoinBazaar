@@ -7,7 +7,7 @@ export const CONTRACT_ADDRESSES = {
     'marketplace': 'ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR.marketplace',
     'marketplace-sbtc-real': 'ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR.marketplace-sbtc-real',
     'bitcoin-oracle': 'ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR.bitcoin-oracle',
-    'gaming-nft': 'ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR.gaming-nft',
+    'gaming-nft': 'ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR.gaming-nft-simple',
     'gaming-nft-sbtc-real': 'ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR.gaming-nft-sbtc-real',
     'nft-defi': 'ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR.nft-defi',
     'nft-defi-sbtc-real': 'ST29PFXYP90ZPXMRWXY6181CWHWS57JZWABP9EXMR.nft-defi-sbtc-real',
