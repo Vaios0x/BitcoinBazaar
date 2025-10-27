@@ -30,7 +30,34 @@
   }
 )
 
-;; Borrow sBTC against NFT
+;; Borrow sBTC against NFT (simplified version)
+(define-public (borrow-sbtc (nft-id uint) (amount uint) (interest-rate uint) (duration uint))
+  (let (
+    (loan-id (+ (var-get loan-counter) u1))
+    (current-block (get-block-info? time tx-sender))
+    (due-block (+ current-block duration))
+  )
+    ;; Create loan entry (simplified for testing)
+    (map-set nft-loans
+      { loan-id: loan-id }
+      {
+        nft-id: nft-id,
+        borrower: tx-sender,
+        collateral-value: amount,
+        borrowed-amount: amount,
+        interest-rate: interest-rate,
+        start-block: current-block,
+        due-block: due-block,
+        status: "active"
+      }
+    )
+    
+    (var-set loan-counter loan-id)
+    (ok loan-id)
+  )
+)
+
+;; Borrow sBTC against NFT (original function)
 (define-public (borrow-against-nft (nft-id uint) (amount uint))
   (let (
     (nft-owner (unwrap! (contract-call? .nft-core get-owner nft-id) err-not-found))
