@@ -2,10 +2,46 @@
 
 import React from 'react'
 import { TrendingUp, Lock, Coins, PieChart, DollarSign } from 'lucide-react'
+import { TransactionNotification } from '@/components/ui/TransactionNotification'
+import { borrowSBTCSimple } from '@/lib/stacks/transactions-simple'
 
 export function DeFiDashboard() {
   const [activeTab, setActiveTab] = React.useState<'lending' | 'staking' | 'liquidity'>('lending')
   const [selectedTemplate, setSelectedTemplate] = React.useState<string | null>(null)
+  const [showNotification, setShowNotification] = React.useState(false)
+  const [lastTxId, setLastTxId] = React.useState<string>('')
+  const [isLoading, setIsLoading] = React.useState(false)
+
+  // Función para manejar el borrow sBTC
+  const handleBorrowSBTC = async () => {
+    try {
+      setIsLoading(true)
+      
+      // Obtener datos de la plantilla seleccionada
+      const templateData = selectedTemplate ? templates[selectedTemplate as keyof typeof templates] : templates.advanced
+      const nftId = 1234 // NFT ID por defecto para testing
+      const amount = parseFloat(templateData.lending.amount)
+      const interestRate = parseFloat(templateData.lending.rate.replace('% APY', '')) / 100
+      const duration = parseInt(templateData.lending.period.replace(' days', ''))
+      
+      console.log('Iniciando borrow sBTC:', { nftId, amount, interestRate, duration })
+      
+      // Llamar a la función de transacción
+      const txId = await borrowSBTCSimple(nftId, amount, interestRate, duration)
+      
+      console.log('Borrow sBTC exitoso:', txId)
+      
+      // Mostrar notificación
+      setLastTxId(txId)
+      setShowNotification(true)
+      
+    } catch (error: any) {
+      console.error('Error en borrow sBTC:', error)
+      alert(`Error: ${error.message}`)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   // Plantillas pre-llenadas
   const templates = {
@@ -205,14 +241,27 @@ export function DeFiDashboard() {
       </div>
       
       {/* Tab Content */}
-      {activeTab === 'lending' && <LendingPanel selectedTemplate={selectedTemplate} templates={templates} />}
+      {activeTab === 'lending' && <LendingPanel selectedTemplate={selectedTemplate} templates={templates} handleBorrowSBTC={handleBorrowSBTC} isLoading={isLoading} />}
       {activeTab === 'staking' && <StakingPanel selectedTemplate={selectedTemplate} templates={templates} />}
       {activeTab === 'liquidity' && <LiquidityPanel selectedTemplate={selectedTemplate} templates={templates} />}
+      
+      {/* Transaction Notification */}
+      <TransactionNotification
+        isOpen={showNotification}
+        onClose={() => setShowNotification(false)}
+        txId={lastTxId}
+        type="borrow"
+      />
     </div>
   )
 }
 
-function LendingPanel({ selectedTemplate, templates }: { selectedTemplate: string | null, templates: any }) {
+function LendingPanel({ selectedTemplate, templates, handleBorrowSBTC, isLoading }: { 
+  selectedTemplate: string | null, 
+  templates: any,
+  handleBorrowSBTC: () => void,
+  isLoading: boolean
+}) {
   const templateData = selectedTemplate ? templates[selectedTemplate] : null
   
   return (
@@ -267,8 +316,21 @@ function LendingPanel({ selectedTemplate, templates }: { selectedTemplate: strin
             </div>
           </div>
           
-          <button className="w-full py-3 bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white font-bold rounded-xl hover:shadow-lg">
-            Borrow sBTC
+          <button 
+            onClick={handleBorrowSBTC}
+            disabled={isLoading}
+            className={`w-full py-3 bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white font-bold rounded-xl hover:shadow-lg transition-all ${
+              isLoading ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'
+            }`}
+          >
+            {isLoading ? (
+              <div className="flex items-center justify-center space-x-2">
+                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <span>Procesando...</span>
+              </div>
+            ) : (
+              'Borrow sBTC'
+            )}
           </button>
         </div>
       </div>

@@ -1222,3 +1222,80 @@ export async function completeBattleSimple(
     throw new Error(`Failed to complete battle: ${error.message || 'Unknown error'}`)
   }
 }
+
+/**
+ * Borrow sBTC using NFT as collateral
+ */
+export async function borrowSBTCSimple(
+  nftId: number,
+  amount: number,
+  interestRate: number,
+  duration: number
+): Promise<string> {
+  try {
+    console.log('Starting borrow sBTC transaction:', { nftId, amount, interestRate, duration })
+    
+    // Validate wallet for testing (same as buyNFTSimple)
+    validateWalletForTesting()
+    
+    const { address } = useWalletStore.getState()
+    if (!address) {
+      throw new Error('Wallet address not available')
+    }
+
+    const network = getNetwork()
+    const { address: contractAddress, name: contractName } = getContractInfo('nft-defi')
+
+    console.log('Preparing borrow sBTC transaction...', {
+      contractAddress,
+      contractName,
+      functionName: CONTRACT_FUNCTIONS['nft-defi'].borrowSbtc,
+      network: 'https://api.testnet.hiro.so',
+      address,
+      nftId,
+      amount,
+      interestRate,
+      duration
+    })
+
+    return new Promise((resolve, reject) => {
+      const txOptions = {
+        contractAddress,
+        contractName,
+        functionName: CONTRACT_FUNCTIONS['nft-defi'].borrowSbtc,
+        functionArgs: [
+          uintCV(nftId),
+          uintCV(amount * 1000000), // Convert to microSTX
+          uintCV(interestRate * 100), // Convert to basis points
+          uintCV(duration * 24 * 60 * 60) // Convert days to seconds
+        ],
+        network,
+        onFinish: (data: any) => {
+          console.log('Borrow sBTC transaction finished:', data)
+          // Extract transaction ID from the response
+          const txId = data?.txId || data?.txid || data?.transactionId || data?.txHash || 'unknown'
+          resolve(txId)
+        },
+        onCancel: () => {
+          console.log('Borrow sBTC transaction cancelled')
+          reject(new Error('Transaction cancelled by user'))
+        },
+        onError: (error: any) => {
+          console.error('Borrow sBTC transaction error:', error)
+          reject(new Error(`Borrow sBTC transaction failed: ${error.message || 'Unknown error'}`))
+        }
+      }
+
+      console.log('Opening Leather Wallet for borrow sBTC transaction...')
+      console.log('Borrow sBTC transaction options:', txOptions)
+      
+      openContractCall(txOptions).catch((error) => {
+        console.error('openContractCall error:', error)
+        reject(error)
+      })
+    })
+  } catch (error: any) {
+    console.error('Error in borrowSBTCSimple:', error)
+    throw new Error(`Failed to borrow sBTC: ${error.message || 'Unknown error'}`)
+  }
+}

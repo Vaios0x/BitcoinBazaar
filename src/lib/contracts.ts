@@ -85,6 +85,7 @@ export const CONTRACT_FUNCTIONS = {
     stakeNft: 'stake-nft',
     unstakeNft: 'unstake-nft',
     borrowAgainstNft: 'borrow-against-nft',
+    borrowSbtc: 'borrow-sbtc',
     repayLoan: 'repay-loan',
     getStakeInfo: 'get-stake-info',
     getLoanInfo: 'get-loan-info',
