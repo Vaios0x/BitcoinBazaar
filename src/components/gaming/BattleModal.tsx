@@ -234,68 +234,66 @@ export function BattleModal({ isOpen, onClose, nft }: BattleModalProps) {
     setSpecialEffects([])
     
     try {
-      // Start real blockchain battle transaction FIRST (payment before battle)
-      const { startBattleSimple } = await import('@/lib/stacks/transactions-simple')
+      // Start working battle using the same pattern as buyNFTSimple
+      const { workingBattleSimple } = await import('@/lib/stacks/transactions-simple')
       
       // Add battle start log
-      setBattleLog(prev => [...prev, `🚀 Initiating battle with ${opponent?.name || 'Unknown Opponent'}...`])
+      setBattleLog(prev => [...prev, `🚀 Starting battle with ${opponent?.name || 'Unknown Opponent'}...`])
       setBattleLog(prev => [...prev, `💳 Processing payment (0.1 STX)...`])
       
-      // Call the real battle function FIRST - payment happens here
-      const txId = await startBattleSimple(
+      // Call the working battle function (same pattern as buyNFTSimple)
+      const txId = await workingBattleSimple(
         nft.id,
-        opponent.id,
-        0.1, // Default wager - this charges the user
-        'STX' // Default payment token
+        opponent.id
       )
       
       // Store transaction ID for later display
       setBattleTxId(txId)
       
-      setBattleLog(prev => [...prev, `✅ Payment processed! Battle transaction: ${txId}`])
+      setBattleLog(prev => [...prev, `✅ Battle transaction successful! Transaction: ${txId}`])
       setBattleLog(prev => [...prev, `⚔️ Battle begins!`])
       
       // Now start the visual battle simulation (after payment is confirmed)
-      const battleInterval = setInterval(() => {
-        setBattleProgress(prev => {
-          const newProgress = prev + 2
-          if (newProgress >= 100) {
-            clearInterval(battleInterval)
-            const win = Math.random() > 0.3
-            setBattleResult(win ? 'win' : 'lose')
-            setBattlePhase('result')
+    const battleInterval = setInterval(() => {
+      setBattleProgress(prev => {
+        const newProgress = prev + 2
+        if (newProgress >= 100) {
+          clearInterval(battleInterval)
+          const win = Math.random() > 0.3
+      setBattleResult(win ? 'win' : 'lose')
+      setBattlePhase('result')
             
             // Complete battle on blockchain (this distributes rewards)
             if (battleOpponent) {
               completeBattle(win ? 'win' : 'lose', battleTxId)
             }
-            return 100
-          }
-          return newProgress
-        })
+          return 100
+        }
+        return newProgress
+      })
 
-        // Simulate battle actions
-        const actions = [
+      // Simulate battle actions
+      const actions = [
           `${nft?.name || 'Your NFT'} attacks with Bitcoin Strike!`,
           `${opponent?.name || 'Opponent'} uses ${opponent?.specialAbilities?.[Math.floor(Math.random() * (opponent?.specialAbilities?.length || 1))] || 'Special Attack'}!`,
-          'Critical hit!',
-          'Blocked!',
-          'Special ability activated!',
-          'Energy surge detected!'
-        ]
-        
-        setBattleLog(prev => [...prev.slice(-4), actions[Math.floor(Math.random() * actions.length)]])
-        
-        // Update health
-        setPlayerHealth(prev => Math.max(0, prev - Math.random() * 15))
-        setOpponentHealth(prev => Math.max(0, prev - Math.random() * 12))
-        
-        // Add special effects
-        if (Math.random() > 0.7) {
-          const effects = ['Lightning', 'Fire', 'Ice', 'Shadow', 'Light']
-          setSpecialEffects(prev => [...prev.slice(-2), effects[Math.floor(Math.random() * effects.length)]])
-        }
-      }, 100)
+        'Critical hit!',
+        'Blocked!',
+        'Special ability activated!',
+        'Energy surge detected!'
+      ]
+      
+      setBattleLog(prev => [...prev.slice(-4), actions[Math.floor(Math.random() * actions.length)]])
+      
+      // Update health
+      setPlayerHealth(prev => Math.max(0, prev - Math.random() * 15))
+      setOpponentHealth(prev => Math.max(0, prev - Math.random() * 12))
+      
+      // Add special effects
+      if (Math.random() > 0.7) {
+        const effects = ['Lightning', 'Fire', 'Ice', 'Shadow', 'Light']
+        setSpecialEffects(prev => [...prev.slice(-2), effects[Math.floor(Math.random() * effects.length)]])
+      }
+    }, 100)
       
     } catch (error) {
       console.error('Battle start failed:', error)

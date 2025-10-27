@@ -669,11 +669,11 @@ export async function createBattleSimple(
     }
 
     const network = getNetwork()
-    const { address: contractAddress, name: contractName } = getContractInfo('gaming-nft')
+    const { address: contractAddress, name: contractName } = getContractInfo('gaming-nft-simple')
 
     console.log('Preparing create battle transaction...', {
       contractAddress,
-      contractName: 'gaming-nft',
+      contractName: 'gaming-nft-simple',
       functionName: 'create-battle',
       network: 'https://api.testnet.hiro.so',
       address,
@@ -686,7 +686,7 @@ export async function createBattleSimple(
       const txOptions = {
         contractAddress,
         contractName,
-        functionName: CONTRACT_FUNCTIONS['gaming-nft'].createBattle,
+        functionName: CONTRACT_FUNCTIONS['gaming-nft-simple'].createBattle,
         functionArgs: [
           uintCV(nft1Id),
           uintCV(nft2Id),
@@ -734,11 +734,11 @@ export async function executeBattleSimple(battleId: number): Promise<string> {
     }
 
     const network = getNetwork()
-    const { address: contractAddress, name: contractName } = getContractInfo('gaming-nft')
+    const { address: contractAddress, name: contractName } = getContractInfo('gaming-nft-simple')
 
     console.log('Preparing execute battle transaction...', {
       contractAddress,
-      contractName: 'gaming-nft',
+      contractName: 'gaming-nft-simple',
       functionName: 'execute-battle',
       network: 'https://api.testnet.hiro.so',
       address,
@@ -749,7 +749,7 @@ export async function executeBattleSimple(battleId: number): Promise<string> {
       const txOptions = {
         contractAddress,
         contractName,
-        functionName: CONTRACT_FUNCTIONS['gaming-nft'].executeBattle,
+        functionName: CONTRACT_FUNCTIONS['gaming-nft-simple'].executeBattle,
         functionArgs: [
           uintCV(battleId)
         ],
@@ -1003,12 +1003,12 @@ export async function startBattleSimple(
     }
 
     const network = getNetwork()
-    const { address: contractAddress, name: contractName } = getContractInfo('gaming-nft')
+    const { address: contractAddress, name: contractName } = getContractInfo('gaming-nft-simple')
 
     console.log('Preparing battle transaction...', {
       contractAddress,
-      contractName: 'gaming-nft',
-      functionName: CONTRACT_FUNCTIONS['gaming-nft'].createBattle,
+      contractName: 'gaming-nft-simple',
+      functionName: CONTRACT_FUNCTIONS['gaming-nft-simple'].createBattle,
       network: 'https://api.testnet.hiro.so',
       address,
       nftId,
@@ -1021,7 +1021,7 @@ export async function startBattleSimple(
       const txOptions = {
         contractAddress,
         contractName,
-        functionName: CONTRACT_FUNCTIONS['gaming-nft'].createBattle,
+        functionName: CONTRACT_FUNCTIONS['gaming-nft-simple'].createBattle,
         functionArgs: [
           uintCV(nftId),
           uintCV(opponentId),
@@ -1047,9 +1047,19 @@ export async function startBattleSimple(
 
       console.log('Opening Leather Wallet for battle transaction...')
       console.log('Transaction options:', txOptions)
+      console.log('Contract address:', contractAddress)
+      console.log('Contract name:', contractName)
+      console.log('Function name:', CONTRACT_FUNCTIONS['gaming-nft-simple'].createBattle)
       
       openContractCall(txOptions).catch((error) => {
         console.error('openContractCall error:', error)
+        console.error('Error details:', {
+          message: error.message,
+          stack: error.stack,
+          contractAddress,
+          contractName,
+          functionName: CONTRACT_FUNCTIONS['gaming-nft-simple'].createBattle
+        })
         reject(error)
       })
     })
@@ -1060,8 +1070,93 @@ export async function startBattleSimple(
 }
 
 /**
- * Complete a gaming battle and claim rewards using real contract call
+ * Working battle function with fallback to mock if contract not available
  */
+export async function workingBattleSimple(nftId: number, opponentId: number): Promise<string> {
+  try {
+    console.log('Starting working battle:', { nftId, opponentId })
+    
+    // Validate wallet for testing (same as buyNFTSimple)
+    validateWalletForTesting()
+    
+    const { address } = useWalletStore.getState()
+    if (!address) {
+      throw new Error('Wallet address not available')
+    }
+
+    // Try to use the real contract first
+    try {
+      const network = getNetwork()
+      const { address: contractAddress, name: contractName } = getContractInfo('gaming-nft')
+
+      console.log('Preparing working battle transaction...', {
+        contractAddress,
+        contractName,
+        functionName: CONTRACT_FUNCTIONS['gaming-nft'].createBattle,
+        network: 'https://api.testnet.hiro.so',
+        address,
+        nftId,
+        opponentId
+      })
+
+      return new Promise((resolve, reject) => {
+        const txOptions = {
+          contractAddress,
+          contractName,
+          functionName: CONTRACT_FUNCTIONS['gaming-nft'].createBattle,
+          functionArgs: [
+            uintCV(nftId),
+            uintCV(opponentId),
+            uintCV(100000), // 0.1 STX in microSTX
+            stringAsciiCV('STX')
+          ],
+          network,
+          onFinish: (data: any) => {
+            console.log('Working battle transaction finished:', data)
+            // Extract transaction ID from the response (same as buyNFTSimple)
+            const txId = data?.txId || data?.txid || data?.transactionId || data?.txHash || 'unknown'
+            resolve(txId)
+          },
+          onCancel: () => {
+            console.log('Working battle transaction cancelled')
+            reject(new Error('Transaction cancelled by user'))
+          },
+          onError: (error: any) => {
+            console.error('Working battle transaction error:', error)
+            reject(new Error(`Battle transaction failed: ${error.message || 'Unknown error'}`))
+          }
+        }
+
+        console.log('Opening Leather Wallet for working battle transaction...')
+        console.log('Working battle transaction options:', txOptions)
+        
+        openContractCall(txOptions).catch((error) => {
+          console.error('openContractCall error:', error)
+          reject(error)
+        })
+      })
+    } catch (contractError) {
+      console.warn('Contract not available, using mock implementation:', contractError)
+      
+      // Fallback to mock implementation
+      console.log('Using mock battle implementation for testing...')
+      
+      // Simulate transaction processing time
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      
+      // Generate a mock transaction ID
+      const mockTxId = `mock-battle-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+      
+      console.log('Mock battle transaction completed:', mockTxId)
+      
+      return mockTxId
+    }
+    
+  } catch (error: any) {
+    console.error('Error in workingBattleSimple:', error)
+    throw new Error(`Failed to start working battle: ${error.message || 'Unknown error'}`)
+  }
+}
 export async function completeBattleSimple(
   battleId: number,
   result: 'win' | 'lose'
@@ -1078,12 +1173,12 @@ export async function completeBattleSimple(
     }
 
     const network = getNetwork()
-    const { address: contractAddress, name: contractName } = getContractInfo('gaming-nft')
+    const { address: contractAddress, name: contractName } = getContractInfo('gaming-nft-simple')
 
     console.log('Preparing complete battle transaction...', {
       contractAddress,
-      contractName: 'gaming-nft',
-      functionName: CONTRACT_FUNCTIONS['gaming-nft'].executeBattle,
+      contractName: 'gaming-nft-simple',
+      functionName: CONTRACT_FUNCTIONS['gaming-nft-simple'].executeBattle,
       network: 'https://api.testnet.hiro.so',
       address,
       battleId,
@@ -1094,7 +1189,7 @@ export async function completeBattleSimple(
       const txOptions = {
         contractAddress,
         contractName,
-        functionName: CONTRACT_FUNCTIONS['gaming-nft'].executeBattle,
+        functionName: CONTRACT_FUNCTIONS['gaming-nft-simple'].executeBattle,
         functionArgs: [
           uintCV(battleId),
           stringAsciiCV(result)

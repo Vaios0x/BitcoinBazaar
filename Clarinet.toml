@@ -37,6 +37,11 @@ path = 'contracts/gaming-nft.clar'
 clarity_version = 3
 epoch = 'latest'
 
+[contracts.gaming-nft-fixed]
+path = 'contracts/gaming-nft-fixed.clar'
+clarity_version = 3
+epoch = 'latest'
+
 [contracts.gaming-nft-simple]
 path = 'contracts/gaming-nft-simple.clar'
 clarity_version = 3
