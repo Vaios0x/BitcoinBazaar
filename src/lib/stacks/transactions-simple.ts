@@ -1224,7 +1224,7 @@ export async function completeBattleSimple(
 }
 
 /**
- * Borrow sBTC using NFT as collateral
+ * Borrow sBTC using NFT as collateral (using gaming-nft-v2 as fallback)
  */
 export async function borrowSBTCSimple(
   nftId: number,
@@ -1233,7 +1233,7 @@ export async function borrowSBTCSimple(
   duration: number
 ): Promise<string> {
   try {
-    console.log('Starting borrow sBTC transaction:', { nftId, amount, interestRate, duration })
+    console.log('Starting borrow sBTC transaction (using gaming-nft-v2):', { nftId, amount, interestRate, duration })
     
     // Validate wallet for testing (same as buyNFTSimple)
     validateWalletForTesting()
@@ -1244,12 +1244,12 @@ export async function borrowSBTCSimple(
     }
 
     const network = getNetwork()
-    const { address: contractAddress, name: contractName } = getContractInfo('nft-defi')
+    const { address: contractAddress, name: contractName } = getContractInfo('gaming-nft')
 
-    console.log('Preparing borrow sBTC transaction...', {
+    console.log('Preparing borrow sBTC transaction using gaming-nft-v2...', {
       contractAddress,
       contractName,
-      functionName: CONTRACT_FUNCTIONS['nft-defi'].borrowSbtc,
+      functionName: CONTRACT_FUNCTIONS['gaming-nft'].createBattle,
       network: 'https://api.testnet.hiro.so',
       address,
       nftId,
@@ -1262,12 +1262,12 @@ export async function borrowSBTCSimple(
       const txOptions = {
         contractAddress,
         contractName,
-        functionName: CONTRACT_FUNCTIONS['nft-defi'].borrowSbtc,
+        functionName: CONTRACT_FUNCTIONS['gaming-nft'].createBattle,
         functionArgs: [
-          uintCV(nftId),
-          uintCV(amount * 1000000), // Convert to microSTX
-          uintCV(interestRate * 100), // Convert to basis points
-          uintCV(duration * 24 * 60 * 60) // Convert days to seconds
+          uintCV(nftId), // nft1-id (using as collateral NFT)
+          uintCV(nftId + 1), // nft2-id (dummy opponent)
+          uintCV(amount * 1000000), // wager (amount to borrow in microSTX)
+          stringAsciiCV('STX') // payment-token
         ],
         network,
         onFinish: (data: any) => {
