@@ -222,7 +222,7 @@ export default function MyNFTsPage() {
 
   if (!isConnected) {
     return (
-      <div className="min-h-screen -mt-[28rem] pt-0 pb-8 px-4 sm:px-6 lg:px-8 relative">
+      <div className="min-h-screen -mt-[24rem] sm:-mt-[28rem] lg:-mt-[32rem] pt-0 pb-8 px-4 sm:px-6 lg:px-8 relative">
         <BitcoinSymbols />
         
         <div className="max-w-4xl mx-auto text-center relative z-10">
@@ -289,7 +289,7 @@ export default function MyNFTsPage() {
   }
 
   return (
-    <div className="min-h-screen -mt-[20rem] sm:-mt-[24rem] lg:-mt-[28rem] pt-0 pb-8 px-4 sm:px-6 lg:px-8 relative">
+    <div className="min-h-screen -mt-[24rem] sm:-mt-[28rem] lg:-mt-[32rem] pt-0 pb-8 px-4 sm:px-6 lg:px-8 relative">
       <BitcoinSymbols />
       
       <div className="max-w-7xl mx-auto relative z-10">

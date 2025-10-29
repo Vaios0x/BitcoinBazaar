@@ -12,7 +12,7 @@ export default function DeFiPage() {
       <BitcoinSymbols />
       
       {/* Hero Section - Enhanced Responsive */}
-      <section className="relative -mt-[20rem] sm:-mt-[24rem] lg:-mt-[28rem] pt-0 pb-12 sm:pb-16 lg:pb-20 px-4 sm:px-6 lg:px-8">
+      <section className="relative -mt-[24rem] sm:-mt-[28rem] lg:-mt-[32rem] pt-0 pb-12 sm:pb-16 lg:pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 50 }}

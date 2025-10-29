@@ -275,17 +275,17 @@ export function Navbar() {
 
           {/* Mobile Navigation Links */}
           <div className="flex flex-col space-y-3 sm:space-y-4">
-            <MobileNavLink href="/">Home</MobileNavLink>
-            <MobileNavLink href="/explore">Explore</MobileNavLink>
-            <MobileNavLink href="/my-nfts" className="text-bitcoin-400 hover:text-bitcoin-300 font-semibold">
+            <MobileNavLink href="/" onClick={() => setIsMobileMenuOpen(false)}>Home</MobileNavLink>
+            <MobileNavLink href="/explore" onClick={() => setIsMobileMenuOpen(false)}>Explore</MobileNavLink>
+            <MobileNavLink href="/my-nfts" className="text-bitcoin-400 hover:text-bitcoin-300 font-semibold" onClick={() => setIsMobileMenuOpen(false)}>
               🎨 Mis NFTs
             </MobileNavLink>
-            <MobileNavLink href="/gaming">Gaming</MobileNavLink>
-            <MobileNavLink href="/defi">DeFi</MobileNavLink>
-            <MobileNavLink href="/collections">Collections</MobileNavLink>
-            <MobileNavLink href="/auctions">Auctions</MobileNavLink>
-            <MobileNavLink href="/stats">Stats</MobileNavLink>
-            <MobileNavLink href="/testing" className="text-green-400 hover:text-green-300 font-semibold">
+            <MobileNavLink href="/gaming" onClick={() => setIsMobileMenuOpen(false)}>Gaming</MobileNavLink>
+            <MobileNavLink href="/defi" onClick={() => setIsMobileMenuOpen(false)}>DeFi</MobileNavLink>
+            <MobileNavLink href="/collections" onClick={() => setIsMobileMenuOpen(false)}>Collections</MobileNavLink>
+            <MobileNavLink href="/auctions" onClick={() => setIsMobileMenuOpen(false)}>Auctions</MobileNavLink>
+            <MobileNavLink href="/stats" onClick={() => setIsMobileMenuOpen(false)}>Stats</MobileNavLink>
+            <MobileNavLink href="/testing" className="text-green-400 hover:text-green-300 font-semibold" onClick={() => setIsMobileMenuOpen(false)}>
               🚀 Demo
             </MobileNavLink>
             
@@ -293,6 +293,7 @@ export function Navbar() {
             <Link 
               href="/create" 
               className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white font-semibold rounded-full hover:from-bitcoin-600 hover:to-stacks-600 transition-all duration-300 transform hover:scale-105 bitcoin-glow group mt-2"
+              onClick={() => setIsMobileMenuOpen(false)}
             >
               <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
               Crear NFT
@@ -318,9 +319,9 @@ function NavLink({ href, children, className = "" }: { href: string, children: a
   )
 }
 
-function MobileNavLink({ href, children, className = "" }: { href: string, children: any, className?: string }) {
+function MobileNavLink({ href, children, className = "", onClick }: { href: string, children: any, className?: string, onClick?: () => void }) {
   return (
-    <Link href={href} className={`text-lg text-gray-300 hover:text-stacks-400 transition-colors font-medium hover:scale-105 transform duration-300 ${className}`}>
+    <Link href={href} onClick={onClick} className={`text-lg text-gray-300 hover:text-stacks-400 transition-colors font-medium hover:scale-105 transform duration-300 ${className}`}>
       {children}
     </Link>
   )

@@ -194,7 +194,7 @@ export default function ExplorePage() {
   })
 
   return (
-    <div className="min-h-screen -mt-[20rem] sm:-mt-[24rem] lg:-mt-[28rem] pt-0 pb-8 px-4 sm:px-6 lg:px-8 relative">
+    <div className="min-h-screen -mt-[24rem] sm:-mt-[28rem] lg:-mt-[32rem] pt-0 pb-8 px-4 sm:px-6 lg:px-8 relative">
       {/* Bitcoin Symbols Animation Background */}
       <BitcoinSymbols />
       
