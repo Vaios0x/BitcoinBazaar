@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
   CheckCircle2, 
@@ -36,6 +36,7 @@ export function NeuralNotification({
   duration = 15000
 }: NeuralNotificationProps) {
   const [isVisible, setIsVisible] = useState(true)
+  const isClosingRef = useRef(false)
   const [copied, setCopied] = useState(false)
 
   useEffect(() => {
@@ -49,8 +50,12 @@ export function NeuralNotification({
   }, [autoClose, duration, type, onClose])
 
   const handleClose = () => {
+    if (isClosingRef.current) return
+    isClosingRef.current = true
+    try {
+      onClose?.()
+    } catch (e) {}
     setIsVisible(false)
-    setTimeout(() => onClose?.(), 500)
   }
 
   const copyToClipboard = async (text: string) => {
@@ -146,7 +151,8 @@ export function NeuralNotification({
             damping: 30,
             duration: 0.6
           }}
-          className={`fixed top-[35%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[9999] w-[calc(100vw-2rem)] max-w-sm sm:max-w-md md:max-w-lg mx-4 ${getBgClass()} ${getGlowClass()} border-2 rounded-2xl p-4 sm:p-6 backdrop-blur-xl`}
+          role="dialog" aria-modal="true"
+          className={`fixed top-[35%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[9999] w-[calc(100vw-2rem)] max-w-sm sm:max-w-md md:max-w-lg mx-4 ${getBgClass()} ${getGlowClass()} border-2 rounded-2xl p-4 sm:p-6 backdrop-blur-xl pointer-events-auto`}
         >
           {/* Neural Background Effect */}
           <div className={`absolute inset-0 z-0 ${getNeuralEffect()} rounded-2xl opacity-30`} />
@@ -192,7 +198,11 @@ export function NeuralNotification({
               {/* Close Button */}
               <button
                 onClick={handleClose}
-                className="text-gray-400 hover:text-white transition-colors p-1 rounded-lg hover:bg-white/10"
+                type="button"
+                aria-label="Cerrar notificación"
+                onMouseDown={(e) => e.stopPropagation()}
+                onClickCapture={(e) => { e.stopPropagation() }}
+                className="relative z-50 text-gray-400 hover:text-white transition-colors p-1 rounded-lg hover:bg-white/10 pointer-events-auto"
               >
                 <XCircle className="w-5 h-5" />
               </button>

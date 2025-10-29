@@ -6,7 +6,6 @@ import { X, ShoppingCart, Trash2, Plus, Minus, CreditCard, Bitcoin } from 'lucid
 import { toast } from 'react-hot-toast'
 import { buyNFTSimple } from '@/lib/stacks/transactions-simple'
 import { useWalletStore } from '@/lib/stores/walletStore'
-import { NeuralNotification } from '@/components/notifications/NeuralNotification'
 import { useNFTEvents } from '@/contexts/NFTEventsContext'
 import { useNFTs } from '@/hooks/useNFTs'
 import type { NFT } from '@/types/nft'
@@ -34,12 +33,6 @@ export function ShoppingCartModal({
   onClearCart
 }: ShoppingCartModalProps) {
   const [isProcessing, setIsProcessing] = useState(false)
-  const [transactionStatus, setTransactionStatus] = useState<{
-    type: 'loading' | 'success' | 'error'
-    message: string
-    txId?: string
-    explorerUrl?: string
-  } | null>(null)
   
   const { isConnected, address } = useWalletStore()
   const { addEvent } = useNFTEvents()
@@ -77,10 +70,6 @@ export function ShoppingCartModal({
     }
 
     setIsProcessing(true)
-    setTransactionStatus({
-      type: 'loading',
-      message: 'Procesando compra de NFTs...'
-    })
 
     try {
       const purchaseResults = []
@@ -89,10 +78,6 @@ export function ShoppingCartModal({
       for (const item of cartItems) {
         for (let i = 0; i < item.quantity; i++) {
           try {
-            setTransactionStatus({
-              type: 'loading',
-              message: `Comprando ${item.nft.name}...`
-            })
 
             const txId = await buyNFTSimple(item.nft.id, item.nft.paymentToken)
             const explorerUrl = `https://explorer.stacks.co/txid/${txId}?chain=testnet`
@@ -124,43 +109,22 @@ export function ShoppingCartModal({
       const firstTxId = purchaseResults[0]?.txId
       const firstExplorerUrl = purchaseResults[0]?.explorerUrl
 
-      setTransactionStatus({
-        type: 'success',
-        message: `¡Compra exitosa! ${totalPurchased} NFT${totalPurchased > 1 ? 's' : ''} transferido${totalPurchased > 1 ? 's' : ''} a tu wallet`,
-        txId: firstTxId,
-        explorerUrl: firstExplorerUrl
-      })
-
-      toast.success(`¡Compra exitosa! ${totalPurchased} NFT${totalPurchased > 1 ? 's' : ''} comprado${totalPurchased > 1 ? 's' : ''}`, {
-        duration: 8000,
-        style: {
-          background: '#10B981',
-          color: '#fff',
-          fontSize: '14px',
-          fontWeight: '500'
-        }
-      })
+      // Notificación de éxito removida intencionalmente
 
       // Refresh NFTs to show updated ownership
       setTimeout(() => {
         refreshNFTs()
       }, 2000)
 
-      // Clear cart and close modal after delay
-      setTimeout(() => {
-        onClearCart()
-        onClose()
-        setTransactionStatus(null)
-      }, 15000)
+      // Cerrar inmediatamente el modal y limpiar el carrito; dejar solo la notificación visible
+      onClearCart()
+      onClose()
 
     } catch (error: any) {
       const errorMessage = error?.message || 'Error desconocido'
       console.error('Purchase failed:', errorMessage)
       
-      setTransactionStatus({
-        type: 'error',
-        message: `Error en la compra: ${errorMessage}`
-      })
+      // Mantener solo notificación visual de error vía toast
 
       toast.error(`Error en la compra: ${errorMessage}`, {
         duration: 6000,
@@ -172,18 +136,17 @@ export function ShoppingCartModal({
         }
       })
 
-      setTimeout(() => {
-        setTransactionStatus(null)
-      }, 8000)
+      // No mantener estado adicional para evitar re-render loops
     } finally {
       setIsProcessing(false)
     }
   }
 
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <>
+    <>
+      <AnimatePresence>
+        {isOpen && (
+          <>
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -406,18 +369,11 @@ export function ShoppingCartModal({
             </div>
           </motion.div>
 
-          {/* Neural Notification */}
-          {transactionStatus && (
-            <NeuralNotification
-              type={transactionStatus.type}
-              message={transactionStatus.message}
-              txId={transactionStatus.txId}
-              explorerUrl={transactionStatus.explorerUrl}
-              onClose={() => setTransactionStatus(null)}
-            />
-          )}
-        </>
-      )}
-    </AnimatePresence>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* Notificación removida en Explore */}
+    </>
   )
 }

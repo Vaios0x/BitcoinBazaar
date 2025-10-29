@@ -125,16 +125,13 @@ export function Navbar() {
             <NavLink href="/">Home</NavLink>
             <NavLink href="/explore">Explore</NavLink>
             <NavLink href="/my-nfts" className="text-bitcoin-400 hover:text-bitcoin-300 font-semibold">
-              🎨 Mis NFTs
+              My Nfts
             </NavLink>
             <NavLink href="/gaming">Gaming</NavLink>
             <NavLink href="/defi">DeFi</NavLink>
             <NavLink href="/collections">Collections</NavLink>
             <NavLink href="/auctions">Auctions</NavLink>
             <NavLink href="/stats">Stats</NavLink>
-            <NavLink href="/testing" className="text-green-400 hover:text-green-300 font-semibold">
-              🚀 Demo
-            </NavLink>
           </div>
           
           {/* Create Button - Desktop */}
@@ -144,7 +141,7 @@ export function Navbar() {
               className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-bitcoin-500 to-stacks-500 text-white font-semibold rounded-full hover:from-bitcoin-600 hover:to-stacks-600 transition-all duration-300 transform hover:scale-105 bitcoin-glow group"
             >
               <Plus className="w-4 h-4 mr-2 group-hover:rotate-90 transition-transform duration-300" />
-              Crear
+              Create
             </Link>
           </div>
           
@@ -278,16 +275,13 @@ export function Navbar() {
             <MobileNavLink href="/" onClick={() => setIsMobileMenuOpen(false)}>Home</MobileNavLink>
             <MobileNavLink href="/explore" onClick={() => setIsMobileMenuOpen(false)}>Explore</MobileNavLink>
             <MobileNavLink href="/my-nfts" className="text-bitcoin-400 hover:text-bitcoin-300 font-semibold" onClick={() => setIsMobileMenuOpen(false)}>
-              🎨 Mis NFTs
+              My Nfts
             </MobileNavLink>
             <MobileNavLink href="/gaming" onClick={() => setIsMobileMenuOpen(false)}>Gaming</MobileNavLink>
             <MobileNavLink href="/defi" onClick={() => setIsMobileMenuOpen(false)}>DeFi</MobileNavLink>
             <MobileNavLink href="/collections" onClick={() => setIsMobileMenuOpen(false)}>Collections</MobileNavLink>
             <MobileNavLink href="/auctions" onClick={() => setIsMobileMenuOpen(false)}>Auctions</MobileNavLink>
             <MobileNavLink href="/stats" onClick={() => setIsMobileMenuOpen(false)}>Stats</MobileNavLink>
-            <MobileNavLink href="/testing" className="text-green-400 hover:text-green-300 font-semibold" onClick={() => setIsMobileMenuOpen(false)}>
-              🚀 Demo
-            </MobileNavLink>
             
             {/* Create Button - Mobile */}
             <Link 
@@ -296,7 +290,7 @@ export function Navbar() {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
-              Crear NFT
+              Create NFT
             </Link>
           </div>
 
